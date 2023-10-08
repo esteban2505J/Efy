@@ -109,7 +109,7 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+          <Link href="/blog" aria-current="page">
             Blog
           </Link>
         </NavbarItem>
