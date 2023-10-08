@@ -11,6 +11,9 @@ dependencies:
   framer-motion:
     specifier: ^10.16.4
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
+  nodemailer:
+    specifier: ^6.9.5
+    version: 6.9.5
 
 devDependencies:
   vite:
@@ -2671,6 +2674,11 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nodemailer@6.9.5:
+    resolution: {integrity: sha512-/dmdWo62XjumuLc5+AYQZeiRj+PRR8y8qKtFCOyuOl1k/hckZd8durUUHs/ucKx6/8kN+wFxqKJlQ/LK/qR5FA==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}

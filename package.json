@@ -1,7 +1,8 @@
 {
 	"dependencies": {
 		"@nextui-org/react": "^2.1.13",
-		"framer-motion": "^10.16.4"
+		"framer-motion": "^10.16.4",
+		"nodemailer": "^6.9.5"
 	},
 	"devDependencies": {
 		"vite": "^4.4.11"
