@@ -1,3 +1,4 @@
+// Imports
 import React from "react";
 import {
   Navbar,
@@ -20,11 +21,9 @@ import {
   TagUser,
   Scale,
 } from "./icons.jsx";
-
 import Login from "../auth/Login.jsx";
 import SignUp from "../auth/SignUp.jsx";
-import CartNav from "./cartNav.jsx";
-// import { AcmeLogo } from "./AcmeLogo.jsx";
+import CartNav from "./CartNav.jsx";
 
 export default function App() {
   const icons = {
@@ -50,7 +49,9 @@ export default function App() {
             width={60}
           />
         </div>
-        <p className="font-bold text-inherit text-3xl text-amber-700">Efy</p>
+        <Link className="font-bold text-inherit text-3xl text-[#000] " href="/">
+          Efy
+        </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <Dropdown>
@@ -75,54 +76,50 @@ export default function App() {
             }}
           >
             <DropdownItem
-              key="autoscaling"
-              description="ACME scales apps to meet user demand, automagically, based on load."
+              key="Mens"
+              description="Discover our collection of perfumes for men. Fresh aromas for the day and seductive fragrances for the night. Find your signature of elegance
+              "
               startContent={icons.scale}
             >
-              Autoscaling
+              For men
             </DropdownItem>
             <DropdownItem
-              key="usage_metrics"
-              description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
+              key="For womens"
+              description="Explore our collection of perfumes for women. From floral and fresh fragrances for the day to seductive and elegant aromas for the night. Find your unique essence and enhance your femininity with our exquisite perfumes."
               startContent={icons.activity}
             >
-              Usage Metrics
+              For womens
             </DropdownItem>
             <DropdownItem
-              key="production_ready"
-              description="ACME runs on ACME, join us and others serving requests at web scale."
+              key="For pets"
+              description="
+              Explore our line of pet fragrances. Fresh, mild scents to keep your furry companion smelling lovely. Give your pet a special touch of freshness."
               startContent={icons.flash}
             >
-              Production Ready
+              For pets
             </DropdownItem>
             <DropdownItem
-              key="99_uptime"
-              description="Applications stay on the grid with high availability and high uptime guarantees."
+              key="Brands"
+              description="
+              Discover the best perfume brands. Quality and elegance in each bottle. Find your olfactory signature her."
               startContent={icons.server}
             >
-              +99% Uptime
-            </DropdownItem>
-            <DropdownItem
-              key="supreme_support"
-              description="Overcome any challenge with a supporting team ready to respond."
-              startContent={icons.user}
-            >
-              +Supreme Support
+              Brands
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive>
           <Link href="#" aria-current="page">
-            Customers
+            Blog
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
+          <Link className="text-[#e38d15]" href="#" underline="hover">
+            About us
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent justify="end" className="my-5">
         <NavbarItem className="hidden lg:flex">
           <Login></Login>
         </NavbarItem>

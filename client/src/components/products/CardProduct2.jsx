@@ -1,8 +1,12 @@
 import React from "react";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Image, link } from "@nextui-org/react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CardProduct2() {
+  const navigate = useNavigate();
   const baseImagePath = "src/assets/images";
+  // const [redirectToProduct, setRedirectToProduct] = useState(false);
   const list = [
     {
       title: "Orange",
@@ -53,8 +57,8 @@ export default function CardProduct2() {
           isBlurred="true"
           shadow="sm"
           key={index}
-          isPressable
-          onPress={() => console.log("item pressed")}
+          isPressable={true}
+          onClick={() => navigate("/product", item)}
         >
           <CardBody className="overflow-visible p-0 ">
             <img

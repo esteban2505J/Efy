@@ -10,7 +10,7 @@ export default function CartNav() {
       <div className="flex items-center gap-3">
         <Badge
           color="danger"
-          content={50}
+          content={10}
           isInvisible={isInvisible}
           shape="circle"
         >

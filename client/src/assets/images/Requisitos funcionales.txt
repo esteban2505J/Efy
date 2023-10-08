@@ -1,0 +1,49 @@
+-Registro de Usuarios: Los usuarios deben poder registrarse en la tienda proporcionando su nombre, dirección de correo electrónico y contraseña.
+
+-Inicio de Sesión: Los usuarios registrados deben poder iniciar sesión en sus cuentas utilizando su nombre de usuario y contraseña.
+
+-Gestión de Perfiles de Usuario: Los usuarios deben poder editar su información personal, como dirección de envío y datos de contacto.
+
+-Búsqueda de Productos: Los usuarios deben poder buscar perfumes por nombre, marca, tipo de fragancia y otros criterios relevantes.
+
+-Visualización de Catálogo: Los usuarios deben poder ver una lista de productos disponibles, incluyendo imágenes, descripciones y precios.
+
+-Detalles del Producto: Los usuarios deben poder ver detalles completos de un producto, incluyendo ingredientes, tamaño y disponibilidad.
+
+-Filtrado de Productos: Los usuarios deben poder refinar los resultados de búsqueda utilizando filtros como precio, marca y tipo de fragancia.
+
+-Añadir al Carrito de Compras: Los usuarios deben poder agregar productos al carrito de compras para realizar compras múltiples.
+
+-Carrito de Compras: Los usuarios deben poder ver y editar el contenido de su carrito de compras antes de realizar el pago.
+
+-Realizar Pedido: Los usuarios deben poder revisar y confirmar su pedido, proporcionar información de envío y seleccionar opciones de pago.
+
+-Múltiples Opciones de Pago: Debe haber múltiples opciones de pago disponibles, como tarjetas de crédito, tarjetas de débito, PayPal y otros métodos populares.
+
+-Procesamiento de Pagos en Línea: El sistema debe procesar los pagos en línea de manera segura y eficiente.
+
+-Confirmación de Pedido: Los usuarios deben recibir una confirmación por correo electrónico después de realizar un pedido.
+
+-Historial de Pedidos: Los usuarios deben poder ver un historial de sus pedidos anteriores y el estado actual de los pedidos en curso.
+
+-Seguimiento de Envío: Los usuarios deben poder rastrear el estado de su envío y recibir actualizaciones sobre la fecha de entrega estimada.
+
+-Devoluciones y Reembolsos: Debe haber un proceso claro para que los usuarios soliciten devoluciones y reembolsos en caso de productos dañados o insatisfactorios.
+
+-Evaluaciones y Reseñas de Productos: Los usuarios deben poder dejar reseñas y calificaciones para los perfumes que han comprado.
+
+-Sistema de Recomendaciones: El sistema debe ofrecer recomendaciones de productos basadas en el historial de compras del usuario.
+
+-Ofertas y Descuentos: Los usuarios deben recibir notificaciones de ofertas especiales y descuentos en productos.
+
+-Soporte al Cliente en Línea: Los usuarios deben poder ponerse en contacto con el servicio de atención al cliente en línea para preguntas, problemas o solicitudes de información adicional.
+
+-Chat en Vivo: Debe haber una opción de chat en vivo para brindar asistencia instantánea a los usuarios.
+
+-Suscripción al Boletín: Los usuarios deben poder suscribirse al boletín de la tienda para recibir actualizaciones y promociones por correo electrónico.
+
+-Opciones de Envoltura de Regalo: Los usuarios deben poder seleccionar la opción de envoltura de regalo para sus compras.
+
+-Sistema de Gestión de Inventario: La tienda debe tener un sistema de gestión de inventario actualizado para evitar la venta de productos agotados.
+
+-Seguridad de Datos del Cliente: Deben implementarse medidas de seguridad robustas para proteger la información personal y financiera de los usuarios.
