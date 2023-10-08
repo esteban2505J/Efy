@@ -127,7 +127,7 @@ export default function App() {
           <SignUp></SignUp>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/shoppingcart">
             <CartNav />
           </Link>
         </NavbarItem>
