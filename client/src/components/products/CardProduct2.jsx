@@ -9,12 +9,17 @@ export default function CardProduct2() {
   // const [redirectToProduct, setRedirectToProduct] = useState(false);
   const list = [
     {
-      title: "Orange",
+      title: "Kiwi",
       img: `${baseImagePath}/perfume7.jpg`,
       price: "$5.50",
     },
     {
-      title: "Women Perfume",
+      title: "Perfume Rose",
+      img: `${baseImagePath}/perfume10.jpg`,
+      price: "$7.50",
+    },
+    {
+      title: "Perfume Women",
       img: `${baseImagePath}/perfume1.jpg`,
       price: "$15.00",
     },
@@ -24,9 +29,14 @@ export default function CardProduct2() {
       price: "$10.00",
     },
     {
-      title: "Women Perfume 2",
+      title: "Perfume Women 2",
       img: `${baseImagePath}/perfume4.jpg`,
       price: "$16.30",
+    },
+    {
+      title: "Perfume Rose 2",
+      img: `${baseImagePath}/perfume11.jpg`,
+      price: "$14.00",
     },
     {
       title: "Shalimar",
@@ -39,9 +49,19 @@ export default function CardProduct2() {
       price: "$8.00",
     },
     {
+      title: "Perfume Men",
+      img: `${baseImagePath}/perfume12.jpg`,
+      price: "$8.00",
+    },
+    {
       title: "Sea Power",
       img: `${baseImagePath}/perfume8.jpg`,
       price: "$7.50",
+    },
+    {
+      title: "Perfume Men 2",
+      img: `${baseImagePath}/perfume13.jpg`,
+      price: "$8.50",
     },
     {
       title: "Safe Perfume",
