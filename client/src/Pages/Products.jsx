@@ -1,4 +1,3 @@
-import React from "react";
 import CardProduct2 from "../components/products/CardProduct2";
 
 export default function Products() {

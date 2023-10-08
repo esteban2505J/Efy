@@ -6,6 +6,7 @@ import "../src/assets/scss/astro-ecommerce.scss";
 import "./App.css";
 import Products from "./Pages/Products";
 import DetailProduct from "./Pages/DetailProduct";
+import AboutUs from "./Pages/AboutUs";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Products />} />
             <Route path="/product/:id" element={<Products />} />
             <Route path="/product" element={<DetailProduct />} />
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         </main>
       </BrowserRouter>
