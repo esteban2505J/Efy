@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const port = process.env.PORT || 9000;
 const instace = axios.create({
-  baseURL: `http://localhost:${port}/api`,
+  baseURL: "http://localhost:1600/api",
   withCredentials: true,
 });
 
