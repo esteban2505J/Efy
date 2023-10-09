@@ -53,7 +53,7 @@ export default function Login() {
         placement="top-center"
         backdrop="blur"
        >
-         <Modal>
+      <Modal>
            
       </Modal>
         <ModalContent>
@@ -81,17 +81,9 @@ export default function Login() {
                   type="password"
                   variant="bordered"
                 />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                    defaultSelected
-                    color="success"
-                  >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
+                <div className="flex gap-4 py-2 px-1 justify-between">
+                 <Checkbox defaultSelected size="sm">Remember me</Checkbox>
+                  <Link color="primary" href="/forgotpassword" size="sm">
                     Forgot password?
                   </Link>
                 </div>

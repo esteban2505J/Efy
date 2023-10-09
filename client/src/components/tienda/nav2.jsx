@@ -113,7 +113,7 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive>
-          <Link href="/blog" aria-current="page">
+          <Link href="/blog" aria-current="page" underline="hover">
             Blog
           </Link>
         </NavbarItem>

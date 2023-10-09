@@ -11,6 +11,7 @@ import Blog from "./Pages/Blog";
 import ShoppingCart from "./Pages/ShoppingCart";
 import { AuthProvider } from "./context/AuthContext";
 import ProfileUser from "./Pages/ProfileUser";
+import ForgotPassword from "./Pages/ForgotPassword";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/blog" element={<Blog />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/profileUser" element={<ProfileUser />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
             </Routes>
           </main>
         </BrowserRouter>
