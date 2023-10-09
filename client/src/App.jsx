@@ -9,23 +9,26 @@ import DetailProduct from "./Pages/DetailProduct";
 import AboutUs from "./Pages/AboutUs";
 import Blog from "./Pages/Blog";
 import ShoppingCart from "./Pages/ShoppingCart";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <main>
-          <Nav2 />
-          <Routes>
-            <Route path="/" element={<Products />} />
-            <Route path="/product/:id" element={<Products />} />
-            <Route path="/product" element={<DetailProduct />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/shoppingcart" element={<ShoppingCart />} />
-          </Routes>
-        </main>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <main>
+            <Nav2 />
+            <Routes>
+              <Route path="/" element={<Products />} />
+              <Route path="/product/:id" element={<Products />} />
+              <Route path="/product" element={<DetailProduct />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/shoppingcart" element={<ShoppingCart />} />
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }

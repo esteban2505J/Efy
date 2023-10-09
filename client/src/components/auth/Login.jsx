@@ -13,9 +13,31 @@ import {
 import { Checkbox } from "@nextui-org/react";
 import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
+import { useForm } from "react-hook-form";
+import { userAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { sigIn, isAuthenticated } = userAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      alert("¡Bienvenido a Effy! Sesión iniciada con éxito.");
+    }
+  }, [isAuthenticated]);
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm();
+
+  const onSubmit = handleSubmit(async (values) => {
+    sigIn(values);
+    onOpenChange(false);
+  });
 
   return (
     <>
@@ -34,6 +56,7 @@ export default function Login() {
               <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
               <ModalBody>
                 <Input
+                  {...register("email", { required: true })}
                   autoFocus
                   endContent={
                     <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
@@ -43,6 +66,7 @@ export default function Login() {
                   variant="bordered"
                 />
                 <Input
+                  {...register("password", { required: true })}
                   endContent={
                     <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                   }
@@ -74,7 +98,7 @@ export default function Login() {
                 >
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={onSubmit}>
                   Sign in
                 </Button>
               </ModalFooter>
