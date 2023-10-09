@@ -1,4 +1,3 @@
-// Imports
 import React from "react";
 import {
   Navbar,
@@ -24,8 +23,13 @@ import {
 import Login from "../auth/Login.jsx";
 import SignUp from "../auth/SignUp.jsx";
 import CartNav from "./CartNav.jsx";
+import { userAuth } from "../../context/AuthContext.jsx";
+import { BiLogOut } from "react-icons/bi";
 
 export default function App() {
+  const { isAuthenticated, logOut, user } = userAuth();
+
+  // Iconos para el menú desplegable de categorías
   const icons = {
     chevron: <ChevronDown fill="currentColor" size={16} />,
     scale: <Scale className="text-warning" fill="currentColor" size={30} />,
@@ -49,11 +53,12 @@ export default function App() {
             width={60}
           />
         </div>
-        <Link className="font-bold text-inherit text-3xl text-[#000] " href="/">
+        <Link className="font-bold text-inherit text-3xl text-[#000]" href="/">
           Efy
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {/* Menú desplegable de categorías */}
         <Dropdown>
           <NavbarItem>
             <DropdownTrigger>
@@ -77,8 +82,7 @@ export default function App() {
           >
             <DropdownItem
               key="Mens"
-              description="Discover our collection of perfumes for men. Fresh aromas for the day and seductive fragrances for the night. Find your signature of elegance
-              "
+              description="Discover our collection of perfumes for men. Fresh aromas for the day and seductive fragrances for the night. Find your signature of elegance."
               startContent={icons.scale}
             >
               For men
@@ -120,17 +124,48 @@ export default function App() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="my-5">
-        <NavbarItem className="hidden lg:flex">
-          <Login></Login>
-        </NavbarItem>
-        <NavbarItem>
-          <SignUp></SignUp>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/shoppingcart">
-            <CartNav />
-          </Link>
-        </NavbarItem>
+        {isAuthenticated ? (
+          // Usuario autenticado
+          <>
+            <div className="flex">
+              <span className="text-lg text-[#b25b76]">
+                Welcome {user.fullName}
+              </span>
+            </div>
+            <NavbarItem>
+              <Link
+                className="text-4xl"
+                to={"/"}
+                onClick={() => {
+                  logOut();
+                }}
+              >
+                {/* Icono de cierre de sesión */}
+                <BiLogOut className="bg-red-500 rounded-md p-2 text-white" />
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="/shoppingcart">
+                <CartNav />
+              </Link>
+            </NavbarItem>
+          </>
+        ) : (
+          // Usuario no autenticado
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <Login />
+            </NavbarItem>
+            <NavbarItem>
+              <SignUp />
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="/shoppingcart">
+                <CartNav />
+              </Link>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
     </Navbar>
   );

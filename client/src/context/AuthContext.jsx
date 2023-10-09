@@ -67,21 +67,23 @@ export const AuthProvider = ({ children }) => {
     async function checkLogin() {
       const cookies = Cookies.get();
       console.log(cookies);
+      // console.log("está entrando a esta función");
       if (!cookies.token) {
         setIsAuthenticated(false);
         setUser(null);
         setLoading(false);
         return;
       }
-
       {
         try {
           const res = await verifyTokenRequest(cookies.token);
           if (!res.data) {
             setIsAuthenticated(false);
             setLoading(false);
+            console.log("no hay bada");
             return;
           }
+          console.log(res.data);
 
           setIsAuthenticated(true);
           setUser(res.data);
@@ -90,6 +92,7 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(false);
           setUser(null);
           setLoading(false);
+          console.log(error);
         }
       }
     }
