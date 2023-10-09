@@ -129,7 +129,7 @@ export default function App() {
           <>
             <div className="flex">
               <span className="text-lg text-[#b25b76]">
-                Welcome {user.fullName}
+                Welcome {user.fullName.split(' ')[0]}
               </span>
             </div>
             <NavbarItem>

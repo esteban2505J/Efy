@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
           if (!res.data) {
             setIsAuthenticated(false);
             setLoading(false);
-            console.log("no hay bada");
+            console.log("no hay nada");
             return;
           }
           console.log(res.data);
