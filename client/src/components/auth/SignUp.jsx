@@ -13,9 +13,39 @@ import { Checkbox } from "@nextui-org/react";
 import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { TbPhotoUp } from "react-icons/tb";
-
+import { useForm } from "react-hook-form";
+import { userAuth } from "../../context/AuthContext.jsx";
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { sigUp, errors: registerError } = userAuth();
+  const [Pasword, setPasword] = useState("");
+  const [Pasword2, setPasword2] = useState("");
+
+  const verfyMatchPassword = () => {
+    Pasword === Pasword2 ? true : false;
+  };
+  /**
+   * method to control the sending of the registration request
+   */
+  const onSubmit = handleSubmit(async (values) => {
+    if (verfyMatchPassword) {
+      sigUp(values);
+      <Modal isOpen={isOpen} onChange={onOpenChange}>
+        <ModalContent>
+          <ModalHeader> Error the passwords no match</ModalHeader>
+        </ModalContent>
+      </Modal>;
+    } else {
+      alert(`${errors}`);
+    }
+  });
 
   return (
     <>
@@ -34,6 +64,17 @@ export default function SignUp() {
               <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
               <ModalBody>
                 <Input
+                  {...register("fullName", { required: true })}
+                  autoFocus
+                  endContent={
+                    <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                  }
+                  label="Full name"
+                  placeholder="Enter your full Name"
+                  variant="bordered"
+                />
+                <Input
+                  {...register("email", { required: true })}
                   autoFocus
                   endContent={
                     <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
@@ -43,15 +84,22 @@ export default function SignUp() {
                   variant="bordered"
                 />
                 <Input
+                  {...register("password", { required: true })}
                   endContent={
                     <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                   }
+                  onChange={(e) => {
+                    setPasword(e.target.value);
+                  }}
                   label="Password"
                   placeholder="Enter your password"
                   type="password"
                   variant="bordered"
                 />
                 <Input
+                  onChange={(e) => {
+                    setPasword2(e.target.value);
+                  }}
                   endContent={
                     <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                   }
@@ -84,7 +132,7 @@ export default function SignUp() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={onSubmit}>
                   Sign in
                 </Button>
               </ModalFooter>
