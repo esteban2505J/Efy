@@ -97,7 +97,7 @@ export const login = async (req, res) => {
 
     res.json({
       id: userFound._id,
-      userName: userFound.userName,
+      fullName: userFound.fullName,
       email: userFound.email,
       createAt: userFound.createdAt,
       updateAt: userFound.updatedAt,
@@ -129,16 +129,18 @@ export const profile = async (req, res) => {
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
 
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  console.log(token, "<==");
+  if (!token) return res.status(401).json({ message: "Unauthorized 1" });
 
   jwt.verify(token, KEY_TOKEN, async (err, user) => {
-    if (err) return res.status(401).json({ message: "Unauthorized" });
-    const userFound = await User.findById(user._id);
-    if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+    if (err) return res.status(401).json({ message: "Unauthorized 2" });
+    const userFound = await User.findById(user.id);
+    console.log("si está llegando back");
+    if (!userFound) return res.status(401).json({ message: "Unauthorized 3" });
 
     return res.json({
       id: userFound._id,
-      userName: userFound.userName,
+      fullName: userFound.fullName,
       email: userFound.email,
     });
   });

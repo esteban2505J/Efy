@@ -15,19 +15,10 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { sigIn, isAuthenticated } = userAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      alert("¡Bienvenido a Effy! Sesión iniciada con éxito.");
-    }
-  }, [isAuthenticated]);
   const {
     register,
     handleSubmit,

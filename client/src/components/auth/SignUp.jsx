@@ -14,7 +14,7 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { TbPhotoUp } from "react-icons/tb";
 
-export default function Login() {
+export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -31,7 +31,7 @@ export default function Login() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
