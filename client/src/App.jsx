@@ -10,6 +10,7 @@ import AboutUs from "./Pages/AboutUs";
 import Blog from "./Pages/Blog";
 import ShoppingCart from "./Pages/ShoppingCart";
 import { AuthProvider } from "./context/AuthContext";
+import ProfileUser from "./Pages/ProfileUser";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
+              <Route path="/profileUser" element={<ProfileUser />} />
             </Routes>
           </main>
         </BrowserRouter>
