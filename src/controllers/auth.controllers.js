@@ -25,10 +25,6 @@ export const register = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (userFound) return res.status(400).json(["The email already exist."]);
-    // const profilePictureDefault = {
-    //   publicId: `${Math.round(Math.random() * 1000)}`,
-    //   secureUrl: "https://cdn-icons-png.flaticon.com/128/456/456212.png",
-    // };
 
     // create a new user
     const newUser = new User({
@@ -37,6 +33,7 @@ export const register = async (req, res) => {
       fullName,
     });
 
+    console.log(profilePicture);
     if (req.files?.profilePicture) {
       const result = await upLoadImage(req.files.profilePicture.tempFilePath);
       newUser.profilePicture = {
@@ -88,7 +85,8 @@ export const register = async (req, res) => {
 
         ¡Bienvenido a la familia EFY!
 
-        Atentamente, CEO Yuliana`};
+        Atentamente, CEO Yuliana`,
+      };
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -112,6 +110,7 @@ export const login = async (req, res) => {
   try {
     // found user
     const userFound = await User.findOne({ email });
+    console.log("this is a", userFound);
 
     if (!userFound) return res.status(400).json({ message: "User no found" });
 
@@ -129,6 +128,7 @@ export const login = async (req, res) => {
       id: userFound._id,
       fullName: userFound.fullName,
       email: userFound.email,
+      profilePicture: userFound.profilePicture,
       createAt: userFound.createdAt,
       updateAt: userFound.updatedAt,
     });

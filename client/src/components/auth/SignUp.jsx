@@ -16,6 +16,8 @@ import { TbPhotoUp } from "react-icons/tb";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { useState } from "react";
+
+import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -27,7 +29,12 @@ export default function SignUp() {
   const { sigUp, errors: registerError } = userAuth();
   const [Pasword, setPasword] = useState("");
   const [Pasword2, setPasword2] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
 
+  const handleProfilePictureChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setProfilePicture(selectedFile);
+  };
   const verfyMatchPassword = () => {
     Pasword === Pasword2 ? true : false;
   };
@@ -35,8 +42,28 @@ export default function SignUp() {
    * method to control the sending of the registration request
    */
   const onSubmit = handleSubmit(async (values) => {
+    // Crea una instancia de FormData
+    const formData = new FormData();
+
     if (verfyMatchPassword) {
       sigUp(values);
+
+      // Agrega los campos del formulario al formData
+      formData.append("fullName", values.fullName);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      formData.append("profilePicture", profilePicture); // Asegúrate de usar la clave correcta aquí
+
+      // Envía los datos al backend utilizando Axios
+      try {
+        const response = await sigUp(formData);
+        // Maneja la respuesta del backend aquí, si es necesario
+        console.log(response);
+      } catch (error) {
+        // Maneja los errores, si los hay
+        console.error("Error al enviar el formulario:", error);
+      }
+
       <Modal isOpen={isOpen} onChange={onOpenChange}>
         <ModalContent>
           <ModalHeader> Error the passwords no match</ModalHeader>
@@ -108,12 +135,16 @@ export default function SignUp() {
                   type="password"
                   variant="bordered"
                 />
-                <Input
-                  endContent={<TbPhotoUp className="text-2xl" />}
-                  label="Enter a profile photo"
+                <label>Profile Picture</label>
+                <input
+                  {...register("profilePicture", { required: true })}
                   type="file"
-                  variant="bordered"
+                  onChange={handleProfilePictureChange}
+                  accept="image/*"
+                  name="profilePicture"
+                  required
                 />
+
                 <div className="flex py-2 px-1 justify-between">
                   <Checkbox
                     classNames={{
