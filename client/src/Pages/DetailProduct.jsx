@@ -22,7 +22,7 @@ export default function DetailProduct({ product }) {
         </section>
         <section>
         <h1 className="font-bold text-4xl mb-3">{product.title}</h1>
-        <p className="mb-2">{product.description}</p>
+        <p className="mb-2"> {product.description}</p>
         <h2 className="font-semibold text-xl mb-3">{product.price}</h2>
           <div>
             <div className="flex ">
