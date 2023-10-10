@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const sigUp = async (user) => {
     try {
+      console.log(user);
       const res = await registerRequest(user);
       console.log(res.data);
       setIsAuthenticated(true);
