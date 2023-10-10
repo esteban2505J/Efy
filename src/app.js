@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoutes from "./routes/auth.routes.js";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 
 dotenv.config();
 
@@ -18,6 +19,13 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use(express.json());
+// Note that this option available for versions 1.0.0 and newer.
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./uploads",
+  })
+);
 app.use(cookieParser());
 app.use("/api", authRoutes);
 

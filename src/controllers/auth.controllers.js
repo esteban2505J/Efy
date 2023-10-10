@@ -10,7 +10,9 @@ import { createAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
-import { transporter } from "../config.js";
+import { transporter } from "../libs/nodemailer.js";
+import { upLoadImage } from "../libs/claudinary.js";
+import fs from "fs-extra";
 
 /*function for te procces of register*/
 export const register = async (req, res) => {
@@ -23,18 +25,28 @@ export const register = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (userFound) return res.status(400).json(["The email already exist."]);
-    const profilePictureDefault = {
-      publicId: `${Math.round(Math.random() * 1000)}`,
-      secureUrl: "https://cdn-icons-png.flaticon.com/128/456/456212.png",
-    };
+    // const profilePictureDefault = {
+    //   publicId: `${Math.round(Math.random() * 1000)}`,
+    //   secureUrl: "https://cdn-icons-png.flaticon.com/128/456/456212.png",
+    // };
+
     // create a new user
     const newUser = new User({
       email,
       password: passwordHash,
       fullName,
-      profilePicture: profilePicture || profilePictureDefault,
     });
 
+    if (req.files?.profilePicture) {
+      const result = await upLoadImage(req.files.profilePicture.tempFilePath);
+      newUser.profilePicture = {
+        publicId: result.public_id,
+        secureUrl: result.secure_url,
+      };
+
+      await fs.unlink(req.files.profilePicture.tempFilePath);
+      console.log(result);
+    }
     // saved the user create
     const userSaved = await newUser.save();
 

@@ -13,40 +13,39 @@ import { userAuth } from "../../context/AuthContext";
 
 export default function ModalLogin() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isAuthenticated } = userAuth();
+  const { isAuthenticated, user } = userAuth();
 
   useEffect(() => {
+    console.log("antes del if");
     if (isAuthenticated) {
-      // Espera a que el modal se haya montado antes de abrirlo
+      // Wait for the modal to be mounted before opening it
       setTimeout(() => {
-        onOpen();
+        console.log("está llegando antes");
+        onOpen(); // Call onOpen as a function
+        console.log("está llegando");
       }, 0);
     } else {
-      onClose(); // Cierra el modal cuando el usuario no está autenticado
+      onClose(); // Close the modal when the user is not authenticated
     }
   }, [isAuthenticated, onOpen, onClose]);
 
   return (
     <Modal size="sm" isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className="flex flex-col gap-1">
-              Modal Title
-            </ModalHeader>
-            <ModalBody>
-              <CardModalLogin />
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Close
-              </Button>
-              <Button color="primary" onPress={onClose}>
-                Action
-              </Button>
-            </ModalFooter>
-          </>
-        )}
+        <>
+          <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+          <ModalBody>
+            <CardModalLogin />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="light" onClick={onClose}>
+              Close
+            </Button>
+            <Button color="primary" onClick={onClose}>
+              Action
+            </Button>
+          </ModalFooter>
+        </>
       </ModalContent>
     </Modal>
   );

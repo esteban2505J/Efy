@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -15,6 +15,7 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
+import ModalLogin from "../../components/auth/ModalLogin.jsx";
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -25,9 +26,18 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      // onOpen(); // Open the modal
+    } else {
+      // onOpenChange(false); // Close the modal
+    }
+  }, [isAuthenticated, onOpen, onOpenChange]);
+
   const onSubmit = handleSubmit(async (values) => {
     sigIn(values);
     onOpenChange(false);
+    onclose;
   });
 
   return (
