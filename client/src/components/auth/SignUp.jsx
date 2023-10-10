@@ -109,7 +109,6 @@ export default function SignUp() {
                   variant="bordered"
                 />
                 <Input
-                  size="lg"
                   endContent={<TbPhotoUp className="text-2xl" />}
                   label="Enter a profile photo"
                   type="file"
