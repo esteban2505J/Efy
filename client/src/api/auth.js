@@ -6,4 +6,4 @@ export const loginRequest = (user) => axios.post("/login", user);
 
 export const verifyTokenRequest = () => axios.get("/verify");
 
-export const sendEmailBuy = (user, product) => axios.post("/sendemailbuy", { user, product });
+// export const sendEmailBuy = (user, product) => axios.post("/sendemailbuy", { user, product });

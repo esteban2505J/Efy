@@ -3,31 +3,31 @@ import { HeartIcon } from "../components/products/HeartIcon";
 import { Button } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { useParams, useLocation } from "react-router-dom";
-import { sendEmailBuy } from "../api/auth";
-import userAuth from "../context/AuthContext";
+// import { sendEmailBuy } from "../api/auth";
+// import userAuth from "../context/AuthContext";
 
 
 export default function DetailProduct() {
   const { id } = useParams();
   const location = useLocation();
   const product = location.state.product;
-  const { user } = userAuth();
+  // const { user } = userAuth();
 
   const defaultContent =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-  const handleAddToCartClick = async () => {
-    try {
-      // Envía una solicitud para enviar el correo electrónico al servidor
-      const response = await sendEmailBuy({ user, product });
+    // const handleAddToCartClick = async () => {
+    //   try {
+    //     // Envía una solicitud para enviar el correo electrónico al servidor
+    //     const response = await sendEmailBuy({ user, product });
 
-      // Maneja la respuesta si es necesario
-      console.log("Correo electrónico enviado:", response.data);
-    } catch (error) {
-      // Maneja errores si ocurren
-      console.error("Error al enviar el correo electrónico:", error);
-    }
-  };
+    //     // Maneja la respuesta si es necesario
+    //     console.log("Correo electrónico enviado:", response.data);
+    //   } catch (error) {
+    //     // Maneja errores si ocurren
+    //     console.error("Error al enviar el correo electrónico:", error);
+    //   }
+    // };
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function DetailProduct() {
                 variant="shadow"
                 size="sm"
                 className="mr-5" 
-                onClick={handleAddToCartClick}
+                // onClick={handleAddToCartClick}
               >
                 Add to cart
               </Button>

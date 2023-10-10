@@ -131,7 +131,7 @@ export const AuthProvider = ({ children }) => {
         errors,
         loading,
         user,
-        sendEmailBuy,
+        // sendEmailBuy,
       }}
     >
       {children}
