@@ -71,24 +71,24 @@ export const register = async (req, res) => {
         subject: "¡Gracias por Registrarte en EFY - Essential For You!",
         text: `Estimado(a) ${userSaved.fullName}
 
-        Es un placer darte la bienvenida a EFY - Essential For You, tu tienda virtual de perfumes preferida. Estamos emocionados de tenerte como parte de nuestra comunidad de amantes de las fragancias y estamos agradecidos por haberte registrado en nuestro sitio web.
+      Es un placer darte la bienvenida a EFY - Essential For You, tu tienda virtual de perfumes preferida. Estamos emocionados de tenerte como parte de nuestra comunidad de amantes de las fragancias y estamos agradecidos por haberte registrado en nuestro sitio web.
 
-        En EFY, nos esforzamos por brindarte una experiencia de compra de perfumes única y satisfactoria. Creemos en la importancia de encontrar la fragancia perfecta que complemente tu estilo y personalidad, y estamos aquí para ayudarte a descubrir tus favoritas. Ya sea que busques una fragancia fresca y ligera para el día a día o algo más sofisticado y elegante para ocasiones especiales, tenemos una amplia selección de perfumes que seguramente te encantarán.
+      En EFY, nos esforzamos por brindarte una experiencia de compra de perfumes única y satisfactoria. Creemos en la importancia de encontrar la fragancia perfecta que complemente tu estilo y personalidad, y estamos aquí para ayudarte a descubrir tus favoritas. Ya sea que busques una fragancia fresca y ligera para el día a día o algo más sofisticado y elegante para ocasiones especiales, tenemos una amplia selección de perfumes que seguramente te encantarán.
 
-        Al registrarte en EFY, tendrás acceso a una serie de beneficios, incluyendo:
+      Al registrarte en EFY, tendrás acceso a una serie de beneficios, incluyendo:
 
         - Ofertas y promociones exclusivas para miembros.
         - Recomendaciones personalizadas de fragancias basadas en tus preferencias.
         - Actualizaciones sobre nuevos lanzamientos y productos destacados.
         - Una experiencia de compra segura y conveniente.
 
-        Te animamos a explorar nuestro catálogo en línea y a descubrir las últimas tendencias en el mundo de las fragancias. Si alguna vez necesitas ayuda para encontrar la fragancia perfecta o tienes alguna pregunta sobre nuestros productos o servicios, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para servirte y asegurarnos de que tu experiencia en EFY sea excepcional.
+      Te animamos a explorar nuestro catálogo en línea y a descubrir las últimas tendencias en el mundo de las fragancias. Si alguna vez necesitas ayuda para encontrar la fragancia perfecta o tienes alguna pregunta sobre nuestros productos o servicios, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para servirte y asegurarnos de que tu experiencia en EFY sea excepcional.
 
-        Una vez más, gracias por unirte a EFY. Esperamos que disfrutes de tu experiencia de compra con nosotros y que encuentres los perfumes que se adapten a tu estilo y personalidad.
+      Una vez más, gracias por unirte a EFY. Esperamos que disfrutes de tu experiencia de compra con nosotros y que encuentres los perfumes que se adapten a tu estilo y personalidad.
 
-        ¡Bienvenido a la familia EFY!
+      ¡Bienvenido a la familia EFY!
 
-        Atentamente, CEO Yuliana`};
+      Atentamente, CEO Yuliana`};
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -154,6 +154,37 @@ export const profile = async (req, res) => {
     createAt: userFound.createdAt,
     updatedAt: userFound.updatedAt,
   });
+};
+
+// Ruta para enviar el correo electrónico cuando se agrega al carrito
+export const sendEmailBuy = async (req, res) => {
+  const { user, product } = req.body;
+
+  // Verifica que tengas la información del usuario y el producto
+  if (!user || !user.email || !product || !product.name || !product.price) {
+    return res.status(400).json({ message: "Datos de usuario o producto inválidos" });
+  }
+
+  const { fullName, email } = user;
+  const { name, price } = product;
+
+  // Crea el contenido del correo electrónico
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "¡Gracias por tu compra!",
+    text: `Estimado(a) ${fullName},\n\nGracias por comprar ${name} por ${price} pesos.\n\nEsperamos que disfrutes de tu compra.\n\nAtentamente, Tu Tienda`,
+  };
+
+  try {
+    // Envía el correo electrónico
+    await transporter.sendMail(mailOptions);
+    console.log("Correo electrónico enviado correctamente");
+    res.status(200).json({ message: "Correo electrónico enviado correctamente" });
+  } catch (error) {
+    console.error("Error al enviar el correo electrónico:", error);
+    res.status(500).json({ message: "Error al enviar el correo electrónico" });
+  }
 };
 
 export const verifyToken = async (req, res) => {
