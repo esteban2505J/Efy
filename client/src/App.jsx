@@ -22,8 +22,8 @@ function App() {
             <Nav2 />
             <Routes>
               <Route path="/" element={<Products />} />
-              <Route path="/product/:id" element={<Products />} />
-              <Route path="/product" element={<DetailProduct />} />
+              <Route path="/product" element={<Products />} />
+              <Route path="/product/:id" element={<DetailProduct />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
