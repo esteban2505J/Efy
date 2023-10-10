@@ -38,9 +38,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await loginRequest(user);
       console.log(res);
-      console.log("Antes de ejecutar")
-      setIsAuthenticated(true)
-      console.log("Estado", isAuthenticated)
+      console.log("Antes de ejecutar");
+      setIsAuthenticated(true);
+      console.log("Estado", isAuthenticated);
       setUser(res.data);
     } catch (error) {
       if (Array.isArray(error.response.data)) {
@@ -70,15 +70,11 @@ export const AuthProvider = ({ children }) => {
       console.log("checkLogin se está ejecutando");
       const cookies = Cookies.get();
       console.log(cookies);
-<<<<<<< HEAD
-      console.log("está entrando a esta función");
-=======
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
       if (!cookies.token) {
         setIsAuthenticated(false);
         setUser(null);
         setLoading(false);
-        console.log(loading)
+        console.log(loading);
         return;
       }
       {
@@ -95,9 +91,9 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true);
           setUser(res.data);
           setLoading(false);
-          console.log("Verificar token", isAuthenticated)
-          console.log("Verificar usuario", user)
-          console.log("Verificar loading", loading)
+          console.log("Verificar token", isAuthenticated);
+          console.log("Verificar usuario", user);
+          console.log("Verificar loading", loading);
         } catch (error) {
           setIsAuthenticated(false);
           setUser(null);

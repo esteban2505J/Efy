@@ -15,7 +15,6 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
-import ModalLogin from "../../components/auth/ModalLogin.jsx";
 import ModalLogin from "./ModalLogin.jsx";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx"; // Asegúrate de importar el contexto adecuado
