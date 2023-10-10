@@ -15,14 +15,10 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
-<<<<<<< HEAD
 import ModalLogin from "../../components/auth/ModalLogin.jsx";
-=======
 import ModalLogin from "./ModalLogin.jsx";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx"; // Asegúrate de importar el contexto adecuado
-
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -33,7 +29,6 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
-<<<<<<< HEAD
   useEffect(() => {
     if (isAuthenticated) {
       // onOpen(); // Open the modal
@@ -42,39 +37,34 @@ export default function Login() {
     }
   }, [isAuthenticated, onOpen, onOpenChange]);
 
-  const onSubmit = handleSubmit(async (values) => {
-    sigIn(values);
-    onOpenChange(false);
-    onclose;
-=======
   // Obtener el contexto de autenticación
   const authContext = useContext(AuthContext);
 
   // Desestructurar los valores del contexto
   const { user } = authContext;
-  
+
   const onSubmit = handleSubmit(async (values) => {
     sigIn(values);
     onOpenChange(false);
-     console.log("Renderizando Login component. isAuthenticated:", isAuthenticated);
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
+    console.log(
+      "Renderizando Login component. isAuthenticated:",
+      isAuthenticated
+    );
   });
 
-   return (
+  return (
     <>
       <Button onPress={onOpen} className="bg-orange-200" variant="shadow">
         Login
-       </Button>
-       {isAuthenticated && <ModalLogin />}
-       <Modal
+      </Button>
+      {isAuthenticated && <ModalLogin />}
+      <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="top-center"
         backdrop="blur"
-       >
-      <Modal>
-           
-      </Modal>
+      >
+        <Modal></Modal>
         <ModalContent>
           {(onClose) => (
             <>
@@ -101,7 +91,9 @@ export default function Login() {
                   variant="bordered"
                 />
                 <div className="flex gap-4 py-2 px-1 justify-between">
-                 <Checkbox defaultSelected size="sm">Remember me</Checkbox>
+                  <Checkbox defaultSelected size="sm">
+                    Remember me
+                  </Checkbox>
                   <Link color="primary" href="/forgotpassword" size="sm">
                     Forgot password?
                   </Link>
@@ -123,7 +115,6 @@ export default function Login() {
           )}
         </ModalContent>
       </Modal>
-     </>
-     
+    </>
   );
 }
