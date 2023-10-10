@@ -15,18 +15,16 @@ export default function ModalLogin() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isAuthenticated, user } = userAuth();
 
-
-
- useEffect(() => {
-  if (isAuthenticated) {
-    // Espera a que el modal se haya montado antes de abrirlo
-    setTimeout(() => {
-      onOpen()
-    }, 0);
-  } else {
-    onClose(); // Cierra el modal cuando el usuario no está autenticado
-  }
-}, [isAuthenticated, onOpen, onClose]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Espera a que el modal se haya montado antes de abrirlo
+      setTimeout(() => {
+        onOpen();
+      }, 0);
+    } else {
+      onClose(); // Cierra el modal cuando el usuario no está autenticado
+    }
+  }, [isAuthenticated, onOpen, onClose]);
 
   return (
     <Modal size="sm" isOpen={isOpen} onClose={onClose}>
