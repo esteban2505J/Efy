@@ -15,14 +15,10 @@ import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
-<<<<<<< HEAD
-import ModalLogin from "../../components/auth/ModalLogin.jsx";
-=======
 import ModalLogin from "./ModalLogin.jsx";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx"; // Asegúrate de importar el contexto adecuado
 
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -33,20 +29,6 @@ export default function Login() {
     // formState: { errors },
   } = useForm();
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (isAuthenticated) {
-      // onOpen(); // Open the modal
-    } else {
-      // onOpenChange(false); // Close the modal
-    }
-  }, [isAuthenticated, onOpen, onOpenChange]);
-
-  const onSubmit = handleSubmit(async (values) => {
-    sigIn(values);
-    onOpenChange(false);
-    onclose;
-=======
   // Obtener el contexto de autenticación
   const authContext = useContext(AuthContext);
 
@@ -57,7 +39,6 @@ export default function Login() {
     sigIn(values);
     onOpenChange(false);
      console.log("Renderizando Login component. isAuthenticated:", isAuthenticated);
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
   });
 
    return (
@@ -72,9 +53,7 @@ export default function Login() {
         placement="top-center"
         backdrop="blur"
        >
-      <Modal>
-           
-      </Modal>
+
         <ModalContent>
           {(onClose) => (
             <>

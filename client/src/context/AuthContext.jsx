@@ -70,10 +70,7 @@ export const AuthProvider = ({ children }) => {
       console.log("checkLogin se está ejecutando");
       const cookies = Cookies.get();
       console.log(cookies);
-<<<<<<< HEAD
       console.log("está entrando a esta función");
-=======
->>>>>>> 235e36811224a5d07c93d38e299ceb0c27930ed6
       if (!cookies.token) {
         setIsAuthenticated(false);
         setUser(null);
