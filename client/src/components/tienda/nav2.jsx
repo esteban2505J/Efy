@@ -113,7 +113,7 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive>
-          <Link href="/blog" aria-current="page">
+          <Link href="/blog" aria-current="page" underline="hover">
             Blog
           </Link>
         </NavbarItem>
@@ -129,7 +129,9 @@ export default function App() {
           <>
             <div className="flex">
               <span className="text-lg text-[#b25b76]">
-                Welcome {user.fullName}
+                <Link className="text-[#b25b76]" href="/profileuser" underline="hover">
+                  Welcome {user.fullName.split(' ')[0]}
+                </Link>
               </span>
             </div>
             <NavbarItem>
