@@ -68,9 +68,27 @@ export const register = async (req, res) => {
       const mailOptions = {
         from: `${process.env.EMAIL}`,
         to: userSaved.email,
-        subject: "¡Bienvenido a nuestra aplicación!",
-        text: "Gracias por registrarte en nuestra aplicación. ¡Esperamos que disfrutes de tu experiencia!",
-      };
+        subject: "¡Gracias por Registrarte en EFY - Essential For You!",
+        text: `Estimado(a) ${userSaved.fullName}
+
+        Es un placer darte la bienvenida a EFY - Essential For You, tu tienda virtual de perfumes preferida. Estamos emocionados de tenerte como parte de nuestra comunidad de amantes de las fragancias y estamos agradecidos por haberte registrado en nuestro sitio web.
+
+        En EFY, nos esforzamos por brindarte una experiencia de compra de perfumes única y satisfactoria. Creemos en la importancia de encontrar la fragancia perfecta que complemente tu estilo y personalidad, y estamos aquí para ayudarte a descubrir tus favoritas. Ya sea que busques una fragancia fresca y ligera para el día a día o algo más sofisticado y elegante para ocasiones especiales, tenemos una amplia selección de perfumes que seguramente te encantarán.
+
+        Al registrarte en EFY, tendrás acceso a una serie de beneficios, incluyendo:
+
+        - Ofertas y promociones exclusivas para miembros.
+        - Recomendaciones personalizadas de fragancias basadas en tus preferencias.
+        - Actualizaciones sobre nuevos lanzamientos y productos destacados.
+        - Una experiencia de compra segura y conveniente.
+
+        Te animamos a explorar nuestro catálogo en línea y a descubrir las últimas tendencias en el mundo de las fragancias. Si alguna vez necesitas ayuda para encontrar la fragancia perfecta o tienes alguna pregunta sobre nuestros productos o servicios, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para servirte y asegurarnos de que tu experiencia en EFY sea excepcional.
+
+        Una vez más, gracias por unirte a EFY. Esperamos que disfrutes de tu experiencia de compra con nosotros y que encuentres los perfumes que se adapten a tu estilo y personalidad.
+
+        ¡Bienvenido a la familia EFY!
+
+        Atentamente, CEO Yuliana`};
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
