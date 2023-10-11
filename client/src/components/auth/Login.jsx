@@ -21,11 +21,11 @@ import { AuthContext } from "../../context/AuthContext.jsx"; // Asegúrate de im
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { sigIn, isAuthenticated } = userAuth();
+  const { sigIn, isAuthenticated, errors: registerError } = userAuth();
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Login() {
   const authContext = useContext(AuthContext);
 
   // Desestructurar los valores del contexto
-  const { user } = authContext;
+  // const { user } = authContext;
 
   const onSubmit = handleSubmit(async (values) => {
     sigIn(values);
@@ -63,56 +63,72 @@ export default function Login() {
         placement="top-center"
         backdrop="blur"
       >
-        <Modal></Modal>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-              <ModalBody>
-                <Input
-                  {...register("email", { required: true })}
-                  autoFocus
-                  endContent={
-                    <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Email"
-                  placeholder="Enter your email"
-                  variant="bordered"
-                />
-                <Input
-                  {...register("password", { required: true })}
-                  endContent={
-                    <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-                <div className="flex gap-4 py-2 px-1 justify-between">
-                  <Checkbox defaultSelected size="sm">
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="/forgotpassword" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  className="bg-[#DA344D]"
-                  variant="flat"
-                  onPress={onClose}
-                >
-                  Close
-                </Button>
-                <Button color="primary" onPress={onSubmit}>
-                  Sign in
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
+        <Modal>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Log in
+                </ModalHeader>
+                <ModalBody>
+                  {registerError.map((error, i) => {
+                    return (
+                      <div className="bg-[#b00415] p-2 text-white" key={i}>
+                        {error}
+                      </div>
+                    );
+                  })}
+                  <Input
+                    {...register("email", { required: true })}
+                    autoFocus
+                    endContent={
+                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="Email"
+                    placeholder="Enter your email"
+                    variant="bordered"
+                  />
+                  {errors.fullName && (
+                    <p className=" text-red-500">Full name is required</p>
+                  )}
+                  <Input
+                    {...register("password", { required: true })}
+                    endContent={
+                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="Password"
+                    placeholder="Enter your password"
+                    type="password"
+                    variant="bordered"
+                  />
+                  {errors.email && (
+                    <p className=" text-red-500">Email is required</p>
+                  )}
+                  <div className="flex gap-4 py-2 px-1 justify-between">
+                    <Checkbox defaultSelected size="sm">
+                      Remember me
+                    </Checkbox>
+                    <Link color="primary" href="/forgotpassword" size="sm">
+                      Forgot password?
+                    </Link>
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    className="bg-[#DA344D]"
+                    variant="flat"
+                    onPress={onClose}
+                  >
+                    Close
+                  </Button>
+                  <Button color="primary" onPress={onSubmit}>
+                    Sign in
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </Modal>
     </>
   );

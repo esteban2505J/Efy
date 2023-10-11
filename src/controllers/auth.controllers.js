@@ -32,8 +32,7 @@ export const register = async (req, res) => {
       password: passwordHash,
       fullName,
     });
-
-    console.log(profilePicture);
+    console.log(req.files.profilePicture);
     if (req.files?.profilePicture) {
       const result = await upLoadImage(req.files.profilePicture.tempFilePath);
       newUser.profilePicture = {
