@@ -10,8 +10,10 @@ import { createAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
-import { transporter } from "../libs/nodemailer.js";
+import { sendEmail } from "../libs/nodemailer.js";
 import { upLoadImage } from "../libs/claudinary.js";
+import { render } from "@react-email/components";
+import { Welcome } from "../emails/template/Welcome.jsx";
 import fs from "fs-extra";
 
 /*function for te procces of register*/
@@ -60,44 +62,15 @@ export const register = async (req, res) => {
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
-    try {
-      const mailOptions = {
-        from: `${process.env.EMAIL}`,
-        to: userSaved.email,
-        subject: "¡Gracias por Registrarte en EFY - Essential For You!",
-        text: `Estimado(a) ${userSaved.fullName}
+    const html = render(Welcome({ url: "", username: userSaved.fullName }));
 
-        Es un placer darte la bienvenida a EFY - Essential For You, tu tienda virtual de perfumes preferida. Estamos emocionados de tenerte como parte de nuestra comunidad de amantes de las fragancias y estamos agradecidos por haberte registrado en nuestro sitio web.
-
-        En EFY, nos esforzamos por brindarte una experiencia de compra de perfumes única y satisfactoria. Creemos en la importancia de encontrar la fragancia perfecta que complemente tu estilo y personalidad, y estamos aquí para ayudarte a descubrir tus favoritas. Ya sea que busques una fragancia fresca y ligera para el día a día o algo más sofisticado y elegante para ocasiones especiales, tenemos una amplia selección de perfumes que seguramente te encantarán.
-
-        Al registrarte en EFY, tendrás acceso a una serie de beneficios, incluyendo:
-
-        - Ofertas y promociones exclusivas para miembros.
-        - Recomendaciones personalizadas de fragancias basadas en tus preferencias.
-        - Actualizaciones sobre nuevos lanzamientos y productos destacados.
-        - Una experiencia de compra segura y conveniente.
-
-        Te animamos a explorar nuestro catálogo en línea y a descubrir las últimas tendencias en el mundo de las fragancias. Si alguna vez necesitas ayuda para encontrar la fragancia perfecta o tienes alguna pregunta sobre nuestros productos o servicios, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para servirte y asegurarnos de que tu experiencia en EFY sea excepcional.
-
-        Una vez más, gracias por unirte a EFY. Esperamos que disfrutes de tu experiencia de compra con nosotros y que encuentres los perfumes que se adapten a tu estilo y personalidad.
-
-        ¡Bienvenido a la familia EFY!
-
-        Atentamente, CEO Yuliana`,
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error("Error al enviar el correo electrónico:", error);
-        } else {
-          console.log("Correo electrónico enviado:", info.response);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await sendEmail({
+      email: userSaved.email,
+      subject: "¡Gracias por Registrarte en EFY - Essential For You!",
+      html,
+    });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -124,13 +97,17 @@ export const login = async (req, res) => {
     res.cookie("token", token);
 
     res.json({
+      ...userFound,
       id: userFound._id,
-      fullName: userFound.fullName,
-      email: userFound.email,
-      profilePicture: userFound.profilePicture,
-      createAt: userFound.createdAt,
-      updateAt: userFound.updatedAt,
     });
+    // res.json({
+    //   id: userFound._id,
+    //   fullName: userFound.fullName,
+    //   email: userFound.email,
+    //   profilePicture: userFound.profilePicture,
+    //   createAt: userFound.createdAt,
+    //   updateAt: userFound.updatedAt,
+    // });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

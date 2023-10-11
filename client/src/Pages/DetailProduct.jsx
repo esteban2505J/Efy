@@ -1,25 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HeartIcon } from "../components/products/HeartIcon";
 import { Button } from "@nextui-org/react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { useParams, useLocation } from "react-router-dom";
+// import { sendEmailBuy } from "../api/auth";
+// import userAuth from "../context/AuthContext";
 
-export default function DetailProduct({ product }) {
+
+export default function DetailProduct() {
   const { id } = useParams();
   const location = useLocation();
-  product = location.state.product;
+  const product = location.state.product;
+  // const { user } = userAuth();
+
   const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-  
-  
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+    // const handleAddToCartClick = async () => {
+    //   try {
+    //     // Envía una solicitud para enviar el correo electrónico al servidor
+    //     const response = await sendEmailBuy({ user, product });
+
+    //     // Maneja la respuesta si es necesario
+    //     console.log("Correo electrónico enviado:", response.data);
+    //   } catch (error) {
+    //     // Maneja errores si ocurren
+    //     console.error("Error al enviar el correo electrónico:", error);
+    //   }
+    // };
+
   return (
     <>
       <section className="grid grid-cols-2 mt-6 container">
         <section>
-         <div className="flex justify-center">
-           <img src={product.img} alt="" width={240} className="rounded-lg" />
+          <div className="flex justify-center" style={{ width: "300px", height: "300px", marginLeft: "85px" }}>
+             <img src={product.img} alt="" width={270} className="rounded-lg" />
           </div>
         </section>
+
         <section>
         <h1 className="font-bold text-4xl mb-3">{product.title}</h1>
         <p className="mb-2"> {product.description}</p>
@@ -30,7 +48,8 @@ export default function DetailProduct({ product }) {
                 color="primary"
                 variant="shadow"
                 size="sm"
-                className="mr-5"
+                className="mr-5" 
+                // onClick={handleAddToCartClick}
               >
                 Add to cart
               </Button>
