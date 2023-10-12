@@ -13,7 +13,7 @@ import { KEY_TOKEN } from "../config.js";
 import { sendEmail } from "../libs/nodemailer.js";
 import { upLoadImage } from "../libs/claudinary.js";
 import { render } from "@react-email/components";
-import { Welcome } from "../emails/template/Welcome.jsx";
+import { Welcome } from "../emails/template/Welcome.js";
 import fs from "fs-extra";
 
 /*function for te procces of register*/

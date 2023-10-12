@@ -32,12 +32,15 @@ dependencies:
   express-fileupload:
     specifier: ^1.4.1
     version: 1.4.1
+  fs-extra:
+    specifier: ^11.1.1
+    version: 11.1.1
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
   mongoose:
-    specifier: ^7.6.0
-    version: 7.6.0
+    specifier: ^7.6.1
+    version: 7.6.1
   morgan:
     specifier: ^1.10.0
     version: 1.10.0
@@ -651,8 +654,10 @@ packages:
       selderee: 0.10.0
     dev: false
 
-  /@types/node@20.8.3:
-    resolution: {integrity: sha512-jxiZQFpb+NlH5kjW49vXxvxTjeeqlbsnTAdBTKpzEdPs9itay7MscYXz3Fo9VYFEsfQ6LJFitHad3faerLAjCw==}
+  /@types/node@20.8.4:
+    resolution: {integrity: sha512-ZVPnqU58giiCjSxjVUESDtdPk4QR5WQhhINbc9UBrKLU68MX5BF6kbQzTrkwbolyr0X8ChBpXfavr5mZFKZQ5A==}
+    dependencies:
+      undici-types: 5.25.3
     dev: false
 
   /@types/normalize-package-data@2.4.2:
@@ -666,7 +671,7 @@ packages:
   /@types/whatwg-url@8.2.2:
     resolution: {integrity: sha512-FtQu10RWgn3D9U4aazdwIE2yzphmTJREDqNdODHrbrZmmMqI0vMheC/6NE/J1Yveaj8H+ela+YwWTjq5PGmuhA==}
     dependencies:
-      '@types/node': 20.8.3
+      '@types/node': 20.8.4
       '@types/webidl-conversions': 7.0.1
     dev: false
 
@@ -1059,6 +1064,7 @@ packages:
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+    requiresBuild: true
     dev: false
 
   /cors@2.8.5:
@@ -1779,6 +1785,7 @@ packages:
 
   /isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
+    requiresBuild: true
     dev: false
 
   /isexe@2.0.0:
@@ -2077,8 +2084,8 @@ packages:
       '@mongodb-js/saslprep': 1.1.0
     dev: false
 
-  /mongoose@7.6.0:
-    resolution: {integrity: sha512-ztQ12rm0BQN5i7LB6xhWX4l9a9w2aa3jEwa/mM2vAutYJRyAwOzcusvKJBULMzFHyUDBOVW15grisexypgMIWA==}
+  /mongoose@7.6.1:
+    resolution: {integrity: sha512-Iflr60FL7mabBdgAtumLTwEGdZGV6IKHfF7F75En2JWpPitorwQeCFqWPcPHRnBxncKANl3gwI9nh2Yb4y3/sA==}
     engines: {node: '>=14.20.1'}
     dependencies:
       bson: 5.5.0
@@ -2467,6 +2474,7 @@ packages:
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
+    requiresBuild: true
     dev: false
 
   /proto-list@1.2.4:
@@ -2864,6 +2872,7 @@ packages:
 
   /string_decoder@1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
+    requiresBuild: true
     dependencies:
       safe-buffer: 5.1.2
     dev: false
@@ -3025,6 +3034,10 @@ packages:
 
   /undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
+    dev: false
+
+  /undici-types@5.25.3:
+    resolution: {integrity: sha512-Ga1jfYwRn7+cP9v8auvEXN1rX3sWqlayd4HP7OKk4mZWylEmu3KzXDUGrQUN6Ol7qo1gPvB2e5gX6udnyEPgdA==}
     dev: false
 
   /universal-user-agent@6.0.0:
