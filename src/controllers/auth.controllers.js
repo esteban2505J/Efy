@@ -13,7 +13,7 @@ import { KEY_TOKEN } from "../config.js";
 import { sendEmail } from "../libs/nodemailer.js";
 import { upLoadImage } from "../libs/claudinary.js";
 import { render } from "@react-email/components";
-import { Welcome } from "../emails/template/Welcome.js";
+// import { Welcome } from "../emails/template/Welcome.js";
 import fs from "fs-extra";
 
 /*function for te procces of register*/
@@ -64,11 +64,11 @@ export const register = async (req, res) => {
     });
     const html = render(Welcome({ url: "", username: userSaved.fullName }));
 
-    await sendEmail({
-      email: userSaved.email,
-      subject: "¡Gracias por Registrarte en EFY - Essential For You!",
-      html,
-    });
+    // await sendEmail({
+    //   email: userSaved.email,
+    //   subject: "¡Gracias por Registrarte en EFY - Essential For You!",
+    //   html,
+    // });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

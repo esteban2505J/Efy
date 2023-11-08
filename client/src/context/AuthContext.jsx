@@ -35,20 +35,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-// const sendEmailBuy = async () => { 
-//   try {
-//     if (user && user.fullName && user.email) {
-//     // Llama a sendEmailBuy con user
-//       const info = await sendEmailBuy(user1);
-//       console.log("Mensaje enviado");
-//   } else {
-//     console.error("El objeto user no tiene la estructura esperada.");
-//   }
-//   } catch (error) {
-//     // return setErrors(error.response.data);
-//   }
-// };
-
+  // const sendEmailBuy = async () => {
+  //   try {
+  //     if (user && user.fullName && user.email) {
+  //     // Llama a sendEmailBuy con user
+  //       const info = await sendEmailBuy(user1);
+  //       console.log("Mensaje enviado");
+  //   } else {
+  //     console.error("El objeto user no tiene la estructura esperada.");
+  //   }
+  //   } catch (error) {
+  //     // return setErrors(error.response.data);
+  //   }
+  // };
 
   const sigIn = async (user) => {
     try {
@@ -83,9 +82,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function checkLogin() {
-      console.log("checkLogin se está ejecutando");
       const cookies = Cookies.get();
-      console.log(cookies);
       if (!cookies.token) {
         setIsAuthenticated(false);
         setUser(null);
@@ -131,7 +128,6 @@ export const AuthProvider = ({ children }) => {
         errors,
         loading,
         user,
-        // sendEmailBuy,
       }}
     >
       {children}

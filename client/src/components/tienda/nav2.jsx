@@ -20,11 +20,11 @@ import {
   TagUser,
   Scale,
 } from "./icons.jsx";
+import { userAuth } from "../../context/AuthContext.jsx";
+import { BiLogOut } from "react-icons/bi";
 import Login from "../auth/Login.jsx";
 import SignUp from "../auth/SignUp.jsx";
 import CartNav from "./CartNav.jsx";
-import { userAuth } from "../../context/AuthContext.jsx";
-import { BiLogOut } from "react-icons/bi";
 
 export default function App() {
   const { isAuthenticated, logOut, user } = userAuth();
@@ -129,8 +129,12 @@ export default function App() {
           <>
             <div className="flex">
               <span className="text-lg text-[#b25b76]">
-                <Link className="text-[#b25b76]" href="/profileuser" underline="hover">
-                  Welcome {user.fullName.split(' ')[0]}
+                <Link
+                  className="text-[#b25b76]"
+                  href="/profileuser"
+                  underline="hover"
+                >
+                  Welcome {user.fullName.split(" ")[0]}
                 </Link>
               </span>
             </div>

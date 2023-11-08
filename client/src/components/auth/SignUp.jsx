@@ -1,3 +1,4 @@
+// Imports
 import {
   Modal,
   ModalContent,
@@ -10,14 +11,11 @@ import {
   Link,
 } from "@nextui-org/react";
 import { Checkbox } from "@nextui-org/react";
-import { MailIcon } from "./MailIcon.jsx";
-import { LockIcon } from "./LockIcon.jsx";
-import { TbPhotoUp } from "react-icons/tb";
+import { MailIcon } from "./icon/MailIcon.jsx";
+import { LockIcon } from "./icon/LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { useState } from "react";
-
-import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -31,6 +29,7 @@ export default function SignUp() {
   const [Pasword2, setPasword2] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
 
+  // functions handle forms
   const handleProfilePictureChange = (e) => {
     const selectedFile = e.target.files[0];
     setProfilePicture(selectedFile);
@@ -63,12 +62,6 @@ export default function SignUp() {
         // Maneja los errores, si los hay
         console.error("Error al enviar el formulario:", error);
       }
-
-      <Modal isOpen={isOpen} onChange={onOpenChange}>
-        <ModalContent>
-          <ModalHeader> Error the passwords no match</ModalHeader>
-        </ModalContent>
-      </Modal>;
     } else {
       alert(`${errors}`);
     }
