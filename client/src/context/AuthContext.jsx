@@ -58,10 +58,10 @@ export const AuthProvider = ({ children }) => {
       console.log("Estado", isAuthenticated);
       setUser(res.data);
     } catch (error) {
-      if (Array.isArray(error.response.data)) {
-        return setErrors(error.response.data);
+      if (Array.isArray(error.response)) {
+        return setErrors(error.response);
       }
-      setErrors([error.response.data.message]);
+      setErrors([error.response]);
     }
   };
 

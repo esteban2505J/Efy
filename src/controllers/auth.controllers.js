@@ -34,7 +34,7 @@ export const register = async (req, res) => {
       password: passwordHash,
       fullName,
     });
-    console.log(req.files.profilePicture);
+    console.log(req.files);
     if (req.files?.profilePicture) {
       const result = await upLoadImage(req.files.profilePicture.tempFilePath);
       newUser.profilePicture = {
@@ -62,7 +62,7 @@ export const register = async (req, res) => {
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
-    const html = render(Welcome({ url: "", username: userSaved.fullName }));
+    // const html = render(Welcome({ url: "", username: userSaved.fullName }));
 
     // await sendEmail({
     //   email: userSaved.email,

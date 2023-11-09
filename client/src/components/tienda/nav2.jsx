@@ -25,6 +25,7 @@ import { BiLogOut } from "react-icons/bi";
 import Login from "../auth/Login.jsx";
 import SignUp from "../auth/SignUp.jsx";
 import CartNav from "./CartNav.jsx";
+import Avatar from "./AvatarComp.jsx";
 
 export default function App() {
   const { isAuthenticated, logOut, user } = userAuth();
@@ -113,7 +114,12 @@ export default function App() {
           </DropdownMenu>
         </Dropdown>
         <NavbarItem isActive>
-          <Link href="/blog" aria-current="page" underline="hover">
+          <Link
+            href="/blog"
+            aria-current="page"
+            underline="hover"
+            className="text-black"
+          >
             Blog
           </Link>
         </NavbarItem>
@@ -127,28 +133,8 @@ export default function App() {
         {isAuthenticated ? (
           // Usuario autenticado
           <>
-            <div className="flex">
-              <span className="text-lg text-[#b25b76]">
-                <Link
-                  className="text-[#b25b76]"
-                  href="/profileuser"
-                  underline="hover"
-                >
-                  Welcome {user.fullName.split(" ")[0]}
-                </Link>
-              </span>
-            </div>
             <NavbarItem>
-              <Link
-                className="text-4xl"
-                to={"/"}
-                onClick={() => {
-                  logOut();
-                }}
-              >
-                {/* Icono de cierre de sesión */}
-                <BiLogOut className="bg-red-500 rounded-md p-2 text-white" />
-              </Link>
+              <Avatar></Avatar>
             </NavbarItem>
             <NavbarItem>
               <Link color="foreground" href="/shoppingcart">
