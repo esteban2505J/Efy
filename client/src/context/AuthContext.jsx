@@ -28,13 +28,17 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       const res = await registerRequest(user);
       setLoading(false);
-      if (!res) setLoading(false);
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       setLoading(false);
-      setErrors(error.response.data);
+      setIsAuthenticated(false);
+      if (Array.isArray(error.response.data)) {
+        console.log(error);
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data]);
     }
   };
 
@@ -55,17 +59,21 @@ export const AuthProvider = ({ children }) => {
   const sigIn = async (user) => {
     try {
       setLoading(true);
+      console.log(user);
       const res = await loginRequest(user);
-      console.log(res);
+      console.log(res.headers);
+      console.log(user);
       setLoading(false);
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
-      if (Array.isArray(error.response)) {
-        setLoading(false);
-        return setErrors(error.response);
+      setLoading(false);
+      setIsAuthenticated(false);
+      if (Array.isArray(error.response.data)) {
+        console.log(error);
+        return setErrors(error.response.data);
       }
-      setErrors([error.response]);
+      setErrors([error.response.data]);
     }
   };
 
@@ -80,7 +88,7 @@ export const AuthProvider = ({ children }) => {
       const timer = setTimeout(() => {
         setErrors([]);
       }, 5000);
-      return clearTimeout(timer);
+      return () => clearTimeout(timer); // Usa clearTimeout aquí
     }
   }, [errors]);
 

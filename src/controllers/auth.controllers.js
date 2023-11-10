@@ -15,6 +15,7 @@ import { upLoadImage } from "../libs/claudinary.js";
 import { render } from "@react-email/components";
 // import { Welcome } from "../emails/template/Welcome.js";
 import fs from "fs-extra";
+import { response } from "express";
 
 /*function for te procces of register*/
 export const register = async (req, res) => {
@@ -82,9 +83,12 @@ export const login = async (req, res) => {
   try {
     // found user
     const userFound = await User.findOne({ email });
-    console.log("this is a", userFound);
+    // console.log("this is a", userFound);
 
-    if (!userFound) return res.status(400).json({ message: "User no found" });
+    if (!userFound) {
+      return res.status(400).json({ message: "User no found" });
+      console.log(res);
+    }
 
     const isMatch = await bcrypt.compare(password, userFound.password);
     if (!isMatch)

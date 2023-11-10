@@ -29,16 +29,12 @@ export default function Login() {
 
   const onSubmit = handleSubmit(async (values) => {
     sigIn(values);
-    onOpenChange(false);
-    console.log(
-      "Renderizando Login component. isAuthenticated:",
-      isAuthenticated
-    );
+    // onOpenChange(false);
   });
 
   return (
     <>
-      {loading && <Loading loading={loading} />}
+      {/* {loading && <Loading loading={loading} />} */}
       <Button onPress={onOpen} className="bg-orange-200" variant="shadow">
         Login
       </Button>
@@ -55,13 +51,13 @@ export default function Login() {
               <ModalHeader className="flex flex-col gap-1">
                 Log in
                 <div>
-                  {/* {loginErrors.map((error, index) => {
+                  {loginErrors.map((error, index) => {
                     return (
                       <div className="text-red-600" key={index}>
-                        {error}
+                        {JSON.stringify(error.message)}
                       </div>
                     );
-                  })} */}
+                  })}
                 </div>
               </ModalHeader>
               <ModalBody>

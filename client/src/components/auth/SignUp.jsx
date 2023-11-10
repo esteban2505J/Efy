@@ -26,7 +26,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { sigUp, errors: registerError, loading } = userAuth();
+  const { sigUp, errors: registerErrors, loading } = userAuth();
 
   const [Pasword, setPasword] = useState("");
   const [Pasword2, setPasword2] = useState("");
@@ -37,37 +37,26 @@ export default function SignUp() {
     const selectedFile = e.target.files[0];
     setProfilePicture(selectedFile);
   };
-  const verfyMatchPassword = () => {
-    Pasword === Pasword2 ? true : false;
-  };
+  const verfyMatchPassword = Pasword === Pasword2;
   /**
    * method to control the sending of the registration request
    */
   const onSubmit = handleSubmit(async (values) => {
-    // Crea una instancia de FormData
-    onOpenChange();
     const formData = new FormData();
 
     if (verfyMatchPassword) {
-      sigUp(values);
-
-      // Agrega los campos del formulario al formData
       formData.append("fullName", values.fullName);
       formData.append("email", values.email);
       formData.append("password", values.password);
-      formData.append("profilePicture", profilePicture); // Asegúrate de usar la clave correcta aquí
+      formData.append("profilePicture", profilePicture);
 
-      // Envía los datos al backend utilizando Axios
       try {
-        const response = await sigUp(formData);
-        // Maneja la respuesta del backend aquí, si es necesario
-        console.log(response);
+        await sigUp(formData);
       } catch (error) {
-        // Maneja los errores, si los hay
         console.error("Error al enviar el formulario:", error);
       }
     } else {
-      alert(`${errors}`);
+      alert("Passwords do not match");
     }
   });
 
@@ -87,8 +76,20 @@ export default function SignUp() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Sign Up
+                <div>
+                  {registerErrors.map((error, index) => (
+                    <div className="text-red-600" key={index}>
+                      {error.message || "An error occurred."}
+                    </div>
+                  ))}
+                </div>
+              </ModalHeader>
               <ModalBody>
+                {errors.fullName && (
+                  <p className=" text-red-500">Full name is required</p>
+                )}
                 <Input
                   {...register("fullName", { required: true })}
                   autoFocus
@@ -99,6 +100,9 @@ export default function SignUp() {
                   placeholder="Enter your full Name"
                   variant="bordered"
                 />
+                {errors.email && (
+                  <p className=" text-red-500">E-mail is required</p>
+                )}
                 <Input
                   {...register("email", { required: true })}
                   autoFocus
@@ -109,6 +113,9 @@ export default function SignUp() {
                   placeholder="Enter your email"
                   variant="bordered"
                 />
+                {errors.password && (
+                  <p className=" text-red-500">Password is required</p>
+                )}
                 <Input
                   {...register("password", { required: true })}
                   endContent={
@@ -122,6 +129,9 @@ export default function SignUp() {
                   type="password"
                   variant="bordered"
                 />
+                {Pasword2 === null && (
+                  <p className=" text-red-500">E-mail is required</p>
+                )}
                 <Input
                   onChange={(e) => {
                     setPasword2(e.target.value);
@@ -135,6 +145,9 @@ export default function SignUp() {
                   variant="bordered"
                 />
                 <label>Profile Picture</label>
+                {errors.profilePicture && (
+                  <p className=" text-red-500"> Profile picture is required</p>
+                )}
                 <input
                   {...register("profilePicture", { required: true })}
                   type="file"
