@@ -15,12 +15,12 @@ import { MailIcon } from "./icon/MailIcon.jsx";
 import { LockIcon } from "./icon/LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext.jsx";
+
+import Loading from "../tienda/Loader.jsx";
 
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { sigIn, isAuthenticated, errors: registerError } = userAuth();
+  const { sigIn, isAuthenticated, errors: loginErrors, loading } = userAuth();
   const {
     register,
     handleSubmit,
@@ -38,6 +38,7 @@ export default function Login() {
 
   return (
     <>
+      {loading && <Loading loading={loading} />}
       <Button onPress={onOpen} className="bg-orange-200" variant="shadow">
         Login
       </Button>
@@ -51,8 +52,22 @@ export default function Login() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Log in
+                <div>
+                  {/* {loginErrors.map((error, index) => {
+                    return (
+                      <div className="text-red-600" key={index}>
+                        {error}
+                      </div>
+                    );
+                  })} */}
+                </div>
+              </ModalHeader>
               <ModalBody>
+                {errors.email && (
+                  <p className=" text-red-500">E-mail is required</p>
+                )}
                 <Input
                   {...register("email", { required: true })}
                   autoFocus
@@ -63,7 +78,9 @@ export default function Login() {
                   placeholder="Enter your email"
                   variant="bordered"
                 />
-
+                {errors.password && (
+                  <p className=" text-red-500">Password is required</p>
+                )}
                 <Input
                   {...register("password", { required: true })}
                   endContent={

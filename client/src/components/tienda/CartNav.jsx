@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "@nextui-org/react";
-import { CartIcon } from "./CartIcon";
+import { CartIcon } from "./icon/CartIcon";
 
 export default function CartNav() {
   const [isInvisible, setIsInvisible] = React.useState(false);

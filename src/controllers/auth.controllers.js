@@ -35,7 +35,7 @@ export const register = async (req, res) => {
       fullName,
     });
     console.log(req.files);
-    if (req.files?.profilePicture) {
+    if (req.files.profilePicture) {
       const result = await upLoadImage(req.files.profilePicture.tempFilePath);
       newUser.profilePicture = {
         publicId: result.public_id,
@@ -58,7 +58,7 @@ export const register = async (req, res) => {
       id: userSaved._id,
       fullName: userSaved.fullName,
       email: userSaved.email,
-      profilePicture: userSaved.profilePicture,
+      profilePicture: userSaved.profilePicture.secureUrl,
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
@@ -97,17 +97,13 @@ export const login = async (req, res) => {
     res.cookie("token", token);
 
     res.json({
-      ...userFound,
       id: userFound._id,
+      fullName: userFound.fullName,
+      email: userFound.email,
+      profilePicture: userFound.profilePicture.secureUrl,
+      createAt: userFound.createdAt,
+      updateAt: userFound.updatedAt,
     });
-    // res.json({
-    //   id: userFound._id,
-    //   fullName: userFound.fullName,
-    //   email: userFound.email,
-    //   profilePicture: userFound.profilePicture,
-    //   createAt: userFound.createdAt,
-    //   updateAt: userFound.updatedAt,
-    // });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -148,6 +144,7 @@ export const verifyToken = async (req, res) => {
       id: userFound._id,
       fullName: userFound.fullName,
       email: userFound.email,
+      profilePicture: userFound.profilePicture.secureUrl,
     });
   });
 };

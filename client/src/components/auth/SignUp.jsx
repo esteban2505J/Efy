@@ -9,13 +9,15 @@ import {
   useDisclosure,
   Input,
   Link,
+  Checkbox,
 } from "@nextui-org/react";
-import { Checkbox } from "@nextui-org/react";
+
 import { MailIcon } from "./icon/MailIcon.jsx";
 import { LockIcon } from "./icon/LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { useState } from "react";
+import Loading from "../tienda/Loader.jsx";
 // import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,7 +26,8 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { sigUp, errors: registerError } = userAuth();
+  const { sigUp, errors: registerError, loading } = userAuth();
+
   const [Pasword, setPasword] = useState("");
   const [Pasword2, setPasword2] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
@@ -42,6 +45,7 @@ export default function SignUp() {
    */
   const onSubmit = handleSubmit(async (values) => {
     // Crea una instancia de FormData
+    onOpenChange();
     const formData = new FormData();
 
     if (verfyMatchPassword) {
@@ -69,9 +73,11 @@ export default function SignUp() {
 
   return (
     <>
+      {loading && <Loading loading={loading} />}
       <Button onPress={onOpen} color="primary">
         Sign Up
       </Button>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}

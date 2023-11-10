@@ -19,7 +19,7 @@ import {
   Server,
   TagUser,
   Scale,
-} from "./icons.jsx";
+} from "./icon/icons.jsx";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { BiLogOut } from "react-icons/bi";
 import Login from "../auth/Login.jsx";

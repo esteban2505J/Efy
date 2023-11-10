@@ -5,6 +5,7 @@ import {
   verifyTokenRequest,
 } from "../api/auth.js";
 import Cookies from "js-cookie";
+import { Button } from "@nextui-org/react";
 
 export const AuthContext = createContext();
 
@@ -24,13 +25,15 @@ export const AuthProvider = ({ children }) => {
 
   const sigUp = async (user) => {
     try {
-      console.log(user);
+      setLoading(true);
       const res = await registerRequest(user);
-      console.log(res.data);
+      setLoading(false);
+      if (!res) setLoading(false);
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
       console.log(error.response);
+      setLoading(false);
       setErrors(error.response.data);
     }
   };
@@ -51,14 +54,15 @@ export const AuthProvider = ({ children }) => {
 
   const sigIn = async (user) => {
     try {
+      setLoading(true);
       const res = await loginRequest(user);
       console.log(res);
-      console.log("Antes de ejecutar");
+      setLoading(false);
       setIsAuthenticated(true);
-      console.log("Estado", isAuthenticated);
       setUser(res.data);
     } catch (error) {
       if (Array.isArray(error.response)) {
+        setLoading(false);
         return setErrors(error.response);
       }
       setErrors([error.response]);
@@ -99,14 +103,12 @@ export const AuthProvider = ({ children }) => {
             console.log("no hay nada");
             return;
           }
+
           console.log(res.data);
 
           setIsAuthenticated(true);
           setUser(res.data);
           setLoading(false);
-          console.log("Verificar token", isAuthenticated);
-          console.log("Verificar usuario", user);
-          console.log("Verificar loading", loading);
         } catch (error) {
           setIsAuthenticated(false);
           setUser(null);
