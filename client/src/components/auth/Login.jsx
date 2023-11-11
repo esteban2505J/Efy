@@ -56,15 +56,9 @@ export default function Login() {
                 Log in
                 <div>
                   {loginErrors &&
-                    (Array.isArray(loginErrors) ? (
-                      loginErrors.map((error, index) => (
-                        <div className="text-red-600" key={index}>
-                          {JSON.stringify(error.message)}
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-red-600">
-                        {JSON.stringify(loginErrors.message)}
+                    Object.values(loginErrors).map((error, index) => (
+                      <div className="text-red-600" key={index}>
+                        {error}
                       </div>
                     ))}
                 </div>

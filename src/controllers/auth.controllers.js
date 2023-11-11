@@ -78,8 +78,8 @@ export const register = async (req, res) => {
           background: #ffc349;
         }
         .logo {
-          width: 21px;
-          height: 21px;
+          width: 41px;
+          height: 41px;
           
         }
         .button {
@@ -87,12 +87,13 @@ export const register = async (req, res) => {
           padding: 10px;
           margin-top: 10px;
           text-decoration: none;
-          color: #fff;
-          background-color: #38a169;
+          color: #fffaf2;
+          background-color: #061615;
           border-radius: 5px;
+          margin: 10px
         }
         .button:hover {
-          background-color: #2f855a;
+          background-color: #00261d;
         }
       </style>
     </head>
@@ -144,11 +145,10 @@ export const login = async (req, res) => {
     const userFound = await User.findOne({ email });
     // console.log("this is a", userFound);
 
-    if (!userFound) return res.status(400).json({ message: "User no found" });
+    if (!userFound) return res.status(400).json(["User not found"]);
 
     const isMatch = await bcrypt.compare(password, userFound.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Inconrrect password" });
+    if (!isMatch) return res.status(400).json(["Incorrect password or email"]);
 
     // creating a json web token
     const token = await createAccesToken({ id: userFound._id });
