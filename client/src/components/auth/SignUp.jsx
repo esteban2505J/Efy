@@ -82,6 +82,7 @@ export default function SignUp() {
                   {registerErrors.map((error, index) => (
                     <div className="text-red-600" key={index}>
                       {error.message || "An error occurred."}
+                      console.log(error)
                     </div>
                   ))}
                 </div>

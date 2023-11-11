@@ -10,12 +10,11 @@ import { createAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
-import { sendEmail } from "../libs/nodemailer.js";
+import { transporter } from "../libs/nodemailer.js";
 import { upLoadImage } from "../libs/claudinary.js";
-import { render } from "@react-email/components";
-// import { Welcome } from "../emails/template/Welcome.js";
+
 import fs from "fs-extra";
-import { response } from "express";
+// import { response } from "express";
 
 /*function for te procces of register*/
 export const register = async (req, res) => {
@@ -44,6 +43,7 @@ export const register = async (req, res) => {
       };
 
       await fs.unlink(req.files.profilePicture.tempFilePath);
+
       console.log(result);
     }
     // saved the user create
@@ -55,6 +55,72 @@ export const register = async (req, res) => {
     // response with cookie created
     res.cookie("token", token);
 
+    const htmlContent = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Bienvenido a Efy</title>
+      <style>
+        /* Agrega estilos CSS según sea necesario */
+        body {
+          font-family: Arial, sans-serif;
+        }
+        .container {
+          padding: 5px;
+          margin-bottom: 5px;
+        }
+        .section {
+          text-align: center;
+          max-width: 600px;
+          margin: 0 auto;
+          background: #ffc349;
+        }
+        .logo {
+          width: 21px;
+          height: 21px;
+          
+        }
+        .button {
+          display: inline-block;
+          padding: 10px;
+          margin-top: 10px;
+          text-decoration: none;
+          color: #fff;
+          background-color: #38a169;
+          border-radius: 5px;
+        }
+        .button:hover {
+          background-color: #2f855a;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="section">
+          <img class="logo" src="https://res.cloudinary.com/dapsakqbt/image/upload/v1699647385/logo_zqnph0.png">
+          <hr>
+          <p class="font-bold">
+            Gracias ${userSaved.fullName} por registrarte en nuestra tienda, ahora puedes comprar y disfrutar de nuestros productos.
+          </p>
+          <a class="button" href="http://localhost:5173/">Click para entrar a la tienda</a>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+
+    const mailOptions = {
+      from: "juane.ramirezt@uqvirtual.edu.co",
+      to: `${userSaved.email}`,
+      subject: "Bienvenida",
+      html: htmlContent,
+    };
+
+    // Enviar el correo electrónico de confirmación
+    await transporter.sendMail(mailOptions);
+
     res.json({
       id: userSaved._id,
       fullName: userSaved.fullName,
@@ -63,13 +129,6 @@ export const register = async (req, res) => {
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
-    // const html = render(Welcome({ url: "", username: userSaved.fullName }));
-
-    // await sendEmail({
-    //   email: userSaved.email,
-    //   subject: "¡Gracias por Registrarte en EFY - Essential For You!",
-    //   html,
-    // });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
