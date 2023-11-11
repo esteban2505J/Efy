@@ -63,7 +63,11 @@ export default function SignUp() {
   return (
     <>
       {loading && <Loading loading={loading} />}
-      <Button onPress={onOpen} color="primary">
+      <Button
+        onPress={onOpen}
+        color="primary"
+        className={`${loading ? "invisible" : ""}`}
+      >
         Sign Up
       </Button>
 
@@ -79,12 +83,12 @@ export default function SignUp() {
               <ModalHeader className="flex flex-col gap-1">
                 Sign Up
                 <div>
-                  {registerErrors.map((error, index) => (
-                    <div className="text-red-600" key={index}>
-                      {error.message || "An error occurred."}
-                      console.log(error)
-                    </div>
-                  ))}
+                  {registerErrors &&
+                    Object.values(registerErrors).map((error, index) => (
+                      <div className="text-red-600" key={index}>
+                        {error}
+                      </div>
+                    ))}
                 </div>
               </ModalHeader>
               <ModalBody>
@@ -175,9 +179,14 @@ export default function SignUp() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onSubmit}>
-                  Sign in
-                </Button>
+
+                {loading ? (
+                  <Loading loading={loading} />
+                ) : (
+                  <Button color="primary" onPress={onSubmit}>
+                    Sign in
+                  </Button>
+                )}
               </ModalFooter>
             </>
           )}
