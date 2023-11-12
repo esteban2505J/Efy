@@ -76,6 +76,10 @@ export const AuthProvider = ({ children }) => {
     setUser("");
   };
 
+  // const sendPay = async (some) => {
+
+  // };
+
   useEffect(() => {
     if (errors.length >= 1) {
       const timer = setTimeout(() => {
