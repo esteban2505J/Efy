@@ -23,29 +23,53 @@ export const CartProvider = ({ children }) => {
 
       if (existingItemIndex === -1) {
         // Si el artículo no existe, agrégalo con una cantidad de 1
-        return [...prevCart, { ...item, quantity: 1 }];
+        const updatedCart = [...prevCart, { ...item, quantity: 1 }];
+
+        localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+        return updatedCart; // Cambiado a 'updatedCart' en lugar de 'cart'
       } else {
         // Si el artículo ya existe, actualiza su cantidad
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex].quantity =
           updatedCart[existingItemIndex].quantity + 1;
-        return updatedCart;
+
+        localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+        return updatedCart; // Cambiado a 'updatedCart' en lugar de 'cart'
       }
     });
-
-    // Mueve el localStorage.setItem fuera del callback de setShoppingCart
-    // para que use el estado de shoppingCart actualizado.
-    localStorage.setItem(
-      "shoppingCart",
-      JSON.stringify([...shoppingCart, item])
-    );
-    console.log(shoppingCart);
   };
 
-  const deleteItem = (item) => {
-    const { id } = item;
-    const updatedCart = shoppingCart.filter((cartItem) => cartItem.id !== id);
-    setShoppingCart(updatedCart);
+  // Función para calcular el total del carrito
+  const calculateTotal = (cart) => {
+    let valorTotal = 0;
+    cart.forEach((item) => {
+      const precioSinFormato = parseInt(item.price.replace(/[$.]/g, ""), 10);
+      valorTotal += precioSinFormato * item.quantity;
+    });
+    return valorTotal.toFixed(2);
+  };
+  const deleteItem = async (item) => {
+    const { title, quantity } = item;
+
+    if (quantity > 1) {
+      // Si la cantidad es mayor que 1, disminuye la cantidad en 1
+      const updatedCart = shoppingCart.map((cartItem) =>
+        cartItem.title === title
+          ? { ...cartItem, quantity: cartItem.quantity - 1 }
+          : cartItem
+      );
+
+      setShoppingCart(updatedCart);
+      localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+    } else {
+      // Si la cantidad es 1, elimina el artículo del carrito
+      const updatedCart = shoppingCart.filter(
+        (cartItem) => cartItem.title !== title
+      );
+
+      setShoppingCart(updatedCart);
+      localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+    }
   };
 
   return (
@@ -55,6 +79,7 @@ export const CartProvider = ({ children }) => {
         setShoppingCart,
         addItem,
         deleteItem,
+        calculateTotal,
       }}
     >
       {children}
