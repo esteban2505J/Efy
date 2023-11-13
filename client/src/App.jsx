@@ -12,27 +12,30 @@ import ShoppingCart from "./Pages/ShoppingCart";
 import { AuthProvider } from "./context/AuthContext";
 import ProfileUser from "./Pages/ProfileUser";
 import ForgotPassword from "./Pages/ForgotPassword";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <main>
-            <Nav2 />
-            <Routes>
-              <Route path="/" element={<Products />} />
-              <Route path="/product" element={<Products />} />
-              <Route path="/product/:id" element={<DetailProduct />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/shoppingcart" element={<ShoppingCart />} />
-              <Route path="/profileUser" element={<ProfileUser />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-            </Routes>
-          </main>
-        </BrowserRouter>
-      </AuthProvider>
+      <CartProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <main>
+              <Nav2 />
+              <Routes>
+                <Route path="/" element={<Products />} />
+                <Route path="/product" element={<Products />} />
+                <Route path="/product/:id" element={<DetailProduct />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/shoppingcart" element={<ShoppingCart />} />
+                <Route path="/profileUser" element={<ProfileUser />} />
+                <Route path="/forgotpassword" element={<ForgotPassword />} />
+              </Routes>
+            </main>
+          </BrowserRouter>
+        </AuthProvider>
+      </CartProvider>
     </>
   );
 }
