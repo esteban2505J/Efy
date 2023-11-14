@@ -14,6 +14,8 @@ import { BiLogOut } from "react-icons/bi";
 
 export default function AvatarComp() {
   const { user, logOut } = userAuth();
+  const firstName = user.fullName.split(" ")[0]; // Obtener el primer nombre
+  const emailResumed = user.email.split("@")[0]; // Obtener los primeros 5 caracteres
 
   return (
     <Dropdown placement="bottom-start">
@@ -27,8 +29,8 @@ export default function AvatarComp() {
           <User
             as="button"
             className="transition-transform"
-            description={user.email}
-            name={user.fullName}
+            description={emailResumed}
+            name={firstName}
           />
         </div>
       </DropdownTrigger>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -11,15 +11,7 @@ import {
   Dropdown,
   DropdownMenu,
 } from "@nextui-org/react";
-import {
-  ChevronDown,
-  Lock,
-  Activity,
-  Flash,
-  Server,
-  TagUser,
-  Scale,
-} from "./icon/icons.jsx";
+import { ChevronDown, TagUser } from "./icon/icons.jsx";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { BiLogOut } from "react-icons/bi";
 import Login from "../auth/Login.jsx";
@@ -28,137 +20,165 @@ import CartNav from "./CartNav.jsx";
 import Avatar from "./AvatarComp.jsx";
 
 export default function App() {
-  const { isAuthenticated, logOut, user } = userAuth();
+  const { isAuthenticated, user } = userAuth();
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
-  // Iconos para el menú desplegable de categorías
-  const icons = {
-    chevron: <ChevronDown fill="currentColor" size={16} />,
-    scale: <Scale className="text-warning" fill="currentColor" size={30} />,
-    lock: <Lock className="text-success" fill="currentColor" size={30} />,
-    activity: (
-      <Activity className="text-secondary" fill="currentColor" size={30} />
-    ),
-    flash: <Flash className="text-primary" fill="currentColor" size={30} />,
-    server: <Server className="text-success" fill="currentColor" size={30} />,
-    user: <TagUser className="text-danger" fill="currentColor" size={30} />,
+  const handleLoginClick = () => {
+    setShowLogin(!showLogin);
+    setShowSignUp(false);
   };
 
+  const handleSignUpClick = () => {
+    setShowSignUp(!showSignUp);
+    setShowLogin(false);
+  };
+
+  const handleButtonClick = () => {
+    setShowLogin(!showLogin);
+    setShowSignUp(!showSignUp);
+    console.log("fun");
+  };
+
+  const handleScroll = () => {
+    setScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const isScrolled = scrollY > 0;
+
   return (
-    <Navbar>
-      <NavbarBrand>
-        <div>
-          <img
-            src="src/assets/images/logo.png"
-            alt="Efy"
-            className="text"
-            width={60}
-          />
-        </div>
-        <Link className="font-bold text-inherit text-3xl text-[#000]" href="/">
-          Efy
-        </Link>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {/* Menú desplegable de categorías */}
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-                endContent={icons.chevron}
-                radius="sm"
-                variant="light"
-              >
-                Categories
-              </Button>
-            </DropdownTrigger>
-          </NavbarItem>
-          <DropdownMenu
-            aria-label="ACME features"
-            className="w-[340px]"
-            itemClasses={{
-              base: "gap-4",
-            }}
-          >
-            <DropdownItem
-              key="Mens"
-              description="Discover our collection of perfumes for men. Fresh aromas for the day and seductive fragrances for the night. Find your signature of elegance."
-              startContent={icons.scale}
-            >
-              For men
-            </DropdownItem>
-            <DropdownItem
-              key="For womens"
-              description="Explore our collection of perfumes for women. From floral and fresh fragrances for the day to seductive and elegant aromas for the night. Find your unique essence and enhance your femininity with our exquisite perfumes."
-              startContent={icons.activity}
-            >
-              For womens
-            </DropdownItem>
-            <DropdownItem
-              key="For pets"
-              description="
-              Explore our line of pet fragrances. Fresh, mild scents to keep your furry companion smelling lovely. Give your pet a special touch of freshness."
-              startContent={icons.flash}
-            >
-              For pets
-            </DropdownItem>
-            <DropdownItem
-              key="Brands"
-              description="
-              Discover the best perfume brands. Quality and elegance in each bottle. Find your olfactory signature her."
-              startContent={icons.server}
-            >
-              Brands
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        <NavbarItem isActive>
+    <>
+      <Navbar>
+        <NavbarBrand>
+          <div>
+            <img
+              src="src/assets/images/logo.png"
+              alt="Efy"
+              className="text"
+              width={60}
+            />
+          </div>
           <Link
-            href="/blog"
-            aria-current="page"
-            underline="hover"
-            className="text-black"
+            className="font-bold text-inherit text-3xl text-[#000]"
+            href="/"
           >
-            Blog
+            Efy
           </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link className="text-[#e38d15]" href="/aboutus" underline="hover">
-            About us
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end" className="my-5">
-        {isAuthenticated ? (
-          // Usuario autenticado
-          <>
+        </NavbarBrand>
+
+        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+          {/* Menú desplegable de categorías */}
+          <Dropdown className="hidden md:flex">
             <NavbarItem>
-              <Avatar></Avatar>
+              <DropdownTrigger>
+                <Button
+                  disableRipple
+                  className="p-0 bg-transparent :bg-transparent"
+                  endContent={<ChevronDown fill="currentColor" size={16} />}
+                  radius="sm"
+                  variant="light"
+                >
+                  Categories
+                </Button>
+              </DropdownTrigger>
             </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="/shoppingcart">
-                <CartNav />
-              </Link>
-            </NavbarItem>
-          </>
-        ) : (
-          // Usuario no autenticado
-          <>
-            <NavbarItem className="hidden lg:flex">
-              <Login />
-            </NavbarItem>
-            <NavbarItem>
-              <SignUp />
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="/shoppingcart">
-                <CartNav />
-              </Link>
-            </NavbarItem>
-          </>
+            <DropdownMenu
+              aria-label="ACME features"
+              className="w-[340px]"
+              itemClasses={{
+                base: "gap-4",
+              }}
+            >
+              {/* Opciones del menú desplegable */}
+            </DropdownMenu>
+          </Dropdown>
+
+          <NavbarItem isActive className="hidden md:flex">
+            <Link
+              href="/blog"
+              aria-current="page"
+              underline="hover"
+              className="text-black"
+            >
+              Blog
+            </Link>
+          </NavbarItem>
+
+          <NavbarItem>
+            <Link className="text-[#e38d15]" href="/aboutus" underline="hover">
+              About us
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
+
+        <NavbarContent className="my-5">
+          {isAuthenticated ? (
+            <>
+              <NavbarItem>
+                <Avatar />
+              </NavbarItem>
+              <NavbarItem>
+                <Link color="foreground" href="/shoppingcart">
+                  <CartNav />
+                </Link>
+              </NavbarItem>
+            </>
+          ) : (
+            <>
+              <NavbarItem className="hidden lg:flex">
+                <Login />
+              </NavbarItem>
+              <NavbarItem className="hidden lg:flex">
+                <SignUp />
+              </NavbarItem>
+              <NavbarItem>
+                <Link color="foreground" href="/shoppingcart">
+                  <CartNav />
+                </Link>
+              </NavbarItem>
+            </>
+          )}
+
+          <Button
+            onClick={handleButtonClick}
+            variant="light"
+            radius="sm"
+            className={`md:hidden ${
+              isScrolled ? "bg-white md:hidden shadow-md" : ""
+            }`}
+          >
+            {isAuthenticated ? <BiLogOut /> : <TagUser />}
+          </Button>
+        </NavbarContent>
+      </Navbar>
+
+      <div className="flex z-50 justify-evenly md:hidden mt-3">
+        {/* Botones de inicio de sesión y registro */}
+        {!isAuthenticated && showLogin === true && (
+          <Login
+            className={`fixed top-16 right-4 z-50 md:hidden ${
+              isScrolled ? "bg-white shadow-md" : ""
+            }`}
+            onClose={() => setShowLogin(false)}
+          />
         )}
-      </NavbarContent>
-    </Navbar>
+        {!isAuthenticated && showSignUp && (
+          <SignUp
+            className={`fixed top-16 right-2 md:hidden ${
+              isScrolled ? "bg-white shadow-md" : ""
+            }`}
+            onClose={() => setShowSignUp(false)}
+          />
+        )}
+      </div>
+    </>
   );
 }
