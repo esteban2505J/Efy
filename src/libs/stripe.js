@@ -1,5 +1,6 @@
 // Importar el módulo 'stripe'
 import Stripe from "stripe";
+import User from "../models/user.model.js";
 const key =
   "sk_test_51OBOwoFXqJV00ZOvSpxYdYAl5rIMDnnK8ttOXfhMvBurFnHGv45oqDMEdoexS3q3YcYER1GThw4Mr5PZ7IID5f0S00KEkItA6u";
 // Crear una instancia de Stripe con tu clave secreta
@@ -9,10 +10,10 @@ import { transporter } from "../libs/nodemailer.js";
 // Definir la ruta para manejar el pago
 
 export const payStripe = async (req, res) => {
-  const { shoppingCart, user } = req.body;
+  const { shoppingCart, user, shippingAddress } = req.body;
 
   // Crear una sesión de pago con la API de Stripe
-  console.log(user);
+
   try {
     const line_items = shoppingCart.map((item) => {
       return {
@@ -36,8 +37,21 @@ export const payStripe = async (req, res) => {
       success_url: "http://localhost:5173/succes",
       cancel_url: "http://localhost:5173/shoppingcart",
     });
-    console.log(session);
 
+    try {
+      const userfound = await User.findOne({ email: user.email });
+      const shooppingList = {
+        buyId: session.id,
+        shippingAddress,
+        productlList: { shoppingCart },
+        estate: "in preparation",
+      };
+
+      userfound.shoppingList = shooppingList;
+
+      await userfound.save();
+      console.log(userfound);
+    } catch (error) {}
     const htmlContent = `<!DOCTYPE html>
       <html lang="en">
       <head>

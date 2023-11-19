@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema(
       publicId: String,
       secureUrl: String,
     },
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-    shoppingList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    favorites: [],
+    shoppingList: [],
     tempPassword: String,
   },
   {

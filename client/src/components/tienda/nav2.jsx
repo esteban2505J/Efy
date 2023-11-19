@@ -144,19 +144,19 @@ export default function App() {
                   <CartNav />
                 </Link>
               </NavbarItem>
+
+              <Button
+                onClick={handleButtonClick}
+                variant="light"
+                radius="sm"
+                className={`md:hidden ${
+                  isScrolled ? "bg-white md:hidden shadow-md" : ""
+                }`}
+              >
+                <TagUser></TagUser>
+              </Button>
             </>
           )}
-
-          <Button
-            onClick={handleButtonClick}
-            variant="light"
-            radius="sm"
-            className={`md:hidden ${
-              isScrolled ? "bg-white md:hidden shadow-md" : ""
-            }`}
-          >
-            {isAuthenticated ? <BiLogOut /> : <TagUser />}
-          </Button>
         </NavbarContent>
       </Navbar>
 

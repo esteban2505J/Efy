@@ -38,7 +38,11 @@ const CheckOutForm = () => {
       // Realiza la solicitud de pago al backend
       console.log(shoppingCart);
 
-      const response = await axios.post("/pay", { shoppingCart, user });
+      const response = await axios.post("/pay", {
+        shoppingCart,
+        user,
+        shippingAddress,
+      });
 
       console.log(response.data);
       console.log("--------");
