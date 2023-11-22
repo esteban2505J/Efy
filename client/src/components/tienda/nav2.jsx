@@ -113,8 +113,12 @@ export default function App() {
           </NavbarItem>
 
           <NavbarItem>
-            <Link className="text-[#e38d15]" href="/aboutus" underline="hover">
-              About us
+            <Link
+              className="text-[#e38d15]"
+              href="/favorites"
+              underline="hover"
+            >
+              Favorites
             </Link>
           </NavbarItem>
         </NavbarContent>

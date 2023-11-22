@@ -48,7 +48,8 @@ const CheckOutForm = () => {
       console.log("--------");
 
       // Obtiene la sessionId desde la respuesta
-      const { sessionId } = response.data;
+      const { sessionId, userF } = response.data;
+      console.log(userF);
 
       // Redirige al usuario a la página de pago de Stripe
       const { error: stripeError } = await stripe.redirectToCheckout({

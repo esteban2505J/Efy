@@ -47,7 +47,7 @@ export const payStripe = async (req, res) => {
         estate: "in preparation",
       };
 
-      userfound.shoppingList = shooppingList;
+      userfound.shoppingList = [...userfound.shoppingList, shooppingList];
 
       await userfound.save();
       console.log(userfound);

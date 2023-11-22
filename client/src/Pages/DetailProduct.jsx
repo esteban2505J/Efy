@@ -6,7 +6,7 @@ import { useParams, useLocation } from "react-router-dom";
 import useCart from "../context/CartContext";
 
 export default function DetailProduct() {
-  const { addItem } = useCart();
+  const { addItem, addFavoriteItem } = useCart();
   const { id } = useParams();
   const location = useLocation();
   const product = location.state.product;
@@ -46,7 +46,19 @@ export default function DetailProduct() {
               >
                 Add to cart
               </Button>
-              <Button isIconOnly color="danger" aria-label="Like" size="sm">
+              <Button
+                isIconOnly
+                color="danger"
+                aria-label="Like"
+                size="sm"
+                onPress={() => {
+                  try {
+                    addFavoriteItem(product);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+              >
                 <HeartIcon />
               </Button>
             </div>

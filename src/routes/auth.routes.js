@@ -3,6 +3,7 @@ import {
   register,
   login,
   verifyToken,
+  sendOrders,
   // sendEmailBuy,
 } from "../controllers/auth.controllers.js";
 import { validateSchema } from "../middlewars/validatorSchema.middlewar.js";
@@ -14,6 +15,6 @@ router.post("/register", validateSchema(registerSchema), register);
 router.post("/login", validateSchema(loginSchema), login);
 // router.post("/sendemailbuy", sendEmailBuy);
 router.get("/verify", verifyToken);
+router.get("/orders", verifyToken, sendOrders);
 router.post("/pay", payStripe);
-console.log("Ok");
 export default router;

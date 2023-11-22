@@ -127,6 +127,7 @@ export const register = async (req, res) => {
       fullName: userSaved.fullName,
       email: userSaved.email,
       profilePicture: userSaved.profilePicture.secureUrl,
+      shoppingList: userFound.shoppingList,
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
@@ -161,6 +162,7 @@ export const login = async (req, res) => {
       fullName: userFound.fullName,
       email: userFound.email,
       profilePicture: userFound.profilePicture.secureUrl,
+      shoppingList: userFound.shoppingList,
       createAt: userFound.createdAt,
       updateAt: userFound.updatedAt,
     });
@@ -207,4 +209,23 @@ export const verifyToken = async (req, res) => {
       profilePicture: userFound.profilePicture.secureUrl,
     });
   });
+};
+
+export const sendOrders = async (req, res) => {
+  const { user } = req.body;
+  const { email } = user;
+
+  try {
+    // found user
+    const userFound = await User.findOne({ email });
+
+    if (!userFound) return res.status(400).json(["User not found"]);
+
+    console.log(userFound);
+    return res.json({
+      shoppingList: userFound.shoppingList,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

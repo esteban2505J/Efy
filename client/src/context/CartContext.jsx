@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const CartContext = createContext();
+import { getShoppingList } from "../api/auth";
 
 export const useCart = () => {
   const context = useContext(CartContext);
@@ -14,6 +15,11 @@ export const CartProvider = ({ children }) => {
   const [shoppingCart, setShoppingCart] = useState(
     JSON.parse(localStorage.getItem("shoppingCart")) || []
   );
+  const [favoriteItems, setFavoriteItems] = useState(
+    JSON.parse(localStorage.getItem("favoriteItems")) || []
+  );
+
+  const [shoppingOrders, setShoppingOrders] = useState();
 
   const addItem = (item) => {
     setShoppingCart((prevCart) => {
@@ -72,6 +78,47 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const addFavoriteItem = (item) => {
+    setFavoriteItems((prevCart) => {
+      const existingItemIndex = prevCart.findIndex(
+        (cartItem) => cartItem.title === item.title
+      );
+
+      if (existingItemIndex === -1) {
+        // Si el artículo no existe, agrégalo con una cantidad de 1
+        const updateFavorites = [...prevCart, { ...item, quantity: 1 }];
+
+        localStorage.setItem("favoriteItems", JSON.stringify(updateFavorites));
+        return updateFavorites; // Cambiado a 'updatedCart' en lugar de 'cart'
+      } else {
+        // Si el artículo ya existe, actualiza su cantidad
+        const updateFavorites = [...prevCart];
+        updateFavorites[existingItemIndex].quantity =
+          updateFavorites[existingItemIndex].quantity + 1;
+
+        localStorage.setItem("favoriteItems", JSON.stringify(updateFavorites));
+        return updateFavorites; // Cambiado a 'updatedCart' en lugar de 'cart'
+      }
+    });
+  };
+
+  const deleteFvoriteItem = async (item) => {
+    const { title } = item;
+
+    const updatedFavorites = favoriteItems.filter(
+      (cartItem) => cartItem.title !== title
+    );
+
+    setFavoriteItems(updatedFavorites);
+    localStorage.setItem("favoriteItems", JSON.stringify(updatedFavorites));
+  };
+
+  const getOrders = async (user) => {
+    const orders = await getShoppingList(user);
+
+    console.log(orders.data);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -80,6 +127,11 @@ export const CartProvider = ({ children }) => {
         addItem,
         deleteItem,
         calculateTotal,
+        favoriteItems,
+        addFavoriteItem,
+        deleteFvoriteItem,
+        getOrders,
+        shoppingOrders,
       }}
     >
       {children}

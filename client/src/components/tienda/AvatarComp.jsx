@@ -11,6 +11,10 @@ import {
 import React from "react";
 import userAuth from "../../context/AuthContext";
 import { BiLogOut } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { MdLocalShipping } from "react-icons/md";
+import { FaQuestion } from "react-icons/fa";
+import { TbPackageImport } from "react-icons/tb";
 
 export default function AvatarComp() {
   const { user, logOut } = userAuth();
@@ -39,8 +43,34 @@ export default function AvatarComp() {
           <p className="font-bold">Signed in as</p>
           <p className="font-bold text-red-400">{user.email}</p>
         </DropdownItem>
-        <DropdownItem key="settings">My Settings</DropdownItem>
-        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+        <DropdownItem key="settings">
+          <Link to="/returns">
+            <div className="flex  items-center gap-x-3">
+              {" "}
+              <p>Returns</p>
+              <TbPackageImport />
+            </div>
+          </Link>
+        </DropdownItem>
+        <DropdownItem key="help_and_feedback">
+          {" "}
+          <Link to="/pqrs">
+            <div className="flex  items-center gap-x-3">
+              {" "}
+              <p>PQRS</p>
+              <FaQuestion />
+            </div>
+          </Link>
+        </DropdownItem>
+        <DropdownItem key="my_orders">
+          <Link to="/myOrders">
+            <div className="flex  items-center gap-x-3">
+              {" "}
+              <p>My orders</p>
+              <MdLocalShipping />
+            </div>
+          </Link>
+        </DropdownItem>
         <DropdownItem key="logout" color="danger">
           <div className="flex justify-between items-center">
             <Button
