@@ -38,20 +38,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const sendEmailBuy = async () => {
-  //   try {
-  //     if (user && user.fullName && user.email) {
-  //     // Llama a sendEmailBuy con user
-  //       const info = await sendEmailBuy(user1);
-  //       console.log("Mensaje enviado");
-  //   } else {
-  //     console.error("El objeto user no tiene la estructura esperada.");
-  //   }
-  //   } catch (error) {
-  //     // return setErrors(error.response.data);
-  //   }
-  // };
-
   const sigIn = async (user) => {
     try {
       setLoading(true);
@@ -75,10 +61,6 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUser("");
   };
-
-  // const sendPay = async (some) => {
-
-  // };
 
   useEffect(() => {
     if (errors.length >= 1) {

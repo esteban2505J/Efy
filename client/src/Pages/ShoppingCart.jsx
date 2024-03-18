@@ -20,6 +20,7 @@ import userAuth from "../context/AuthContext";
 import useCart from "../context/CartContext";
 import axios from "../api/axios";
 import { useState } from "react";
+
 const stripePromise = loadStripe(
   "pk_test_51OBOwoFXqJV00ZOvsddxtFdzAUaoV65IZatAMT7VUCzZnClcZp6OUQyPac5X8dh218DSCMdxdRBVTEYKkdJ2rSsE0065dDIVHv"
 );
