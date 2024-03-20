@@ -6,6 +6,15 @@ main {
   background: #fff0ee;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  margin-top: auto;
+}
 /* Agrega estas reglas en tu hoja de estilos para estilizar la barra de desplazamiento */
 /* Estilos para WebKit (Chrome, Safari) */
 ::-webkit-scrollbar {

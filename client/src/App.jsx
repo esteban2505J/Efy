@@ -16,6 +16,7 @@ import MyOrders from "./Pages/MyOrders";
 import FavoriteItems from "./Pages/FavoriteItems";
 import Pqrs from "./Pages/Pqrs";
 import Returns from "./Pages/Returns";
+import Footer from "./components/tienda/footer";
 
 function App() {
   return (
@@ -25,21 +26,24 @@ function App() {
           <BrowserRouter>
             <main>
               <Nav2 />
-              <Routes>
-                <Route path="/" element={<Products />} />
-                <Route path="/product" element={<Products />} />
-                <Route path="/product/:id" element={<DetailProduct />} />
-                <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/shoppingcart" element={<ShoppingCart />} />
-                <Route path="/profileUser" element={<ProfileUser />} />
-                <Route path="/forgotpassword" element={<ForgotPassword />} />
-                <Route path="/succes" element={<Succes />} />
-                <Route path="/myOrders" element={<MyOrders />} />
-                <Route path="/favorites" element={<FavoriteItems />} />
-                <Route path="/pqrs" element={<Pqrs />} />
-                <Route path="/returns" element={<Returns />} />
-              </Routes>
+              <body>
+                <Routes>
+                  <Route path="/" element={<Products />} />
+                  <Route path="/product" element={<Products />} />
+                  <Route path="/product/:id" element={<DetailProduct />} />
+                  <Route path="/aboutus" element={<AboutUs />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/shoppingcart" element={<ShoppingCart />} />
+                  <Route path="/profileUser" element={<ProfileUser />} />
+                  <Route path="/forgotpassword" element={<ForgotPassword />} />
+                  <Route path="/succes" element={<Succes />} />
+                  <Route path="/myOrders" element={<MyOrders />} />
+                  <Route path="/favorites" element={<FavoriteItems />} />
+                  <Route path="/pqrs" element={<Pqrs />} />
+                  <Route path="/returns" element={<Returns />} />
+                </Routes>
+              </body>
+              <Footer className="footer" />
             </main>
           </BrowserRouter>
         </AuthProvider>
