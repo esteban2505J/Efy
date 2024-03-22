@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 export default function footer() {
   return (
     <>
-      <section className="flex flex-row justify-evenly bg-black rounded-t-3xl text-2xl text-[#E3A03F]">
-        <div className="flex-col  mt-3 mb-10">
-          <h2 className="mb-3 mt-3">Contáctanos</h2>
+      <section className="grid grid-cols-3 gap-x-5  justify-items-center bg-black sm:text-2xl text-[#E3A03F] ">
+        <div className=" mt-3 mb-10 ">
+          <h2 className="mb-3 mt-3 text-white">Contáctanos</h2>
           <div className="gap-y-4 grid ">
             <div className="hover:text-white">
               <Link
@@ -18,7 +18,7 @@ export default function footer() {
                 className="flex space-x-2 items-center"
               >
                 <ImWhatsapp />
-                <span className="text-sm">Whatssap</span>
+                <span className="text-sm">WhatsApp</span>
               </Link>
             </div>
             <div className="hover:text-white">
@@ -54,8 +54,8 @@ export default function footer() {
           </div>
         </div>
 
-        <div className="flex-col mt-3 mb-10">
-          <h2 className="mb-3 mt-3">Sobre nosotros</h2>
+        <div className="mt-3 mb-10">
+          <h2 className="mb-3 mt-3 text-white">Sobre nosotros</h2>
           <ul
             className="gap-y-4 grid text-sm
           "
@@ -72,8 +72,8 @@ export default function footer() {
           </ul>
         </div>
 
-        <div className="flex-col mt-3 mb-10">
-          <h2 className="mb-3 mt-3">Legal y Privacidad</h2>
+        <div className=" mt-3 mb-10 ">
+          <h2 className="mb-3 mt-3 text-white ">Legal y Privacidad</h2>
           <ul
             className="gap-y-4 grid text-sm 
           "
@@ -81,7 +81,7 @@ export default function footer() {
             <li className="hover:text-white">
               <Link to={"/"}>Terminos y Condiciones</Link>
             </li>
-            <li className="hover:text-white">
+            <li className="hover:text-white ">
               <Link>Politicas de Privacidad</Link>
             </li>
           </ul>

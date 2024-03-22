@@ -10,19 +10,17 @@ export default function DetailProduct() {
   const { id } = useParams();
   const location = useLocation();
   const product = location.state.product;
-  // const { user } = userAuth();
 
   const defaultContent =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
   return (
     <>
-      <section className="grid md:grid-cols-2 mt-6 container">
+      <section className="grid md:grid-cols-2  m-6">
         <section>
           <div className="flex justify-center">
             <img src={product.img} alt="" width={270} className="rounded-lg " />
           </div>
-          <div className="mb-5"></div>
         </section>
 
         <section>

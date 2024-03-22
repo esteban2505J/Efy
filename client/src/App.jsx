@@ -17,6 +17,7 @@ import FavoriteItems from "./Pages/FavoriteItems";
 import Pqrs from "./Pages/Pqrs";
 import Returns from "./Pages/Returns";
 import Footer from "./components/tienda/footer";
+import Carousel from "./components/tienda/Carousel";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <BrowserRouter>
             <main>
               <Nav2 />
+              <Carousel />
               <body>
                 <Routes>
                   <Route path="/" element={<Products />} />
