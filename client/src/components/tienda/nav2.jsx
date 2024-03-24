@@ -56,21 +56,21 @@ export default function App() {
 
   return (
     <>
-      <Navbar>
+      <Navbar shouldHideOnScroll={true} height={"6rem"}>
         <NavbarBrand>
           <div>
             <img
               src="src/assets/images/logo.png"
               alt="Efy"
               className="text"
-              width={60}
+              width={80}
             />
           </div>
           <Link
             className="font-bold text-inherit text-3xl text-[#000]"
             href="/"
           >
-            Efy
+            EFY
           </Link>
         </NavbarBrand>
 
@@ -97,7 +97,18 @@ export default function App() {
                 base: "gap-4",
               }}
             >
-              {/* Opciones del menú desplegable */}
+              <DropdownItem>
+                <Link>Hombre</Link>
+              </DropdownItem>
+              <DropdownItem>
+                <Link>Mujer</Link>
+              </DropdownItem>
+              <DropdownItem>
+                <Link>Mascota</Link>
+              </DropdownItem>
+              <DropdownItem>
+                <Link>Hogar</Link>
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
 
