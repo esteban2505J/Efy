@@ -14,7 +14,6 @@ import { transporter } from "../libs/nodemailer.js";
 import { upLoadImage } from "../libs/claudinary.js";
 
 import fs from "fs-extra";
-// import { response } from "express";
 
 /*function for te procces of register*/
 export const register = async (req, res) => {
@@ -122,12 +121,23 @@ export const register = async (req, res) => {
     // Enviar el correo electrónico de confirmación
     await transporter.sendMail(mailOptions);
 
+    // Eliminar la imagen temporal
+    if (req.files.profilePicture) {
+      fs.unlink(req.files.profilePicture.tempFilePath, (err) => {
+        if (err) {
+          console.error("Error al eliminar la imagen temporal:", err);
+        } else {
+          console.log("Imagen temporal eliminada correctamente");
+        }
+      });
+    }
+
     res.json({
       id: userSaved._id,
       fullName: userSaved.fullName,
       email: userSaved.email,
       profilePicture: userSaved.profilePicture.secureUrl,
-      shoppingList: userFound.shoppingList,
+
       createAt: userSaved.createdAt,
       updateAt: userSaved.updatedAt,
     });
@@ -209,23 +219,4 @@ export const verifyToken = async (req, res) => {
       profilePicture: userFound.profilePicture.secureUrl,
     });
   });
-};
-
-export const sendOrders = async (req, res) => {
-  const { user } = req.body;
-  const { email } = user;
-
-  try {
-    // found user
-    const userFound = await User.findOne({ email });
-
-    if (!userFound) return res.status(400).json(["User not found"]);
-
-    console.log(userFound);
-    return res.json({
-      shoppingList: userFound.shoppingList,
-    });
-  } catch (error) {
-    console.log(error);
-  }
 };

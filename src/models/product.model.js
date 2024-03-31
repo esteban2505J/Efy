@@ -1,7 +1,6 @@
-import { Schema as _Schema, model } from "mongoose";
-const Schema = _Schema;
+import mongoose from "mongoose";
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
   name: { String, required: true },
   brand: { type: String, unique: true, required: true },
   description: { String, required: true },
@@ -9,6 +8,7 @@ const productSchema = new Schema({
     publicId: String,
     secureUrl: String,
   },
+  size: { type: String },
   price: {
     type: String,
     required: true,
