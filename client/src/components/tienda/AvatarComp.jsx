@@ -25,16 +25,12 @@ export default function AvatarComp() {
     <Dropdown placement="bottom-start">
       <DropdownTrigger>
         <div className="flex">
-          <img
-            src={`${user.profilePicture}`}
-            className="rounded-full w-12 h-12 "
-            alt=""
-          />
           <User
             as="button"
             className="transition-transform"
-            description={emailResumed}
-            name={firstName}
+            avatarProps={{
+              src: `${user.profilePicture}`,
+            }}
           />
         </div>
       </DropdownTrigger>

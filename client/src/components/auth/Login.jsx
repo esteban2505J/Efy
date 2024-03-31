@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -15,6 +14,7 @@ import { MailIcon } from "./icon/MailIcon.jsx";
 import { LockIcon } from "./icon/LockIcon.jsx";
 import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 import Loading from "../tienda/Loader.jsx";
 
@@ -29,15 +29,18 @@ export default function Login() {
 
   const onSubmit = handleSubmit(async (values) => {
     sigIn(values);
-    // onOpenChange(false);
+    onOpenChange(false);
   });
 
   return (
     <>
-      {/* {loading && <Loading loading={loading} />} */}
       <Button
         onPress={onOpen}
-        className={`bg-orange-200 ${loading ? "invisible" : ""}`}
+        className={`bg-orange-200 ${
+          loading ? "invisible" : ""
+        }, w-full sm:w-auto ${
+          isAuthenticated ? "invisible" : ""
+        } text-xl font-semibold sm:text-medium`}
         variant="shadow"
       >
         Login

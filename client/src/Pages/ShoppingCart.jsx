@@ -133,7 +133,7 @@ const ShoppingCart = () => {
 
   return (
     <Elements stripe={stripePromise}>
-      <div className="container md:m-4 my-4 md:my-0">
+      <div className="container md:m-4 my-4 ">
         <div className="flex md:flex-row flex-col-reverse md:gap-x-3 gap-3">
           <section
             id="form"
@@ -146,7 +146,7 @@ const ShoppingCart = () => {
               <CardHeader className="flex justify-center items-center">
                 <h1 className="text-3xl text-yellow-700">Order summary</h1>
               </CardHeader>
-              <CardBody className="overflow-y-auto scroll-smooth max-h-[500px]">
+              <CardBody className="overflow-y-auto scroll-smooth ">
                 <div className="flex flex-col gap-3">
                   {shoppingCart.map((item) => {
                     return (
@@ -192,9 +192,11 @@ const ShoppingCart = () => {
                 </div>
               </CardBody>
               <CardFooter>
-                <h2 className="mt-1 text-xl font-semibold">
-                  Total: {calculateTotal(shoppingCart)} COP
-                </h2>
+                <div className="sticky">
+                  <h2 className="mt-1 text-xl font-semibold">
+                    Total: {calculateTotal(shoppingCart)} COP
+                  </h2>
+                </div>
               </CardFooter>
             </Card>
           </section>

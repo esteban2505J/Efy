@@ -16,7 +16,7 @@ const BlogPost = ({ title, date, description, image }) => (
 
 // Componente de Blog Principal que contiene varias entradas
 const Blog = () => (
-  <div className="flex flex-col">
+  <div className="flex flex-col mb-10">
     <BlogPost
       title="Explorando el Fascinante Mundo de las Fragancias y Perfumes"
       date="15 de Noviembre de 2023"
@@ -37,8 +37,6 @@ const Blog = () => (
       description="En Efy, nos esforzamos por ser líderes en sostenibilidad en la industria de la perfumería. Exploraremos cómo las decisiones de fabricación y los ingredientes que elegimos pueden marcar la diferencia en la salud del planeta. Desde envases reciclables hasta ingredientes éticamente obtenidos, cada elección cuenta."
       image="	https://stakeholders.com.pe/wp-content/uploads/2021/04/desarrollo-sostenible-arbaiza-principal.jpg"
     />
-
-    {/* Agrega más entradas de blog según sea necesario */}
   </div>
 );
 

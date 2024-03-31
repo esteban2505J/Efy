@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { useState } from "react";
 import Loading from "../tienda/Loader.jsx";
-// import { useNavigate } from "react-router-dom";
+
 export default function SignUp() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
@@ -26,7 +26,12 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { sigUp, errors: registerErrors, loading } = userAuth();
+  const {
+    sigUp,
+    errors: registerErrors,
+    loading,
+    isAuthenticated,
+  } = userAuth();
 
   const [Pasword, setPasword] = useState("");
   const [Pasword2, setPasword2] = useState("");
@@ -62,11 +67,12 @@ export default function SignUp() {
 
   return (
     <>
-      {loading && <Loading loading={loading} />}
       <Button
         onPress={onOpen}
         color="primary"
-        className={`${loading ? "invisible" : ""}`}
+        className={`${loading ? "invisible" : ""}, w-full sm:w-auto ${
+          isAuthenticated ? "invisible" : ""
+        } text-xl font-semibold sm:text-medium`}
       >
         Sign Up
       </Button>

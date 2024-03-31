@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -10,6 +9,9 @@ import {
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
 } from "@nextui-org/react";
 import { ChevronDown, TagUser } from "./icon/icons.jsx";
 import { userAuth } from "../../context/AuthContext.jsx";
@@ -18,67 +20,46 @@ import Login from "../auth/Login.jsx";
 import SignUp from "../auth/SignUp.jsx";
 import CartNav from "./CartNav.jsx";
 import Avatar from "./AvatarComp.jsx";
+import { useState } from "react";
 
 export default function App() {
-  const { isAuthenticated, user } = userAuth();
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const { isAuthenticated, user, logOut } = userAuth();
 
-  const handleLoginClick = () => {
-    setShowLogin(!showLogin);
-    setShowSignUp(false);
-  };
-
-  const handleSignUpClick = () => {
-    setShowSignUp(!showSignUp);
-    setShowLogin(false);
-  };
-
-  const handleButtonClick = () => {
-    setShowLogin(!showLogin);
-    setShowSignUp(!showSignUp);
-    console.log("fun");
-  };
-
-  const handleScroll = () => {
-    setScrollY(window.scrollY);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const isScrolled = scrollY > 0;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
-      <Navbar shouldHideOnScroll={true} height={"6rem"}>
+      <Navbar
+        shouldHideOnScroll={true}
+        height={"6rem"}
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+        className="flex justify-evenly"
+      >
+        {/* Logo  section 1*/}
         <NavbarBrand>
           <div>
             <img
               src="src/assets/images/logo.png"
               alt="Efy"
-              className="text"
               width={80}
+              className="flex"
             />
           </div>
           <Link
-            className="font-bold text-inherit text-3xl text-[#000]"
+            className="font-bold text-inherit  text-lg sm:text-3xl text-[#000]"
             href="/"
           >
             EFY
           </Link>
         </NavbarBrand>
 
+        {/* section 2 */}
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {/* Menú desplegable de categorías */}
-          <Dropdown className="hidden md:flex">
+          <Dropdown>
             <NavbarItem>
-              <DropdownTrigger>
+              <DropdownTrigger className="text-lg">
                 <Button
                   disableRipple
                   className="p-0 bg-transparent :bg-transparent"
@@ -134,66 +115,139 @@ export default function App() {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent className="my-5">
-          {isAuthenticated ? (
-            <>
-              <NavbarItem>
-                <Avatar />
-              </NavbarItem>
-              <NavbarItem>
-                <Link color="foreground" href="/shoppingcart">
-                  <CartNav />
-                </Link>
-              </NavbarItem>
-            </>
-          ) : (
-            <>
-              <NavbarItem className="hidden lg:flex">
-                <Login />
-              </NavbarItem>
-              <NavbarItem className="hidden lg:flex">
-                <SignUp />
-              </NavbarItem>
-              <NavbarItem>
-                <Link color="foreground" href="/shoppingcart">
-                  <CartNav />
-                </Link>
-              </NavbarItem>
+        {/* section 3 */}
+        <NavbarContent className="my-5 gap-x-7">
+          {/* Shopping Cart */}
+          <NavbarContent justify="end">
+            <Link color="foreground" href="/shoppingcart">
+              <CartNav />
+            </Link>
+          </NavbarContent>
 
+          <NavbarItem className="sm:hidden">
+            <Dropdown>
+              <NavbarItem>
+                <DropdownTrigger>
+                  <Button
+                    disableRipple
+                    className="p-0 bg-transparent :bg-transparent"
+                    endContent={<ChevronDown fill="currentColor" size={16} />}
+                    radius="sm"
+                    variant="light"
+                  >
+                    Categories
+                  </Button>
+                </DropdownTrigger>
+              </NavbarItem>
+              <DropdownMenu
+                aria-label="ACME features"
+                className="w-[340px]"
+                itemClasses={{
+                  base: "gap-4",
+                }}
+              >
+                <DropdownItem>
+                  <Link>Hombre</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link>Mujer</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link>Mascota</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link>Hogar</Link>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+
+          <div className="gap-x-5 flex">
+            {!isAuthenticated && (
+              <>
+                <NavbarItem className="hidden lg:flex">
+                  <Login />
+                </NavbarItem>
+                {/* Register */}
+                <NavbarItem className="hidden lg:flex">
+                  <SignUp />
+                </NavbarItem>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <div className="flex sm:gap-x-5 ">
+                  <div>
+                    <Avatar />
+                  </div>
+                  <div>
+                    <Button
+                      onPress={logOut}
+                      className="bg-red-500 w-3 hidden sm:flex text-2xl text-white ml-8 "
+                    >
+                      <BiLogOut />
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Icono de menu desplegable  */}
+          <NavbarContent className="sm:hidden ">
+            <NavbarMenuToggle
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            />
+          </NavbarContent>
+
+          {/* lista de menu desplegable */}
+          <NavbarMenu>
+            {/* Login */}
+            <NavbarMenuItem>
+              <Login />
+            </NavbarMenuItem>
+
+            {/* Sigup */}
+            <NavbarMenuItem>
+              <SignUp />
+            </NavbarMenuItem>
+            {/* Favorites */}
+            <NavbarMenuItem>
+              <Link
+                className="text-[#e38d15] bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold"
+                href="/favorites"
+                underline="hover"
+              >
+                Favorites
+              </Link>
+            </NavbarMenuItem>
+            {/* Blog */}
+            <NavbarMenuItem>
+              <Link
+                href="/blog"
+                aria-current="page"
+                underline="hover"
+                className="text-black bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold"
+              >
+                <p>Blog</p>
+              </Link>
+            </NavbarMenuItem>
+
+            {/* Log out */}
+            <NavbarMenuItem>
               <Button
-                onClick={handleButtonClick}
-                variant="light"
-                radius="sm"
-                className={`md:hidden ${
-                  isScrolled ? "bg-white md:hidden shadow-md" : ""
+                onPress={() => logOut()}
+                className={`bg-red-400 w-full ${
+                  !isAuthenticated ? "hidden" : ""
                 }`}
               >
-                <TagUser></TagUser>
+                <p>Log Out</p>
+                <BiLogOut />
               </Button>
-            </>
-          )}
+            </NavbarMenuItem>
+          </NavbarMenu>
         </NavbarContent>
       </Navbar>
-
-      <div className="flex z-50 justify-evenly md:hidden mt-3">
-        {/* Botones de inicio de sesión y registro */}
-        {!isAuthenticated && showLogin === true && (
-          <Login
-            className={`fixed top-16 right-4 z-50 md:hidden ${
-              isScrolled ? "bg-white shadow-md" : ""
-            }`}
-            onClose={() => setShowLogin(false)}
-          />
-        )}
-        {!isAuthenticated && showSignUp && (
-          <SignUp
-            className={`fixed top-16 right-2 md:hidden ${
-              isScrolled ? "bg-white shadow-md" : ""
-            }`}
-            onClose={() => setShowSignUp(false)}
-          />
-        )}
-      </div>
     </>
   );
 }

@@ -3,6 +3,8 @@ import { ImWhatsapp, ImFacebook2 } from "react-icons/im";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { CgMail } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import Terminos from "../../Pages/Information/Terminos";
+import Politicas from "../../Pages/Information/Politicas";
 
 export default function footer() {
   return (
@@ -73,16 +75,18 @@ export default function footer() {
         </div>
 
         <div className=" mt-3 mb-10 ">
-          <h2 className="mb-3 mt-3 text-white ">Legal y Privacidad</h2>
+          <h2 className="mb-3 mt-3 text-white text-center">
+            Legal y Privacidad
+          </h2>
           <ul
-            className="gap-y-4 grid text-sm 
+            className="gap-y-4 grid text-sm  text-center
           "
           >
             <li className="hover:text-white">
-              <Link to={"/"}>Terminos y Condiciones</Link>
+              <Terminos />
             </li>
             <li className="hover:text-white ">
-              <Link>Politicas de Privacidad</Link>
+              <Politicas></Politicas>
             </li>
           </ul>
         </div>

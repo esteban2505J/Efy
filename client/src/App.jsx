@@ -4,7 +4,7 @@ import Nav2 from "./components/tienda/nav2";
 import "./App.css";
 import Products from "./Pages/Products";
 import DetailProduct from "./Pages/DetailProduct";
-import AboutUs from "./Pages/AboutUs";
+import AboutUs from "./Pages/Information/AboutUs";
 import Blog from "./Pages/Blog";
 import ShoppingCart from "./Pages/ShoppingCart";
 import { AuthProvider } from "./context/AuthContext";
