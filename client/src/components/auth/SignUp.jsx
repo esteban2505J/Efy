@@ -72,7 +72,7 @@ export default function SignUp() {
         color="primary"
         className={`${loading ? "invisible" : ""}, w-full sm:w-auto ${
           isAuthenticated ? "invisible" : ""
-        } text-xl font-semibold sm:text-medium`}
+        } text-xl font-semibold sm:text-medium `}
       >
         Sign Up
       </Button>

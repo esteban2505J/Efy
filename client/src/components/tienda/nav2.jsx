@@ -13,7 +13,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@nextui-org/react";
-import { ChevronDown, TagUser } from "./icon/icons.jsx";
+import { ChevronDown } from "./icon/icons.jsx";
 import { userAuth } from "../../context/AuthContext.jsx";
 import { BiLogOut } from "react-icons/bi";
 import Login from "../auth/Login.jsx";
@@ -21,6 +21,7 @@ import SignUp from "../auth/SignUp.jsx";
 import CartNav from "./CartNav.jsx";
 import Avatar from "./AvatarComp.jsx";
 import { useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
 
 export default function App() {
   const { isAuthenticated, user, logOut } = userAuth();
@@ -106,11 +107,12 @@ export default function App() {
 
           <NavbarItem>
             <Link
-              className="text-[#e38d15]"
+              className="text-[#e38d15] gap-x-1"
               href="/favorites"
               underline="hover"
             >
-              Favorites
+              <p>Favorites</p>
+              <AiOutlineHeart />
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -214,11 +216,12 @@ export default function App() {
             {/* Favorites */}
             <NavbarMenuItem>
               <Link
-                className="text-[#e38d15] bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold"
+                className="text-[#e38d15] bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold gap-x-1"
                 href="/favorites"
                 underline="hover"
               >
-                Favorites
+                <p>Favorites</p>
+                <AiOutlineHeart />
               </Link>
             </NavbarMenuItem>
             {/* Blog */}

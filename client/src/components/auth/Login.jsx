@@ -36,7 +36,7 @@ export default function Login() {
     <>
       <Button
         onPress={onOpen}
-        className={`bg-orange-200 ${
+        className={`bg-orange-200  ${
           loading ? "invisible" : ""
         }, w-full sm:w-auto ${
           isAuthenticated ? "invisible" : ""
