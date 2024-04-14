@@ -21,10 +21,12 @@ export const CartProvider = ({ children }) => {
 
   const [shoppingOrders, setShoppingOrders] = useState();
 
+  // agregar un producto al carrito de compras
   const addItem = (item) => {
     setShoppingCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
-        (cartItem) => cartItem.title === item.title
+        (cartItem) =>
+          cartItem.title === item.title && cartItem.size === item.size
       );
 
       if (existingItemIndex === -1) {
@@ -34,8 +36,9 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
         return updatedCart; // Cambiado a 'updatedCart' en lugar de 'cart'
       } else {
+        let updatedCart = [...prevCart];
         // Si el artículo ya existe, actualiza su cantidad
-        const updatedCart = [...prevCart];
+
         updatedCart[existingItemIndex].quantity =
           updatedCart[existingItemIndex].quantity + 1;
 
@@ -54,13 +57,15 @@ export const CartProvider = ({ children }) => {
     });
     return valorTotal.toFixed(2);
   };
+
+  // eliminar un producto del carrito de compras
   const deleteItem = async (item) => {
-    const { title, quantity } = item;
+    const { title, quantity, size } = item;
 
     if (quantity > 1) {
       // Si la cantidad es mayor que 1, disminuye la cantidad en 1
       const updatedCart = shoppingCart.map((cartItem) =>
-        cartItem.title === title
+        cartItem.title === title && cartItem.size === size
           ? { ...cartItem, quantity: cartItem.quantity - 1 }
           : cartItem
       );
@@ -70,7 +75,7 @@ export const CartProvider = ({ children }) => {
     } else {
       // Si la cantidad es 1, elimina el artículo del carrito
       const updatedCart = shoppingCart.filter(
-        (cartItem) => cartItem.title !== title
+        (cartItem) => cartItem.title !== title || cartItem.size !== size
       );
 
       setShoppingCart(updatedCart);
@@ -78,6 +83,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // agregar un producto a favoritos
   const addFavoriteItem = (item) => {
     setFavoriteItems((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
@@ -102,6 +108,7 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  // eliminar un producto de la sección de favoritos
   const deleteFvoriteItem = async (item) => {
     const { title } = item;
 

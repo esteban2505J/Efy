@@ -7,6 +7,7 @@ import {
   DropdownMenu,
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 import { useParams, useLocation } from "react-router-dom";
 import { BsCart3, BsChevronCompactDown } from "react-icons/bs";
@@ -28,7 +29,7 @@ export default function DetailProduct() {
   );
 
   const caclcPrice = (priceData) => {
-    const { anchorKey, currentKey } = priceData;
+    const { currentKey } = priceData;
     let price = "$40000";
     if (currentKey === "100 ML") {
       price = "$40000";
@@ -40,7 +41,45 @@ export default function DetailProduct() {
       price = "$20000";
     }
 
+    // tamaño de laloción
+    product.size = currentKey;
+
+    // precio de la loción según su tamaño
+    product.price = price;
     setSelectedPrice(price);
+  };
+
+  const notifyCart = () => {
+    toast(` Añadido al carrito 🛒`, {
+      position: "bottom-right",
+      autoClose: 3000,
+      type: "success",
+    });
+  };
+  const notifyFavorite = () => {
+    toast("❤️ Añadido a favoritos", {
+      position: "bottom-right",
+      autoClose: 3000,
+      type: "error",
+      icon: false,
+    });
+  };
+
+  const addItemToCart = (product) => {
+    try {
+      addItem(product);
+      notifyCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addItemToFavorites = (product) => {
+    try {
+      addFavoriteItem(product);
+      notifyFavorite();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -119,11 +158,7 @@ export default function DetailProduct() {
                 size="md"
                 className="mr-5 text-white bg-black p-5"
                 onPress={() => {
-                  try {
-                    addItem(product);
-                  } catch (error) {
-                    console.log(error);
-                  }
+                  addItemToCart(product);
                 }}
                 endContent={
                   <div className="text-lg">
@@ -134,17 +169,15 @@ export default function DetailProduct() {
                 Add to cart
               </Button>
 
+              <ToastContainer />
+
               <Button
                 isIconOnly
                 color="danger"
                 aria-label="Like"
                 size="sm"
                 onPress={() => {
-                  try {
-                    addFavoriteItem(product);
-                  } catch (error) {
-                    console.log(error);
-                  }
+                  addItemToFavorites(product);
                 }}
               >
                 <HeartIcon />

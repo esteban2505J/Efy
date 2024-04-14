@@ -29,6 +29,7 @@ const CheckOutForm = () => {
   const { addItem, shoppingCart, deleteItem, calculateTotal } = useCart();
   const { isAuthenticated, user } = userAuth();
   const stripe = useStripe();
+
   const [shippingAddress, setShippingAddress] = useState({
     address: "",
     city: "",
@@ -126,8 +127,6 @@ const CheckOutForm = () => {
   );
 };
 
-// ... Otras importaciones ...
-
 const ShoppingCart = () => {
   const { addItem, shoppingCart, deleteItem, calculateTotal } = useCart();
 
@@ -152,15 +151,18 @@ const ShoppingCart = () => {
                     return (
                       <div className="flex-row" key={item.title}>
                         <div className="flex justify-evenly">
+                          {/* imagen del producto */}
                           <img
                             src={item.img}
                             alt=""
                             className="w-44 h-44 object-cover rounded-lg shadow-lg"
                           />
 
+                          {/* botones para agregar o quitar productos */}
                           <div className="m-4 ">
                             <h2 className="text-bold mb-2">{item.title}</h2>
                             <p>Amount: {item.quantity}</p>
+                            <p>Tamaño: {item.size ? item.size : "100 ML"}</p>
                             <div className="my-2">
                               <Button
                                 className="text-2xl px-3  bg-black text-white   rounded-none "
@@ -172,7 +174,7 @@ const ShoppingCart = () => {
                                 +
                               </Button>
                               <Button
-                                className="text-2xl px-3  rounded-none bg-transparent border-1  border-yellow-600 outline-offset-0 hover:bg-red-400"
+                                className="text-2xl px-3  rounded-none bg-transparent border-1  border-yellow-600 outline-offset-0 hover:bg-red-100"
                                 size="sm"
                                 onClick={() => {
                                   deleteItem(item);

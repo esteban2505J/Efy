@@ -4,6 +4,8 @@ import App from "./App.jsx";
 
 // 1. import `NextUIProvider` component
 
+import "react-toastify/ReactToastify.min.css";
+
 import { NextUIProvider } from "@nextui-org/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
