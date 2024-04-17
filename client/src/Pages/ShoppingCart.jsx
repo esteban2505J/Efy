@@ -20,6 +20,7 @@ import userAuth from "../context/AuthContext";
 import useCart from "../context/CartContext";
 import axios from "../api/axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51OBOwoFXqJV00ZOvsddxtFdzAUaoV65IZatAMT7VUCzZnClcZp6OUQyPac5X8dh218DSCMdxdRBVTEYKkdJ2rSsE0065dDIVHv"
@@ -147,50 +148,72 @@ const ShoppingCart = () => {
               </CardHeader>
               <CardBody className="overflow-y-auto scroll-smooth ">
                 <div className="flex flex-col gap-3">
-                  {shoppingCart.map((item) => {
-                    return (
-                      <div className="flex-row" key={item.title}>
-                        <div className="flex justify-evenly">
-                          {/* imagen del producto */}
-                          <img
-                            src={item.img}
-                            alt=""
-                            className="w-44 h-44 object-cover rounded-lg shadow-lg"
-                          />
+                  {shoppingCart.length === 0 ? (
+                    <>
+                      <p className="text-center text-gray-500 text-xl sm:text-2xl">
+                        No tienes elementos en tu carrito de compras. ¡Agrega
+                        algunos productos!
+                      </p>
 
-                          {/* botones para agregar o quitar productos */}
-                          <div className="m-4 ">
-                            <h2 className="text-bold mb-2">{item.title}</h2>
-                            <p>Amount: {item.quantity}</p>
-                            <p>Tamaño: {item.size ? item.size : "100 ML"}</p>
-                            <div className="my-2">
-                              <Button
-                                className="text-2xl px-3  bg-black text-white   rounded-none "
-                                size="sm"
-                                onClick={() => {
-                                  addItem(item);
-                                }}
-                              >
-                                +
-                              </Button>
-                              <Button
-                                className="text-2xl px-3  rounded-none bg-transparent border-1  border-yellow-600 outline-offset-0 hover:bg-red-100"
-                                size="sm"
-                                onClick={() => {
-                                  deleteItem(item);
-                                }}
-                              >
-                                -
-                              </Button>
-                            </div>
-                            <h2 className="mt-3">Price: {item.price}</h2>
-                          </div>
-                        </div>
-
-                        <hr className="m-3" />
+                      <div className="flex justify-center mt-2">
+                        <Link
+                          to={"/"}
+                          className="bg-black text-white p-2 rounded-lg hover:bg-zinc-900"
+                        >
+                          Seguir comprando
+                        </Link>
                       </div>
-                    );
-                  })}
+                    </>
+                  ) : (
+                    <>
+                      {shoppingCart.map((item) => {
+                        return (
+                          <div className="flex-row" key={item.title}>
+                            <div className="flex justify-evenly">
+                              {/* imagen del producto */}
+                              <img
+                                src={item.img}
+                                alt=""
+                                className="w-44 h-44 object-cover rounded-lg shadow-lg"
+                              />
+
+                              {/* botones para agregar o quitar productos */}
+                              <div className="m-4 ">
+                                <h2 className="text-bold mb-2">{item.title}</h2>
+                                <p>Amount: {item.quantity}</p>
+                                <p>
+                                  Tamaño: {item.size ? item.size : "100 ML"}
+                                </p>
+                                <div className="my-2">
+                                  <Button
+                                    className="text-2xl px-3  bg-black text-white   rounded-none "
+                                    size="sm"
+                                    onClick={() => {
+                                      addItem(item);
+                                    }}
+                                  >
+                                    +
+                                  </Button>
+                                  <Button
+                                    className="text-2xl px-3  rounded-none bg-transparent border-1  border-yellow-600 outline-offset-0 hover:bg-red-100"
+                                    size="sm"
+                                    onClick={() => {
+                                      deleteItem(item);
+                                    }}
+                                  >
+                                    -
+                                  </Button>
+                                </div>
+                                <h2 className="mt-3">Price: {item.price}</h2>
+                              </div>
+                            </div>
+
+                            <hr className="m-3" />
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
               </CardBody>
               <CardFooter>

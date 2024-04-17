@@ -7,6 +7,7 @@ import morgan from "morgan";
 import authRoutes from "./routes/auth.routes.js";
 import cors from "cors";
 import fileUpload from "express-fileupload";
+import prodctuRoutes from "./routes/product.routes.js";
 
 dotenv.config();
 
@@ -28,5 +29,6 @@ app.use(
 
 app.use(cookieParser());
 app.use("/api", authRoutes);
+app.use("/api", prodctuRoutes);
 
 export default app;

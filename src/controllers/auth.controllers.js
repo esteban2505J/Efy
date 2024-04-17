@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
 import { transporter } from "../libs/nodemailer.js";
-import { upLoadImage } from "../libs/claudinary.js";
+import upLoadImage from "../libs/claudinary.js";
 
 import fs from "fs-extra";
 
@@ -35,7 +35,10 @@ export const register = async (req, res) => {
     });
     console.log(req.files);
     if (req.files.profilePicture) {
-      const result = await upLoadImage(req.files.profilePicture.tempFilePath);
+      const result = await upLoadImage(
+        req.files.profilePicture.tempFilePath,
+        "profileImage"
+      );
       newUser.profilePicture = {
         publicId: result.public_id,
         secureUrl: result.secure_url,
@@ -200,10 +203,10 @@ export const profile = async (req, res) => {
   });
 };
 
+// Function for the verificarion token
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
 
-  console.log(token, "<==");
   if (!token) return res.status(401).json({ message: "Unauthorized 1" });
 
   jwt.verify(token, KEY_TOKEN, async (err, user) => {

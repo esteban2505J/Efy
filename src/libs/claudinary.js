@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "cloudinary";
 
 const cloud_name = "dapsakqbt";
 const api_key = "514432816986328";
@@ -10,8 +10,16 @@ cloudinary.config({
   secure: true,
 });
 
-export async function upLoadImage(filePath) {
-  return await cloudinary.uploader.upload(filePath, {
-    folder: "profileImage",
-  });
+async function uploadImage(filePath, folder) {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: folder,
+    });
+    return result;
+  } catch (error) {
+    console.error("Error al subir la imagen a Cloudinary:", error);
+    throw error;
+  }
 }
+
+export default uploadImage;
