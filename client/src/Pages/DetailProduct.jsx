@@ -8,17 +8,37 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
-
-import { useParams, useLocation } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { BsCart3, BsChevronCompactDown } from "react-icons/bs";
-
 import useCart from "../context/CartContext";
+import { productList } from "../components/products/productData";
 
 export default function DetailProduct() {
   const { addItem, addFavoriteItem } = useCart();
-  const { id } = useParams();
-  const location = useLocation();
-  const product = location.state.product;
+  const { title } = useParams();
+
+  // Función para obtener el producto por su título
+  const getProductByTitle = (title) => {
+    return productList.find(item => item.title === title);
+  };
+
+  // Buscar el producto correspondiente por el título en la lista de productos
+  let product = getProductByTitle(title);
+
+  // Si no se encuentra el producto, intenta obtenerlo del localStorage
+  useEffect(() => {
+    if (!product) {
+      const storedTitle = localStorage.getItem("productTitle");
+      if (storedTitle) {
+        product = getProductByTitle(storedTitle);
+      }
+    }
+  }, []);
+
+  // Guardar el título del producto en el localStorage
+  useEffect(() => {
+    localStorage.setItem("productTitle", title);
+  }, [title]);
 
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["100 ML"]));
   const [selectdPrice, setSelectedPrice] = React.useState(new Set(["$40000"]));
@@ -27,6 +47,7 @@ export default function DetailProduct() {
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
+
 
   const caclcPrice = (priceData) => {
     const { currentKey } = priceData;

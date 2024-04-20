@@ -24,7 +24,7 @@ import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
 export default function App() {
-  const { isAuthenticated, user, logOut } = userAuth();
+  const { isAuthenticated, logOut } = userAuth();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -49,7 +49,7 @@ export default function App() {
           </div>
           <Link
             className="font-bold text-inherit  text-lg sm:text-3xl text-[#000]"
-            href="/"
+            href="/#"
           >
             EFY
           </Link>
@@ -96,7 +96,7 @@ export default function App() {
 
           <NavbarItem isActive className="hidden md:flex">
             <Link
-              href="/blog"
+              href="/#/blog"
               aria-current="page"
               underline="hover"
               className="text-black"
@@ -108,7 +108,7 @@ export default function App() {
           <NavbarItem>
             <Link
               className="text-[#e38d15] gap-x-1"
-              href="/favorites"
+              href="/#/favorites"
               underline="hover"
             >
               <p>Favorites</p>
@@ -121,7 +121,7 @@ export default function App() {
         <NavbarContent className="my-5 gap-x-7">
           {/* Shopping Cart */}
           <NavbarContent justify="end">
-            <Link color="foreground" href="/shoppingcart">
+            <Link color="foreground" href="/#/shoppingcart">
               <CartNav />
             </Link>
           </NavbarContent>
@@ -217,7 +217,7 @@ export default function App() {
             <NavbarMenuItem>
               <Link
                 className="text-[#e38d15] bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold gap-x-1"
-                href="/favorites"
+                href="/#/favorites"
                 underline="hover"
               >
                 <p>Favorites</p>
@@ -227,7 +227,7 @@ export default function App() {
             {/* Blog */}
             <NavbarMenuItem>
               <Link
-                href="/blog"
+                href="/#/blog"
                 aria-current="page"
                 underline="hover"
                 className="text-black bg-white w-full p-1 rounded-xl justify-center text-xl font-semibold"
