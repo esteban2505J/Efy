@@ -182,7 +182,10 @@ const ShoppingCart = () => {
                                 <h2 className="text-bold mb-2">{item.title}</h2>
                                 <p>Amount: {item.quantity}</p>
                                 <p>
-                                  Tamaño: {item.size ? item.size : "100 ML"}
+                                  Tamaño:{" "}
+                                  {item.size.currentKey
+                                    ? item.size.currentKey
+                                    : "100 ML"}
                                 </p>
                                 <div className="my-2">
                                   <Button

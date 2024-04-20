@@ -11,9 +11,13 @@ const productSchema = new Schema({
     publicId: String,
     secureUrl: String,
   },
-  composition: [{ type: String, required: true }], // Corregido
-  categories: [{ type: String, required: true }], // Corregido
-  typeProduct: { type: String, required: true }, // Corregido
+  composition: {
+    notasAltas: { type: String, required: true },
+    notasMedias: { type: String, required: true },
+    notasBajas: { type: String, required: true },
+  },
+  categories: [{ type: String, required: true }],
+  typeProduct: { type: String, required: true },
 });
 
 const Product = model("Product", productSchema);

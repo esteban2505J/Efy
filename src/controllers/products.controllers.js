@@ -104,11 +104,12 @@ export const getProducts = async (req, res) => {
       res.status(404).json({ message: "No se encontraron productos" });
     }
 
+    console.log(products);
     // Devolver los productos encontrados
     return res.json(products);
   } catch (error) {
     console.log(error);
-    return res.json({ message: "Erorror al encontrar productos" });
+    return res.json({ message: "Error al encontrar productos" });
   }
 };
 
@@ -145,5 +146,25 @@ export const getProductsByTypeProduct = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(404).json({ message: "algo salió mal" });
+  }
+};
+
+export const getProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res
+        .status(404)
+        .json({
+          message: "No se encontró ningún producto con el ID proporcionado.",
+        });
+    }
+
+    return res.json(product);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Algo salió mal al buscar el producto." });
   }
 };
