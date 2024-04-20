@@ -11,7 +11,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 import { useParams, useLocation } from "react-router-dom";
 import { BsCart3, BsChevronCompactDown } from "react-icons/bs";
-
 import useCart from "../context/CartContext";
 import useProduct from "../context/ProductContext";
 
