@@ -29,7 +29,6 @@ export default function CardProduct2() {
                 console.log(error);
               }
             }}
-            onClick={() => navigate(`/product/${item.title}`)}
           >
             <CardBody className="overflow-visible p-0 ">
               <img

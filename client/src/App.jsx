@@ -19,6 +19,8 @@ import Returns from "./Pages/Returns";
 import Footer from "./components/tienda/footer";
 import PaginationNav from "./components/tienda/PaginationNav";
 import { ProductProvider } from "./context/ProductContext";
+import CreateProduct from "./Pages/Information/admin/createProduct";
+import AdministrativePanel from "./Pages/Information/admin/AdministrativePanel";
 
 function App() {
   return (
@@ -48,6 +50,14 @@ function App() {
                     <Route path="/favorites" element={<FavoriteItems />} />
                     <Route path="/pqrs" element={<Pqrs />} />
                     <Route path="/returns" element={<Returns />} />
+                    <Route
+                      path="/admin/createProduct"
+                      element={<CreateProduct />}
+                    ></Route>
+                    <Route
+                      path="/admin/administrativePanel"
+                      element={<AdministrativePanel />}
+                    />
                   </Routes>
                 </body>
                 <Footer className="footer" />

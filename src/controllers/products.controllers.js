@@ -61,12 +61,12 @@ export const createProduct = async (req, res) => {
 };
 
 // Este función elimina un producto dado su id
-export const deleteProcut = async (req, res) => {
-  const { _id } = req.body;
+export const deleteProduct = async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const productDelete = await Product.findByIdAndDelete({ _id: _id });
-    if (productDelete) {
+    const productDelete = await Product.findByIdAndDelete(id);
+    if (!productDelete) {
       return res.status(400).json({ message: "El producto no se eliminó" });
     }
     return res.json({ message: "se ha eliminado el producto con exito" });
@@ -153,11 +153,9 @@ export const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res
-        .status(404)
-        .json({
-          message: "No se encontró ningún producto con el ID proporcionado.",
-        });
+      return res.status(404).json({
+        message: "No se encontró ningún producto con el ID proporcionado.",
+      });
     }
 
     return res.json(product);

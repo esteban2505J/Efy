@@ -110,7 +110,7 @@ export default function DetailProduct() {
   return (
     <>
       {
-        <section className="grid md:grid-cols-2  m-6">
+        <section className="grid md:grid-cols-2  m-6 mb-16">
           <section>
             <div className="flex justify-center">
               <img
@@ -208,7 +208,7 @@ export default function DetailProduct() {
             </div>
 
             {/* Botones de añadir al carrito y favoritos */}
-            <div>
+            <div className="m-6 mt-8">
               <div className="flex ">
                 <Button
                   variant="shadow"
@@ -217,7 +217,7 @@ export default function DetailProduct() {
                   onPress={() => {
                     addItemToCart({
                       ...product,
-                      size: selectedKeys,
+                      size: selectedValue,
                       price: selectdPrice,
                     });
                   }}

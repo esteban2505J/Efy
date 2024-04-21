@@ -38,7 +38,7 @@ export default function FavoriteItems() {
               <div className="flex justify-evenly">
                 <div>
                   <img
-                    src={item.img}
+                    src={item.referenceImage.secureUrl}
                     alt=""
                     className="w-44 h-44 object-cover rounded-lg shadow-lg"
                   />

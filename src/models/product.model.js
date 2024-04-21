@@ -4,9 +4,9 @@ const { Schema, model } = mongoose;
 
 // Esta función es para crear el esquema en la base de datos
 const productSchema = new Schema({
-  title: { type: String, required: true }, // Corregido
+  title: { type: String, required: true },
   house: { type: String }, // Corregido
-  description: { type: String, required: true }, // Corregido
+  description: { type: String, required: true },
   referenceImage: {
     publicId: String,
     secureUrl: String,

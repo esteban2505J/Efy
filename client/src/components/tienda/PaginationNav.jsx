@@ -2,15 +2,20 @@ import { Pagination, Button } from "@nextui-org/react";
 
 import React from "react";
 
-export default function PaginationNav() {
+export default function PaginationNav({ pages, page, setPage }) {
   return (
     <div className="flex justify-center items-center m-8">
       <Pagination
-        total={10}
+        showControls
+        isCompact
+        size="sm"
+        total={pages}
+        page={page}
+        onChange={setPage}
         classNames={{
-          wrapper: "gap-0 overflow-visible h-8 rounded border bg-black   ",
-          item: "w-8 h-8 text-small rounded-none bg-transparent text-[#E3A03F]",
-          cursor: "bg-[#E3A03F] shadow-lg  font-bold",
+          wrapper: "bg-black",
+          cursor:
+            "bg-[#E3A03F] shadow-lg  to-default-800  text-white font-bold",
         }}
       />
     </div>

@@ -103,7 +103,6 @@ const CheckOutForm = () => {
       </div>
       <div className="mt-4 ">
         <h2 className="text-xl mb-3">Detalles del pago</h2>
-        {/* <CardElement className="bg-[#ECEDEE] p-3 rounded-lg hover:bg-[#E4E4E7] transition-all" /> */}
       </div>
       <div className="justify-center flex">
         <Button
@@ -172,7 +171,7 @@ const ShoppingCart = () => {
                             <div className="flex justify-evenly">
                               {/* imagen del producto */}
                               <img
-                                src={item.img}
+                                src={item.referenceImage.secureUrl}
                                 alt=""
                                 className="w-44 h-44 object-cover rounded-lg shadow-lg"
                               />
@@ -181,12 +180,7 @@ const ShoppingCart = () => {
                               <div className="m-4 ">
                                 <h2 className="text-bold mb-2">{item.title}</h2>
                                 <p>Amount: {item.quantity}</p>
-                                <p>
-                                  Tamaño:{" "}
-                                  {item.size.currentKey
-                                    ? item.size.currentKey
-                                    : "100 ML"}
-                                </p>
+                                <p>Tamaño: {item.size}</p>
                                 <div className="my-2">
                                   <Button
                                     className="text-2xl px-3  bg-black text-white   rounded-none "
