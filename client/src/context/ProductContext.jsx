@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState, createContext, useContext } from "react";
-import { getProducts, getProduct } from "../api/products";
+import { getProducts, getProduct, creteProduct } from "../api/products";
 
 export const ProductContext = createContext();
 
@@ -33,6 +33,15 @@ export const ProductProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const createProductContext = async (product) => {
+    try {
+      const productCreated = await creteProduct(product);
+      console.log(productCreated);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Por medio de este useEffect se piden los productos la backend
   useEffect(() => {
     const fetchProducts = async () => {
@@ -60,6 +69,7 @@ export const ProductProvider = ({ children }) => {
         setCurrentProduct,
         updateProduct,
         loadProduct,
+        createProductContext,
       }}
     >
       {children}

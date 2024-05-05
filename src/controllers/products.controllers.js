@@ -25,7 +25,7 @@ export const createProduct = async (req, res) => {
       composition,
       typeProduct,
     });
-    console.log(req.files.referenceImage);
+
     if (req.files.referenceImage) {
       const result = await upLoadImage(
         req.files.referenceImage.tempFilePath,
@@ -80,10 +80,10 @@ export const deleteProduct = async (req, res) => {
 
 // Esta función actualiza un producto ya existente
 export const updateProduct = async (req, res) => {
-  const { _id } = req.body;
+  const { id } = req.params;
 
   try {
-    const product = await Product.findByIdAndUpdate(_id, req.body, {
+    const product = await Product.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     if (!product) return res.status(404).json({ message: "product no found" });
@@ -104,7 +104,7 @@ export const getProducts = async (req, res) => {
       res.status(404).json({ message: "No se encontraron productos" });
     }
 
-    console.log(products);
+    // console.log(products);
     // Devolver los productos encontrados
     return res.json(products);
   } catch (error) {

@@ -12,20 +12,14 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  Pagination,
 } from "@nextui-org/react";
 import PaginationNav from "../../../components/tienda/PaginationNav";
+import ModalCreateProduct from "../../../components/products/ModalCreateProduct";
 
 import { FiSearch } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import useProduct from "../../../context/ProductContext";
-
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -165,6 +159,7 @@ export default function AdministrativePanel() {
             variant="bordered"
             onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
+            className="text-white"
           />
           <div className="flex gap-3">
             <Dropdown>
@@ -217,13 +212,7 @@ export default function AdministrativePanel() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button
-              className="bg-foreground text-background"
-              endContent={<AiOutlinePlus />}
-              size="sm"
-            >
-              Add New
-            </Button>
+            <ModalCreateProduct />
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -266,7 +255,14 @@ export default function AdministrativePanel() {
   const classNames = React.useMemo(
     () => ({
       wrapper: ["max-h-[382px]", "max-w-3xl"],
-      th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
+      th: [
+        "bg-slate-600",
+        "text-black",
+        "border-b",
+        "border-divider",
+        "text-md",
+        ,
+      ],
       td: [
         // changing the rows border radius
         // first
@@ -278,49 +274,54 @@ export default function AdministrativePanel() {
         "group-data-[last=true]:first:before:rounded-none",
         "group-data-[last=true]:last:before:rounded-none",
       ],
+      tr: ["text-white ", "hover:text-black"],
     }),
     []
   );
 
   return (
-    <Table
-      isCompact
-      removeWrapper
-      aria-label="Example table with custom cells, pagination and sorting"
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      checkboxesProps={{
-        classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
-        },
-      }}
-      classNames={classNames}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No products found"} items={items}>
-        {(item) => (
-          <TableRow key={item.title}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <div className="m-6">
+      <Table
+        isCompact
+        removeWrapper
+        aria-label="Example table with custom cells, pagination and sorting"
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        checkboxesProps={{
+          classNames: {
+            wrapper:
+              "after:bg-foreground after:text-background text-background",
+          },
+        }}
+        classNames={classNames}
+        selectedKeys={selectedKeys}
+        selectionMode="multiple"
+        topContent={topContent}
+        topContentPlacement="outside"
+        onSelectionChange={setSelectedKeys}
+        className="bg-slate-900 p-3 rounded-md"
+      >
+        <TableHeader columns={headerColumns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+              allowsSorting={column.sortable}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No products found"} items={items}>
+          {(item) => (
+            <TableRow key={item.title}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
