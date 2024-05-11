@@ -12,9 +12,7 @@ const productSchema = new Schema({
     secureUrl: String,
   },
   composition: {
-    notasAltas: { type: String, required: true },
-    notasMedias: { type: String, required: true },
-    notasBajas: { type: String, required: true },
+   type: String, required:true
   },
   categories: [{ type: String, required: true }],
   typeProduct: { type: String, required: true },

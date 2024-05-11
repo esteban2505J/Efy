@@ -16,6 +16,7 @@ import useProduct from "../context/ProductContext";
 
 export default function DetailProduct() {
   const { id } = useParams();
+  console.log(id)
   const [product, setProduct] = useState([]);
   const { loadProduct } = useProduct();
 
@@ -98,8 +99,9 @@ export default function DetailProduct() {
     }
   };
 
-  const notas = product.composition;
-  const notasAltas = notas ? notas.notasAltas.split("+") : [];
+  const notas = product.composition ? JSON.parse(product.composition) : null;
+
+  const notasAltas = notas ? console.log(notas.notasAltas) : [];
   const notasMedias = notas ? notas.notasMedias.split("+") : [];
   const notasBajas = notas ? notas.notasBajas.split("+") : [];
 

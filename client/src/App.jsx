@@ -30,7 +30,8 @@ function App() {
           <AuthProvider>
             <HashRouter>
               <main>
-                <Nav2 />
+                <Nav2 /> 
+                
 
                 <body>
                   <Routes>

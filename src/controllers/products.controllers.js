@@ -7,7 +7,7 @@ export const createProduct = async (req, res) => {
   const { title, house, categories, description, composition, typeProduct } =
     req.body;
 
-  try {
+  try {   
     // Verificando si el producto ya existe
     const productFound = await Product.findOne({ title: title });
     if (productFound) {

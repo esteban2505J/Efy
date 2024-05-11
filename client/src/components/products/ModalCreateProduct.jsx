@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -15,7 +15,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 
 export default function ModalCreateProduct() {
-  const [productImage, setProductImage] = useState([]);
+  const [productImage, setProductImage] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { createProductContext } = useProduct();
   const {
@@ -23,30 +23,40 @@ export default function ModalCreateProduct() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const formData = new FormData();
 
   const handleProductImageChange = (e) => {
-    let selectedFile = e.target.files[0];
-    setProductImage(selectedFile);
-    console.log(productImage);
+    const selectedFile = e.target.files[0];   
+    setProductImage(selectedFile)
+    console.log(selectedFile);
   };
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values);
-    const formData = new FormData();
+   
+    
     formData.append("title", values.title);
     formData.append("house", values.house);
     formData.append("description", values.description);
-    formData.append("composition", {
+    formData.append("composition", JSON.stringify({
       notasAltas: values.notasAltas,
       notasMedias: values.notasMedias,
       notasBajas: values.notasBajas,
-    });
-    formData.append("type", values.type);
+    }));
+    formData.append("typeProduct", values.type);
     formData.append("referenceImage", productImage);
-    console.log(JSON.stringify(formData));
+  
+    console.log("FormData Entries:");
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
 
-    // createProductContext(formData);
-    onclose();
+    createProductContext(formData);
+
   });
+
+  useEffect(()=>{
+    console.log(productImage)
+    console.log()
+  },[productImage])
   return (
     <>
       <Button
@@ -140,6 +150,7 @@ export default function ModalCreateProduct() {
                 <Input
                   type="file"
                   id="imageProduct"
+                  accept="image/*"
                   variant="bordered"
                   onChange={handleProductImageChange}
                   name="productImage"
