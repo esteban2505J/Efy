@@ -14,7 +14,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import PaginationNav from "../../../components/tienda/PaginationNav";
-import ModalCreateProduct from "../../../components/products/ModalCreateProduct";
+
 
 import { FiSearch } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -212,7 +212,7 @@ export default function AdministrativePanel() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <ModalCreateProduct />
+            {/* <ModalCreateProduct /> */}
           </div>
         </div>
         <div className="flex justify-between items-center">

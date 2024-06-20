@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
 import { transporter } from "../libs/nodemailer.js";
-import upLoadImage from "../libs/claudinary.js";
+// import upLoadImage from "../libs/claudinary.js";
 
 import fs from "fs-extra";
 
@@ -34,20 +34,20 @@ export const register = async (req, res) => {
       fullName,
     });
     console.log(req.files);
-    if (req.files.profilePicture) {
-      const result = await upLoadImage(
-        req.files.profilePicture.tempFilePath,
-        "profileImage"
-      );
-      newUser.profilePicture = {
-        publicId: result.public_id,
-        secureUrl: result.secure_url,
-      };
+    // if (req.files.profilePicture) {
+    //   const result = await upLoadImage(
+    //     req.files.profilePicture.tempFilePath,
+    //     "profileImage"
+    //   );
+    //   newUser.profilePicture = {
+    //     publicId: result.public_id,
+    //     secureUrl: result.secure_url,
+    //   };
 
-      await fs.unlink(req.files.profilePicture.tempFilePath);
+    //   await fs.unlink(req.files.profilePicture.tempFilePath);
 
-      console.log(result);
-    }
+    //   console.log(result);
+    // }
     // saved the user create
     const userSaved = await newUser.save();
 

@@ -26,7 +26,7 @@ app.use(
     tempFileDir: "./uploads",
   })
 );
-
+// app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", prodctuRoutes);

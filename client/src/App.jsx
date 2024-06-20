@@ -19,8 +19,8 @@ import Returns from "./Pages/Returns";
 import Footer from "./components/tienda/footer";
 import PaginationNav from "./components/tienda/PaginationNav";
 import { ProductProvider } from "./context/ProductContext";
-import CreateProduct from "./Pages/Information/admin/createProduct";
-import AdministrativePanel from "./Pages/Information/admin/AdministrativePanel";
+import CreateProduct from "./Pages/Admin/products/CreateProduct";
+import AdministrativePanel from "./Pages/Admin/panel/AdministrativePanel";
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
       <ProductProvider>
         <CartProvider>
           <AuthProvider>
-            <HashRouter>
+            <HashRouter>  
               <main>
                 <Nav2 /> 
                 
@@ -59,6 +59,8 @@ function App() {
                       path="/admin/administrativePanel"
                       element={<AdministrativePanel />}
                     />
+
+                   
                   </Routes>
                 </body>
                 <Footer className="footer" />
