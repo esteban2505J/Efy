@@ -65,9 +65,6 @@ export const createProduct = async (req, res) => {
       attributes : productSaved.attributes, 
       createAt: productSaved.createdAt,
       updateAt: productSaved.updatedAt,
-
-      status : "true",
-      data : referenceImage
     });
   } catch (error) {
     console.log(error);
