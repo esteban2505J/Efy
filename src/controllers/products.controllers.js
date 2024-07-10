@@ -1,6 +1,8 @@
 import Product from "../models/product.model.js";
 import fs from "fs-extra";
 import uploadImage from "../libs/cloudinaryConfig.js";
+import Categorie from "../models/category.model.js";
+
 
 
 // función para crear un producto
@@ -178,3 +180,33 @@ export const getProduct = async (req, res) => {
       .json({ message: "Algo salió mal al buscar el producto." });
   }
 };
+
+// Function for create a new category
+export const createCategory = async (req,res)=>{
+try {
+  const {name, atributtes} =  req.body;
+  const categorieFound = await Categorie.find({name:name})
+  if(!name && !atributtes){
+    return res.status(500).json({message:"No se ingrearon los parametros"})
+  }
+  console.log(categorieFound);
+  if(categorieFound[0]) return res.status(500).json({message:"La categoria ya Existe"})
+  const newCategorie = new Categorie({
+    name,
+    atributtes
+  })
+  const categorieSaved =  await newCategorie.save()
+
+  if(categorieSaved){
+    return res.status(200).json({
+      name : categorieSaved.status,
+      atributtes : categorieSaved.atributtes
+      
+    })
+  }
+
+} catch (error) {
+  console.log(error);
+  return res.status(500).json({message: "algo salió mal"})
+}
+}

@@ -7,6 +7,7 @@ import {
   getProductsByCategorie,
   getProductsByTypeProduct,
   updateProduct,
+  createCategory
 } from "../controllers/products.controllers.js";
 
 const router = new Router();
@@ -21,5 +22,8 @@ router.get("/products/type", getProductsByTypeProduct);
 router.delete("/products/product/delete/:id", deleteProduct);
 router.put("/products/product/update/:id", updateProduct);
 router.get("/product/:id", getProduct);
+
+// Ruta para la creación de categorias
+router.post("/admin/createCategory",createCategory)
 
 export default router;
