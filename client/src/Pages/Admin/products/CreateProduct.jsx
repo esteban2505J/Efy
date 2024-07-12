@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { LuImagePlus } from "react-icons/lu";
 import { FaCircleCheck } from "react-icons/fa6";
 import useProduct from "../../../context/ProductContext";
 import { createCategory } from "../../../api/products";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Importa los estilos de Quill
 
 export default function CreateProduct() {
   // useForm for creating products
   const {
     register: registerProduct,
     handleSubmit: handleSubmitProduct,
+    control: controlProduct,
     formState: { errors: productErrors },
   } = useForm();
 
@@ -84,10 +87,13 @@ export default function CreateProduct() {
   return (
     <div className="min-h-screen bg-gray-300 grid justify-center grid-cols-1 sm:grid-cols-3 items-center sm:items-start sm:gap-4">
       <div className="bg-white sm:my-20 p-8 rounded-lg shadow-lg m-4 sm:ml-10 col-span-2">
-        <h1 className="font-semibold text-xl text-center mb-8">
+        <h1 className="font-semibold text-xl text-center mb-8 bg-yellow-500 ">
           Crear Productos
         </h1>
-        <form onSubmit={onSubmitProduct} className="grid grid-cols-2 gap-4">
+        <form
+          onSubmit={onSubmitProduct}
+          className="sm:grid  flex flex-col sm:grid-cols-2 gap-8 gap-y-14"
+        >
           <Input
             {...registerProduct("title", { required: true })}
             type="text"
@@ -95,12 +101,14 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
-          <Input
-            {...registerProduct("description", { required: true })}
-            type="text"
-            label="Descripción"
-            variant="underlined"
-            color="warning"
+          <Controller
+            name="description"
+            control={controlProduct}
+            z
+            defaultValue=""
+            render={({ field }) => (
+              <ReactQuill {...field} placeholder="Descripción..." />
+            )}
           />
           <Input
             {...registerProduct("categories", { required: true })}
@@ -170,29 +178,71 @@ export default function CreateProduct() {
         </form>
       </div>
 
-      {/* Crear las categorías */}
-      <div className="m-4 sm:my-20 bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="m-6 text-center">Crear categorias</h2>
-        <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
-          <Input
-            {...registerCategory("name", { required: true })}
-            type="text"
-            label="Name"
-            variant="underlined"
-          />
-          <Input
-            {...registerCategory("atributos", { required: true })}
-            type="text"
-            label="Atributos"
-            variant="underlined"
-          />
-          <div className="col-span-2 flex justify-center mt-4">
-            <Button type="submit" className="bg-black text-white">
-              Submit
-            </Button>
-          </div>
-        </form>
-      </div>
+      <aside className="grid gap-y-6 sm:mt-20 sm:mr-10 m-4">
+        {/* Crear las categorías */}
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="mb-4 text-center bg-black text-white">
+            Crear una categoría
+          </h2>
+          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
+            <Input
+              {...registerCategory("name", { required: true })}
+              type="text"
+              label="Name"
+              variant="underlined"
+              className="col-span-2"
+            />
+
+            <div className="col-span-2 flex justify-center mt-4">
+              <Button type="submit" className="bg-black text-white">
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
+        {/* Crear subCategorias */}
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="mb-4 text-center bg-slate-600 text-white">
+            Crear una subcategoría
+          </h2>
+          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
+            <Input
+              {...registerCategory("name", { required: true })}
+              type="text"
+              label="Name"
+              variant="underlined"
+              className="col-span-2"
+            />
+
+            <div className="col-span-2 flex justify-center mt-4">
+              <Button type="submit" className="bg-black text-white">
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
+        {/* Crear tags */}
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="mb-4 text-center bg-orange-200 text-white">
+            Crear un tag
+          </h2>
+          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
+            <Input
+              {...registerCategory("name", { required: true })}
+              type="text"
+              label="Name"
+              variant="underlined"
+              className="col-span-2"
+            />
+
+            <div className="col-span-2 flex justify-center mt-4">
+              <Button type="submit" className="bg-black text-white">
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
+      </aside>
     </div>
   );
 }
