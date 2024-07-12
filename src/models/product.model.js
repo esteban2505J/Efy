@@ -10,11 +10,14 @@ const productSchema = new Schema({
     secureUrl: String,
   },
   categories: [{ type: String, required: true }],
-  typeProduct: { type: String, required: true },
-  price : {type : String, required:true},
-  attributes: { type: Map, of: String ,default :{}}}, {timestamps :true}
+  subCategories: [{ type: String, required: true }],
+  tags: [{ type: String, default:[] }],
+  price: { type: String, required: true },
+  attributes: { type: Map, of: String, default: {} }
+}, { timestamps: true }
 );
 
+productSchema.index({ name: 1 }, { unique: true, collation: { locale: 'es', strength: 2 } });
 const Product = model("Product", productSchema);
 
 export default Product;
