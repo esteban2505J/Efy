@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { LuImagePlus } from "react-icons/lu";
 import { FaCircleCheck } from "react-icons/fa6";
 import useProduct from "../../../context/ProductContext";
-import { createCategory } from "../../../api/products";
+import {
+  createCategory,
+  createSubCategory,
+  createTag,
+} from "../../../api/products";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Importa los estilos de Quill
 
@@ -24,7 +28,21 @@ export default function CreateProduct() {
     formState: { errors: categoryErrors },
   } = useForm();
 
-  const { createProductContext } = useProduct();
+  // useForm for creating subcategories
+  const {
+    register: registerSubCategory,
+    handleSubmit: handleSubmitSubCategory,
+    formState: { errors: subCategoryErrors },
+  } = useForm();
+
+  // useForm for creating subcategories
+  const {
+    register: registerTags,
+    handleSubmit: handleSubmitTags,
+    formState: { errors: tagsErrors },
+  } = useForm();
+
+  const { createProductContext, subCategories } = useProduct();
   const [fileName, setFileName] = useState("");
   const [isFileSelected, setIsFileSelected] = useState(false);
 
@@ -67,18 +85,41 @@ export default function CreateProduct() {
   // Function to create a new category
   const onSubmitCategory = handleSubmitCategory(async (values) => {
     const formDataCategory = new FormData();
-    const attributes = values.atributos.split(",").map((atributo) => {
-      return atributo.trim();
-    });
 
-    formDataCategory.append("name", values.name);
-    formDataCategory.append("atributtes", JSON.stringify(attributes));
-    console.log(attributes);
+    formDataCategory.append("name", values.name.toUpperCase());
     console.log(values.name);
-
     try {
       const category = await createCategory(formDataCategory);
       if (category) console.log(category);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  // Function to create a new subcategory
+  const onSubmitSubCategory = handleSubmitSubCategory(async (values) => {
+    const formDataSubCategory = new FormData();
+
+    console.log(values.name);
+    formDataSubCategory.append("name", values.name.toUpperCase());
+
+    try {
+      const subCategory = await createSubCategory(formDataSubCategory);
+      if (subCategory) console.log(subCategory);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  // Function to create a new tag
+  const onSubmitTag = handleSubmitTags(async (values) => {
+    const formDataTag = new FormData();
+
+    formDataTag.append("name", values.name.toUpperCase());
+
+    console.log(values.name);
+
+    try {
+      const tag = await createTag(formDataTag);
+      if (tag) console.log(tag);
     } catch (error) {
       console.log(error);
     }
@@ -94,6 +135,7 @@ export default function CreateProduct() {
           onSubmit={onSubmitProduct}
           className="sm:grid  flex flex-col sm:grid-cols-2 gap-8 gap-y-14"
         >
+          {/* Titulo */}
           <Input
             {...registerProduct("title", { required: true })}
             type="text"
@@ -101,6 +143,7 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
+          {/* Descriptción */}
           <Controller
             name="description"
             control={controlProduct}
@@ -110,6 +153,7 @@ export default function CreateProduct() {
               <ReactQuill {...field} placeholder="Descripción..." />
             )}
           />
+          {/* categorías */}
           <Input
             {...registerProduct("categories", { required: true })}
             type="text"
@@ -117,13 +161,29 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
+          {/* SubCategories */}
+          <Select
+            label="Subcategorías"
+            selectionMode="multiple"
+            className="max-w-xs"
+            variant="underlined"
+            color="warning"
+          >
+            {subCategories.map((subCategories) => (
+              <SelectItem key={subCategories.key}>
+                {subCategories.name}
+              </SelectItem>
+            ))}
+          </Select>
+          {/* tags */}
           <Input
-            {...registerProduct("typeProduct", { required: true })}
+            {...registerProduct("tags", { required: true })}
             type="text"
-            label="Tipo de producto"
+            label="Etiquetas"
             variant="underlined"
             color="warning"
           />
+          {/* precio */}
           <Input
             {...registerProduct("price", { required: true })}
             type="text"
@@ -131,7 +191,7 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
-
+          {/* I */}
           <div className="col-span-2">
             <div className="flex items-center justify-center w-full m-3">
               <label
@@ -205,9 +265,12 @@ export default function CreateProduct() {
           <h2 className="mb-4 text-center bg-slate-600 text-white">
             Crear una subcategoría
           </h2>
-          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
+          <form
+            onSubmit={onSubmitSubCategory}
+            className="grid grid-cols-2 gap-4"
+          >
             <Input
-              {...registerCategory("name", { required: true })}
+              {...registerSubCategory("name", { required: true })}
               type="text"
               label="Name"
               variant="underlined"
@@ -226,9 +289,9 @@ export default function CreateProduct() {
           <h2 className="mb-4 text-center bg-orange-200 text-white">
             Crear un tag
           </h2>
-          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
+          <form onSubmit={onSubmitTag} className="grid grid-cols-2 gap-4">
             <Input
-              {...registerCategory("name", { required: true })}
+              {...registerTags("name", { required: true })}
               type="text"
               label="Name"
               variant="underlined"

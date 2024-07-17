@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useState, createContext, useContext } from "react";
-import { getProducts, getProduct, creteProduct } from "../api/products";
+import {
+  getProducts,
+  getProduct,
+  creteProduct,
+  getSubCategories,
+} from "../api/products";
 
 export const ProductContext = createContext();
 
@@ -14,6 +19,7 @@ export const useProduct = () => {
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentProduct, setCurrentProduct] = useState(
@@ -42,24 +48,44 @@ export const ProductProvider = ({ children }) => {
       console.log(error);
     }
   };
-  // Por medio de este useEffect se piden los productos la backend
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const dataProducts = await getProducts();
-        setLoading(false);
-        setProducts(dataProducts.data);
-        console.log(dataProducts.data);
-        if (dataProducts.length === 0) {
-          console.log("Ups!! No se encontraron productos");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchProducts();
-  }, []);
+  // Por medio de este useEffect se piden los productos la backend
+  useEffect(
+    () => {
+      const fetchProducts = async () => {
+        try {
+          const dataProducts = await getProducts();
+          setLoading(false);
+          setProducts(dataProducts.data);
+          console.log(dataProducts.data);
+          if (dataProducts.length === 0) {
+            console.log("Ups!! No se encontraron productos");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      const fetchSubCategories = async () => {
+        try {
+          const dataSubcategories = await getSubCategories();
+
+          setSubCategories(dataSubcategories.data);
+          console.log(dataSubcategories.data);
+          if (dataSubcategories.length === 0) {
+            console.log("Ups!! No se encontraron las subCategorías");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchProducts();
+      fetchSubCategories();
+    },
+    [],
+    [subCategories]
+  );
 
   return (
     <ProductContext.Provider
@@ -70,6 +96,7 @@ export const ProductProvider = ({ children }) => {
         updateProduct,
         loadProduct,
         createProductContext,
+        subCategories,
       }}
     >
       {children}
