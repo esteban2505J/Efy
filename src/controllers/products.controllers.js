@@ -2,6 +2,9 @@ import Product from "../models/product.model.js";
 import fs from "fs-extra";
 import uploadImage from "../libs/cloudinaryConfig.js";
 import Categorie from "../models/category.model.js";
+import SubCategorie from "../models/subCategory.model.js";
+import TagModel from "../models/tag.model.js";
+
 
 
 
@@ -126,6 +129,22 @@ export const getProducts = async (req, res) => {
     return res.json({ message: "Error al encontrar productos" });
   }
 };
+// función que devuelve todos los productos
+export const getSubCagtegories = async (req, res) => {
+  try {
+    const subCategories = await SubCategorie.find();
+    if (!subCategories || subCategories.length == 0) {
+      res.status(404).json({ message: "No se encontraron subcategorias" });
+    }
+
+    // console.log(products);
+    // Devolver los productos encontrados
+    return res.json(subCategories);
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: "Error al encontrar subcategorias" });
+  }
+};
 
 // Función que devuelve los productos de cierta categoría
 export const getProductsByCategorie = async (req, res) => {
@@ -184,23 +203,75 @@ export const getProduct = async (req, res) => {
 // Function for create a new category
 export const createCategory = async (req,res)=>{
 try {
-  const {name, atributtes} =  req.body;
+  const {name} =  req.body;
   const categorieFound = await Categorie.find({name:name})
-  if(!name && !atributtes){
+  if(!name){
     return res.status(500).json({message:"No se ingrearon los parametros"})
   }
   console.log(categorieFound);
   if(categorieFound[0]) return res.status(500).json({message:"La categoria ya Existe"})
   const newCategorie = new Categorie({
-    name,
-    atributtes
+    name
   })
   const categorieSaved =  await newCategorie.save()
 
   if(categorieSaved){
     return res.status(200).json({
-      name : categorieSaved.status,
-      atributtes : categorieSaved.atributtes
+      name : categorieSaved.status
+      
+    })
+  }
+
+} catch (error) {
+  console.log(error);
+  return res.status(500).json({message: "algo salió mal"})
+}
+}
+// Function for create a new subcategory
+export const createSubCategory = async (req,res)=>{
+try {
+  const {name} =  req.body;
+  const subCategorieFound = await SubCategorie.find({name:name})
+  if(!name ){
+    return res.status(500).json({message:"No se ingrearon los parametros"})
+  }
+  console.log(subCategorieFound);
+  if(subCategorieFound[0]) return res.status(500).json({message:"La subcategoria ya Existe"})
+  const newSubCategorie = new SubCategorie({
+    name
+  })
+  const subCategorieSaved =  await newSubCategorie.save()
+
+  if(subCategorieSaved){
+    return res.status(200).json({
+      name : subCategorieSaved.status, 
+    })
+  }
+
+} catch (error) {
+  console.log(error);
+  return res.status(500).json({message: "algo salió mal"})
+}
+}
+// Function for create a new tag
+export const createTag = async (req,res)=>{
+try {
+  const {name} =  req.body;
+  const tagFound = await TagModel.find({name:name})
+  if(!name){
+    return res.status(500).json({message:"No se ingrearon los parametros"})
+  }
+  console.log(tagFound);
+  if(tagFound[0]) return res.status(500).json({message:"La etiqueta ya Existe"})
+  const newTag = new TagModel({
+    name
+    
+  })
+  const tagSaved =  await newTag.save()
+
+  if(tagSaved){
+    return res.status(200).json({
+      name : tagSaved.status
       
     })
   }
