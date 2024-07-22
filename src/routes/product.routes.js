@@ -5,12 +5,14 @@ import {
   getProduct,
   getProducts,
   getProductsByCategorie,
-  getProductsByTypeProduct,
+  
   updateProduct,
   createCategory,
   createSubCategory,
   createTag,
-  getSubCagtegories
+  getSubCategories,
+  getCategories,
+  getTags
 } from "../controllers/products.controllers.js";
 
 const router = new Router();
@@ -21,13 +23,17 @@ router.post("/createProduct", createProduct);
 // Rutas para otras operaciones CRUD de productos
 router.get("/products", getProducts);
 router.get("/products/categorie", getProductsByCategorie);
-router.get("/products/type", getProductsByTypeProduct);
+// router.get("/products/type", getProductsByTypeProduct);
 router.delete("/products/product/delete/:id", deleteProduct);
 router.put("/products/product/update/:id", updateProduct);
 router.get("/product/:id", getProduct);
 
 // Ruta para obtener las sub categorias
-router.get("/admin/getSubCategories", getSubCagtegories);
+router.get("/admin/getSubCategories", getSubCategories);
+// Ruta para obtener las categorias
+router.get("/admin/getCategories", getCategories);
+// Ruta para obtener las tags
+router.get("/admin/getTags", getTags);
 
 // Ruta para la creación de categorias
 router.post("/admin/createCategory",createCategory)

@@ -12,7 +12,7 @@ import TagModel from "../models/tag.model.js";
 export const createProduct = async (req, res) => {
 
   // Atributos del producto
-  const { title, description,categories, typeProduct , price, attributes} =
+  const { title, description,categories, typeProduct , price, attributes, subCategories, tags} =
     req.body;
 
    try {   
@@ -25,6 +25,7 @@ export const createProduct = async (req, res) => {
       return res.status(400).json(["El producto ya existe"]);
     }
 
+    console.log(req.files);
     // Verificar si se ha subido un archivo
     if (!req.files || !req.files.image) {
       return res.status(400).json({ message: 'No se ha proporcionado ninguna imagen para subir' });
@@ -55,7 +56,9 @@ export const createProduct = async (req, res) => {
       typeProduct,
       price,
       referenceImage : {publicId:referenceImage.public_id, secureUrl: referenceImage.secure_url},
-      attributes
+      attributes,
+      subCategories,
+      tags
     });
 
     //saved the Product create
@@ -129,8 +132,8 @@ export const getProducts = async (req, res) => {
     return res.json({ message: "Error al encontrar productos" });
   }
 };
-// función que devuelve todos los productos
-export const getSubCagtegories = async (req, res) => {
+// función que devuelve todos las subcategorias 
+export const getSubCategories = async (req, res) => {
   try {
     const subCategories = await SubCategorie.find();
     if (!subCategories || subCategories.length == 0) {
@@ -143,6 +146,39 @@ export const getSubCagtegories = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.json({ message: "Error al encontrar subcategorias" });
+  }
+};
+
+// función que devuelve todos las categorias  ++++++++
+export const getCategories = async (req, res) => {
+  try {
+    const categories = await Categorie.find();
+    if (!categories || categories.length == 0) {
+      res.status(404).json({ message: "No se encontraron categorias" });
+    }
+
+    // console.log(products);
+    // Devolver los productos encontrados
+    return res.json(categories);
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: "Error al encontrar categorias" });
+  }
+};
+// función que devuelve todos las tags  ++++++++
+export const getTags = async (req, res) => {
+  try {
+    const tags = await TagModel.find();
+    if (!tags || tags.length == 0) {
+      res.status(404).json({ message: "No se encontraron tags" });
+    }
+
+    // console.log(products);
+    // Devolver los productos encontrados
+    return res.json(tags);
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: "Error al encontrar tags" });
   }
 };
 
@@ -164,23 +200,23 @@ export const getProductsByCategorie = async (req, res) => {
   }
 };
 
-// Función que devuelve los productos de cierta categoría
-export const getProductsByTypeProduct = async (req, res) => {
-  const { type } = req.body;
-  try {
-    const productsByTypeProduct = await Product.findOne({
-      typeProduct: type,
-    });
-    if (!productsByTypeProduct || productsByTypeProduct.length == 0) {
-      res.status(404).json({ message: "No se encotnraron productos " });
-    }
+// // Función que devuelve los productos de cierta categoría
+// export const getProductsByTypeProduct = async (req, res) => {
+//   const { type } = req.body;
+//   try {
+//     const productsByTypeProduct = await Product.findOne({
+//       typeProduct: type,
+//     });
+//     if (!productsByTypeProduct || productsByTypeProduct.length == 0) {
+//       res.status(404).json({ message: "No se encotnraron productos " });
+//     }
 
-    return res.json(productsByTypeProduct);
-  } catch (error) {
-    console.log(error);
-    return res.status(404).json({ message: "algo salió mal" });
-  }
-};
+//     return res.json(productsByTypeProduct);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(404).json({ message: "algo salió mal" });
+//   }
+// };
 
 export const getProduct = async (req, res) => {
   try {
@@ -231,12 +267,14 @@ try {
 export const createSubCategory = async (req,res)=>{
 try {
   const {name} =  req.body;
+  console.log(name);
   const subCategorieFound = await SubCategorie.find({name:name})
-  if(!name ){
+  if(!name){
     return res.status(500).json({message:"No se ingrearon los parametros"})
   }
   console.log(subCategorieFound);
   if(subCategorieFound[0]) return res.status(500).json({message:"La subcategoria ya Existe"})
+
   const newSubCategorie = new SubCategorie({
     name
   })
