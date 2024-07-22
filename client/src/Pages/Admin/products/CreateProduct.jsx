@@ -13,7 +13,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Importa los estilos de Quill
 
 export default function CreateProduct() {
-  // useForm for creating products
   const {
     register: registerProduct,
     handleSubmit: handleSubmitProduct,
@@ -21,73 +20,84 @@ export default function CreateProduct() {
     formState: { errors: productErrors },
   } = useForm();
 
-  // useForm for creating categories
   const {
     register: registerCategory,
     handleSubmit: handleSubmitCategory,
     formState: { errors: categoryErrors },
   } = useForm();
 
-  // useForm for creating subcategories
   const {
     register: registerSubCategory,
     handleSubmit: handleSubmitSubCategory,
     formState: { errors: subCategoryErrors },
   } = useForm();
 
-  // useForm for creating subcategories
   const {
     register: registerTags,
     handleSubmit: handleSubmitTags,
     formState: { errors: tagsErrors },
   } = useForm();
 
-  const { createProductContext, subCategories } = useProduct();
+  const { createProductContext, subCategories, categories, tags } =
+    useProduct();
   const [fileName, setFileName] = useState("");
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [selectedSubCategories, setSelectedSubCategories] = useState(new Set());
+  const [selectedCategories, setSelectedCategories] = useState(new Set());
+  const [selectedTags, setSelectedTags] = useState(new Set());
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  // Function for the submit request
-  const onSubmitProduct = handleSubmitProduct(async (values) => {
+  // Crear los productos
+  const onSubmitProduct = handleSubmitProduct(async (formValues) => {
     const formData = new FormData();
 
-    // Ensure attributes is an object and convert it to JSON
-    const attributes = { marca: "oakley" };
+    try {
+      if (formValues) {
+        console.log(formValues);
 
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("typeProduct", values.typeProduct);
-    const categories = values.categories.split(",").map((categorie) => {
-      return categorie.trim();
-    });
-    formData.append("categories", JSON.stringify(categories));
-    formData.append("price", values.price);
-    formData.append("attributes", JSON.stringify(attributes));
-    const imageFile = values.image[0];
-    if (imageFile) {
-      formData.append("image", imageFile);
+        formData.append("title", formValues.title);
+        formData.append("description", formValues.description);
+        formData.append("typeProduct", formValues.typeProduct);
+        formData.append(
+          "categories",
+          JSON.stringify(Array.from(selectedCategories))
+        );
+        formData.append(
+          "subCategories",
+          JSON.stringify(Array.from(selectedSubCategories))
+        );
+        formData.append("price", formValues.price);
+        if (selectedImage) {
+          formData.append("image", selectedImage);
+        }
+
+        formData.append("tags", JSON.stringify(Array.from(selectedTags)));
+
+        createProductContext(formData);
+        setIsFileSelected(true);
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    createProductContext(formData);
-    setIsFileSelected(true);
   });
 
-  // Function to handle file name display
+  // Manejador de las imágenes
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
-      setIsFileSelected(true); // Set file selected state
+      setSelectedImage(file);
+      setIsFileSelected(true);
     } else {
       setFileName("");
+      setSelectedImage(null);
     }
   };
 
-  // Function to create a new category
+  // Crear las categorías
   const onSubmitCategory = handleSubmitCategory(async (values) => {
     const formDataCategory = new FormData();
-
     formDataCategory.append("name", values.name.toUpperCase());
-    console.log(values.name);
     try {
       const category = await createCategory(formDataCategory);
       if (category) console.log(category);
@@ -95,13 +105,11 @@ export default function CreateProduct() {
       console.log(error);
     }
   });
-  // Function to create a new subcategory
+
+  // Crear las subcategorías
   const onSubmitSubCategory = handleSubmitSubCategory(async (values) => {
     const formDataSubCategory = new FormData();
-
-    console.log(values.name);
     formDataSubCategory.append("name", values.name.toUpperCase());
-
     try {
       const subCategory = await createSubCategory(formDataSubCategory);
       if (subCategory) console.log(subCategory);
@@ -109,14 +117,11 @@ export default function CreateProduct() {
       console.log(error);
     }
   });
-  // Function to create a new tag
+
+  // Crear tags
   const onSubmitTag = handleSubmitTags(async (values) => {
     const formDataTag = new FormData();
-
     formDataTag.append("name", values.name.toUpperCase());
-
-    console.log(values.name);
-
     try {
       const tag = await createTag(formDataTag);
       if (tag) console.log(tag);
@@ -128,14 +133,13 @@ export default function CreateProduct() {
   return (
     <div className="min-h-screen bg-gray-300 grid justify-center grid-cols-1 sm:grid-cols-3 items-center sm:items-start sm:gap-4">
       <div className="bg-white sm:my-20 p-8 rounded-lg shadow-lg m-4 sm:ml-10 col-span-2">
-        <h1 className="font-semibold text-xl text-center mb-8 bg-yellow-500 ">
+        <h1 className="font-semibold text-xl text-center mb-8 bg-yellow-500">
           Crear Productos
         </h1>
         <form
           onSubmit={onSubmitProduct}
-          className="sm:grid  flex flex-col sm:grid-cols-2 gap-8 gap-y-14"
+          className="sm:grid flex flex-col sm:grid-cols-2 gap-8 gap-y-14"
         >
-          {/* Titulo */}
           <Input
             {...registerProduct("title", { required: true })}
             type="text"
@@ -143,47 +147,88 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
-          {/* Descriptción */}
           <Controller
             name="description"
             control={controlProduct}
-            z
             defaultValue=""
             render={({ field }) => (
               <ReactQuill {...field} placeholder="Descripción..." />
             )}
           />
-          {/* categorías */}
-          <Input
-            {...registerProduct("categories", { required: true })}
-            type="text"
-            label="Categorias"
-            variant="underlined"
-            color="warning"
+          {/* Categories */}
+          <Controller
+            name="categories"
+            control={controlProduct}
+            render={({ field }) => (
+              <div>
+                <Select
+                  {...field}
+                  label="Categorías"
+                  selectedKeys={selectedCategories}
+                  selectionMode="multiple"
+                  className="max-w-xs"
+                  onSelectionChange={setSelectedCategories}
+                  variant="underlined"
+                  color="warning"
+                >
+                  {categories.map((category) => (
+                    <SelectItem key={category.name} value={category.name}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            )}
           />
-          {/* SubCategories */}
-          <Select
-            label="Subcategorías"
-            selectionMode="multiple"
-            className="max-w-xs"
-            variant="underlined"
-            color="warning"
-          >
-            {subCategories.map((subCategories) => (
-              <SelectItem key={subCategories.key}>
-                {subCategories.name}
-              </SelectItem>
-            ))}
-          </Select>
-          {/* tags */}
-          <Input
-            {...registerProduct("tags", { required: true })}
-            type="text"
-            label="Etiquetas"
-            variant="underlined"
-            color="warning"
+          <Controller
+            name="subCategories"
+            control={controlProduct}
+            render={({ field }) => (
+              <div>
+                <Select
+                  {...field}
+                  label="Subcategorías"
+                  selectedKeys={selectedSubCategories}
+                  selectionMode="multiple"
+                  className="max-w-xs"
+                  onSelectionChange={setSelectedSubCategories}
+                  variant="underlined"
+                  color="warning"
+                >
+                  {subCategories.map((subCategory) => (
+                    <SelectItem key={subCategory.name} value={subCategory.name}>
+                      {subCategory.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            )}
           />
-          {/* precio */}
+          {/* Tags */}
+          <Controller
+            name="tags"
+            control={controlProduct}
+            render={({ field }) => (
+              <div>
+                <Select
+                  {...field}
+                  label="Tags"
+                  selectedKeys={selectedTags}
+                  selectionMode="multiple"
+                  className="max-w-xs"
+                  onSelectionChange={setSelectedTags}
+                  variant="underlined"
+                  color="warning"
+                >
+                  {tags.map((tag) => (
+                    <SelectItem key={tag.name} value={tag.name}>
+                      {tag.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            )}
+          />
           <Input
             {...registerProduct("price", { required: true })}
             type="text"
@@ -191,7 +236,6 @@ export default function CreateProduct() {
             variant="underlined"
             color="warning"
           />
-          {/* I */}
           <div className="col-span-2">
             <div className="flex items-center justify-center w-full m-3">
               <label
@@ -212,9 +256,11 @@ export default function CreateProduct() {
                     <div className="text-center mt-2">
                       <div className="flex justify-center items-center max-w-max">
                         <FaCircleCheck className="mr-2 text-green-500" />
-                        <p className="text-sm text-gray-500 dark:text-gray-400 overflow-hidden max-w-[200px] sm:max-w-full truncate">
-                          {fileName}
-                        </p>
+                        <div className="max-w-[200px]">
+                          <p className="text-sm text-gray-500 dark:text-gray-400 overflow-hidden  sm:max-w-full truncate">
+                            {fileName}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -237,9 +283,7 @@ export default function CreateProduct() {
           </div>
         </form>
       </div>
-
       <aside className="grid gap-y-6 sm:mt-20 sm:mr-10 m-4">
-        {/* Crear las categorías */}
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h2 className="mb-4 text-center bg-black text-white">
             Crear una categoría
@@ -252,7 +296,6 @@ export default function CreateProduct() {
               variant="underlined"
               className="col-span-2"
             />
-
             <div className="col-span-2 flex justify-center mt-4">
               <Button type="submit" className="bg-black text-white">
                 Submit
@@ -260,7 +303,6 @@ export default function CreateProduct() {
             </div>
           </form>
         </div>
-        {/* Crear subCategorias */}
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h2 className="mb-4 text-center bg-slate-600 text-white">
             Crear una subcategoría
@@ -276,7 +318,6 @@ export default function CreateProduct() {
               variant="underlined"
               className="col-span-2"
             />
-
             <div className="col-span-2 flex justify-center mt-4">
               <Button type="submit" className="bg-black text-white">
                 Submit
@@ -284,7 +325,6 @@ export default function CreateProduct() {
             </div>
           </form>
         </div>
-        {/* Crear tags */}
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h2 className="mb-4 text-center bg-orange-200 text-white">
             Crear un tag
@@ -297,7 +337,6 @@ export default function CreateProduct() {
               variant="underlined"
               className="col-span-2"
             />
-
             <div className="col-span-2 flex justify-center mt-4">
               <Button type="submit" className="bg-black text-white">
                 Submit

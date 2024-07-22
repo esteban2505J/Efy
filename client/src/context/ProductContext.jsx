@@ -5,6 +5,8 @@ import {
   getProduct,
   creteProduct,
   getSubCategories,
+  getCategories,
+  getTags,
 } from "../api/products";
 
 export const ProductContext = createContext();
@@ -20,6 +22,8 @@ export const useProduct = () => {
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentProduct, setCurrentProduct] = useState(
@@ -50,42 +54,69 @@ export const ProductProvider = ({ children }) => {
   };
 
   // Por medio de este useEffect se piden los productos la backend
-  useEffect(
-    () => {
-      const fetchProducts = async () => {
-        try {
-          const dataProducts = await getProducts();
-          setLoading(false);
-          setProducts(dataProducts.data);
-          console.log(dataProducts.data);
-          if (dataProducts.length === 0) {
-            console.log("Ups!! No se encontraron productos");
-          }
-        } catch (error) {
-          console.log(error);
+  useEffect(() => {
+    // Pedida de los productos al backend
+    const fetchProducts = async () => {
+      try {
+        const dataProducts = await getProducts();
+        setLoading(false);
+        setProducts(dataProducts.data);
+
+        if (dataProducts.length === 0) {
+          console.log("Ups!! No se encontraron productos");
         }
-      };
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      const fetchSubCategories = async () => {
-        try {
-          const dataSubcategories = await getSubCategories();
+    // pedida de las subcategorias las backend
+    const fetchSubCategories = async () => {
+      try {
+        const dataSubcategories = await getSubCategories();
 
-          setSubCategories(dataSubcategories.data);
-          console.log(dataSubcategories.data);
-          if (dataSubcategories.length === 0) {
-            console.log("Ups!! No se encontraron las subCategorías");
-          }
-        } catch (error) {
-          console.log(error);
+        setSubCategories(dataSubcategories.data);
+
+        if (dataSubcategories.length === 0) {
+          console.log("Ups!! No se encontraron las subCategorías");
         }
-      };
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // pedida de las categorías al backend
+    const fetchCategories = async () => {
+      try {
+        const dataCategories = await getCategories();
 
-      fetchProducts();
-      fetchSubCategories();
-    },
-    [],
-    [subCategories]
-  );
+        setCategories(dataCategories.data);
+
+        if (dataCategories.length === 0) {
+          console.log("Ups!! No se encontraron las categorías");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // pedida de las tags al backend
+    const fetchTags = async () => {
+      try {
+        const dataTags = await getTags();
+
+        setTags(dataTags.data);
+
+        if (dataTags.length === 0) {
+          console.log("Ups!! No se encontraron tags");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTags();
+    fetchCategories();
+    fetchProducts();
+    fetchSubCategories();
+  }, []);
 
   return (
     <ProductContext.Provider
@@ -97,6 +128,8 @@ export const ProductProvider = ({ children }) => {
         loadProduct,
         createProductContext,
         subCategories,
+        categories,
+        tags,
       }}
     >
       {children}
