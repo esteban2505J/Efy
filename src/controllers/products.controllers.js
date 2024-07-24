@@ -63,7 +63,7 @@ export const createProduct = async (req, res) => {
 
     //saved the Product create
     const productSaved = await newProduct.save();
-    res.json({
+    res.status(200).json({
       id: productSaved._id,
       title: productSaved.title,
       categories: productSaved.categories,
