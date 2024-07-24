@@ -16,7 +16,7 @@ import useProduct from "../context/ProductContext";
 
 export default function DetailProduct() {
   const { id } = useParams();
-  console.log(id);
+
   const [product, setProduct] = useState([]);
   const { loadProduct } = useProduct();
 
@@ -27,7 +27,6 @@ export default function DetailProduct() {
         if (id) {
           const productData = await loadProduct(id);
           setProduct(productData.data);
-          console.log(productData.data);
         }
       } catch (error) {
         console.error("Error fetching product:", error);

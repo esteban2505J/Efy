@@ -24,7 +24,7 @@ export const ProductProvider = ({ children }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [currentProduct, setCurrentProduct] = useState(
     localStorage.getItem("currentProduct") || []
@@ -46,10 +46,17 @@ export const ProductProvider = ({ children }) => {
 
   const createProductContext = async (product) => {
     try {
+      setLoading(true);
       const productCreated = await creteProduct(product);
+      setLoading(false);
+
       console.log(productCreated);
+      if (productCreated.status === 200) return true;
     } catch (error) {
+      setLoading(false);
+
       console.log(error);
+      return false;
     }
   };
 
@@ -130,6 +137,7 @@ export const ProductProvider = ({ children }) => {
         subCategories,
         categories,
         tags,
+        loading,
       }}
     >
       {children}

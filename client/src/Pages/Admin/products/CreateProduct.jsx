@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { LuImagePlus } from "react-icons/lu";
 import { FaCircleCheck } from "react-icons/fa6";
 import useProduct from "../../../context/ProductContext";
+import { toast, ToastContainer } from "react-toastify";
 import {
   createCategory,
   createSubCategory,
@@ -13,6 +14,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Importa los estilos de Quill
 
 export default function CreateProduct() {
+  // Use form product
   const {
     register: registerProduct,
     handleSubmit: handleSubmitProduct,
@@ -20,25 +22,28 @@ export default function CreateProduct() {
     formState: { errors: productErrors },
   } = useForm();
 
+  // Use form categories
   const {
     register: registerCategory,
     handleSubmit: handleSubmitCategory,
     formState: { errors: categoryErrors },
   } = useForm();
 
+  // use form sub categories
   const {
     register: registerSubCategory,
     handleSubmit: handleSubmitSubCategory,
     formState: { errors: subCategoryErrors },
   } = useForm();
 
+  // Use form tags
   const {
     register: registerTags,
     handleSubmit: handleSubmitTags,
     formState: { errors: tagsErrors },
   } = useForm();
 
-  const { createProductContext, subCategories, categories, tags } =
+  const { createProductContext, subCategories, categories, tags, loading } =
     useProduct();
   const [fileName, setFileName] = useState("");
   const [isFileSelected, setIsFileSelected] = useState(false);
@@ -46,6 +51,9 @@ export default function CreateProduct() {
   const [selectedCategories, setSelectedCategories] = useState(new Set());
   const [selectedTags, setSelectedTags] = useState(new Set());
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loadingCategorie, setLoadingCategorie] = useState(false);
+  const [loadingSubCategorie, setLoadingSubCategorie] = useState(false);
+  const [loadingTag, setLoadingTag] = useState(false);
 
   // Crear los productos
   const onSubmitProduct = handleSubmitProduct(async (formValues) => {
@@ -73,7 +81,20 @@ export default function CreateProduct() {
 
         formData.append("tags", JSON.stringify(Array.from(selectedTags)));
 
-        createProductContext(formData);
+        const createSucces = await createProductContext(formData);
+        if (createSucces === true) {
+          toast(`Producto creado`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            type: "success",
+          });
+        }
+        if (createSucces === false)
+          toast.error(`Producto no ha sido creado`, {
+            position: "bottom-right",
+            autoClose: 3000,
+          });
+
         setIsFileSelected(true);
       }
     } catch (error) {
@@ -99,10 +120,20 @@ export default function CreateProduct() {
     const formDataCategory = new FormData();
     formDataCategory.append("name", values.name.toUpperCase());
     try {
+      setLoadingCategorie(true);
       const category = await createCategory(formDataCategory);
+      setLoadingCategorie(false);
       if (category) console.log(category);
+      if (category.status === 200)
+        toast(`Categoría creada`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          type: "success",
+        });
     } catch (error) {
       console.log(error);
+      setLoadingCategorie(false);
+      toast.error("Categoría no creada");
     }
   });
 
@@ -111,10 +142,20 @@ export default function CreateProduct() {
     const formDataSubCategory = new FormData();
     formDataSubCategory.append("name", values.name.toUpperCase());
     try {
+      setLoadingSubCategorie(true);
       const subCategory = await createSubCategory(formDataSubCategory);
+      setLoadingSubCategorie(false);
       if (subCategory) console.log(subCategory);
+      if (subCategory.status === 200)
+        toast(`Subcategoría creada`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          type: "success",
+        });
     } catch (error) {
       console.log(error);
+      setLoadingSubCategorie(false);
+      toast.error("SubCategoría no creada");
     }
   });
 
@@ -123,10 +164,21 @@ export default function CreateProduct() {
     const formDataTag = new FormData();
     formDataTag.append("name", values.name.toUpperCase());
     try {
+      setLoadingTag(true);
       const tag = await createTag(formDataTag);
-      if (tag) console.log(tag);
+      setLoadingTag(false);
+      console.log(tag);
+
+      if (tag.status === 200)
+        toast(`Etiqueda creada`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          type: "success",
+        });
     } catch (error) {
       console.log(error);
+      setLoadingTag(false);
+      toast.error("Etiqueta no creada");
     }
   });
 
@@ -140,21 +192,36 @@ export default function CreateProduct() {
           onSubmit={onSubmitProduct}
           className="sm:grid flex flex-col sm:grid-cols-2 gap-8 gap-y-14"
         >
-          <Input
-            {...registerProduct("title", { required: true })}
-            type="text"
-            label="Titulo"
-            variant="underlined"
-            color="warning"
-          />
-          <Controller
-            name="description"
-            control={controlProduct}
-            defaultValue=""
-            render={({ field }) => (
-              <ReactQuill {...field} placeholder="Descripción..." />
+          <div>
+            <Input
+              {...registerProduct("title", { required: true })}
+              type="text"
+              label="Titulo"
+              variant="underlined"
+              color="warning"
+            />
+            {productErrors.title && (
+              <span className="text-red-400 text-xs block mt-1">
+                El titulo es requerido
+              </span>
             )}
-          />
+          </div>
+
+          <div>
+            <Controller
+              name="description"
+              control={controlProduct}
+              defaultValue=""
+              render={({ field }) => (
+                <ReactQuill {...field} placeholder="Descripción..." />
+              )}
+            />
+            {productErrors.description && (
+              <span className="text-red-400 text-xs block mt-1">
+                La descripción es requerida
+              </span>
+            )}
+          </div>
           {/* Categories */}
           <Controller
             name="categories"
@@ -229,13 +296,20 @@ export default function CreateProduct() {
               </div>
             )}
           />
-          <Input
-            {...registerProduct("price", { required: true })}
-            type="text"
-            label="Precio"
-            variant="underlined"
-            color="warning"
-          />
+          <div>
+            <Input
+              {...registerProduct("price", { required: true })}
+              type="text"
+              label="Precio"
+              variant="underlined"
+              color="warning"
+            />
+            {productErrors.price && (
+              <span className="text-red-400 text-xs block mt-1">
+                El precio es requerido
+              </span>
+            )}
+          </div>
           <div className="col-span-2">
             <div className="flex items-center justify-center w-full m-3">
               <label
@@ -276,29 +350,48 @@ export default function CreateProduct() {
               </label>
             </div>
           </div>
-          <div className="col-span-2 flex justify-center">
-            <Button type="submit" className="bg-black text-white">
-              Submit
+          <div className="col-span-2 flex justify-center mt-4">
+            <Button
+              type="submit"
+              disabled={loading}
+              className={`${loading ? "disabled" : ""} bg-black text-white`}
+            >
+              {loading ? <Spinner /> : "Create"}
             </Button>
+            <ToastContainer />
           </div>
         </form>
       </div>
+
       <aside className="grid gap-y-6 sm:mt-20 sm:mr-10 m-4">
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h2 className="mb-4 text-center bg-black text-white">
             Crear una categoría
           </h2>
-          <form onSubmit={onSubmitCategory} className="grid grid-cols-2 gap-4">
-            <Input
-              {...registerCategory("name", { required: true })}
-              type="text"
-              label="Name"
-              variant="underlined"
-              className="col-span-2"
-            />
+          <form
+            onSubmit={onSubmitCategory}
+            className="grid grid-cols-1 gap-y-4"
+          >
+            <div>
+              <Input
+                {...registerCategory("name", { required: true })}
+                type="text"
+                label="Name"
+                variant="underlined"
+              />
+              {categoryErrors.name && (
+                <span className="text-red-400 text-xs block mt-1">
+                  El nombre de la categoría es requerido
+                </span>
+              )}
+            </div>
             <div className="col-span-2 flex justify-center mt-4">
-              <Button type="submit" className="bg-black text-white">
-                Submit
+              <Button
+                type="submit"
+                className="bg-black text-white"
+                disabled={loadingCategorie}
+              >
+                {loadingCategorie ? <Spinner /> : "Create"}
               </Button>
             </div>
           </form>
@@ -309,18 +402,28 @@ export default function CreateProduct() {
           </h2>
           <form
             onSubmit={onSubmitSubCategory}
-            className="grid grid-cols-2 gap-4"
+            className="grid grid-cols-1 gap-y-4"
           >
-            <Input
-              {...registerSubCategory("name", { required: true })}
-              type="text"
-              label="Name"
-              variant="underlined"
-              className="col-span-2"
-            />
+            <div>
+              <Input
+                {...registerSubCategory("name", { required: true })}
+                type="text"
+                label="Name"
+                variant="underlined"
+              />
+              {subCategoryErrors.name && (
+                <span className="text-red-400 text-xs block mt-1">
+                  El nombre de la subcategoría es requerido
+                </span>
+              )}
+            </div>
             <div className="col-span-2 flex justify-center mt-4">
-              <Button type="submit" className="bg-black text-white">
-                Submit
+              <Button
+                type="submit"
+                className="bg-black text-white"
+                disabled={loadingSubCategorie}
+              >
+                {loadingSubCategorie ? <Spinner /> : "Create"}
               </Button>
             </div>
           </form>
@@ -329,17 +432,27 @@ export default function CreateProduct() {
           <h2 className="mb-4 text-center bg-orange-200 text-white">
             Crear un tag
           </h2>
-          <form onSubmit={onSubmitTag} className="grid grid-cols-2 gap-4">
-            <Input
-              {...registerTags("name", { required: true })}
-              type="text"
-              label="Name"
-              variant="underlined"
-              className="col-span-2"
-            />
+          <form onSubmit={onSubmitTag} className="grid grid-cols-1 gap-y-4">
+            <div>
+              <Input
+                {...registerTags("name", { required: true })}
+                type="text"
+                label="Name"
+                variant="underlined"
+              />
+              {tagsErrors.name && (
+                <span className="text-red-400 text-xs block mt-1">
+                  El nombre de la etiqueta es requerido
+                </span>
+              )}
+            </div>
             <div className="col-span-2 flex justify-center mt-4">
-              <Button type="submit" className="bg-black text-white">
-                Submit
+              <Button
+                type="submit"
+                className="bg-black text-white "
+                disabled={loadingTag}
+              >
+                {loadingTag ? <Spinner /> : "Create"}
               </Button>
             </div>
           </form>
