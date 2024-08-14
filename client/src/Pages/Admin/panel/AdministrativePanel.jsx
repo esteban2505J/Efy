@@ -15,7 +15,6 @@ import {
 } from "@nextui-org/react";
 import PaginationNav from "../../../components/tienda/PaginationNav";
 
-
 import { FiSearch } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
