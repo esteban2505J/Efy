@@ -1,4 +1,4 @@
-import { HeartIcon } from "../components/products/HeartIcon";
+import { HeartIcon } from "../../components/products/HeartIcon";
 import {
   Dropdown,
   Button,
@@ -11,8 +11,9 @@ import { toast, ToastContainer } from "react-toastify";
 
 import { useParams, useLocation } from "react-router-dom";
 import { BsCart3, BsChevronCompactDown } from "react-icons/bs";
-import useCart from "../context/CartContext";
-import useProduct from "../context/ProductContext";
+import useCart from "../../context/CartContext";
+import useProduct from "../../context/ProductContext";
+import "react-quill/dist/quill.snow.css";
 
 export default function DetailProduct() {
   const { id } = useParams();
@@ -98,15 +99,6 @@ export default function DetailProduct() {
     }
   };
 
-  const notas =
-    typeof product.composition === "string"
-      ? JSON.parse(product.composition)
-      : null;
-
-  const notasAltas = notas ? console.log(notas.notasAltas) : [];
-  const notasMedias = notas ? notas.notasMedias.split("+") : [];
-  const notasBajas = notas ? notas.notasBajas.split("+") : [];
-
   useEffect(() => {
     caclcPrice(selectedKeys);
   }, [selectedKeys]);
@@ -128,9 +120,33 @@ export default function DetailProduct() {
 
           <section>
             <h1 className="font-bold text-4xl mb-3">{product.title}</h1>
-            <p className="mb-2"> {product.description}</p>
+            <style jsx>{`
+              .product-description ul {
+                list-style-type: disc; /* Para listas desordenadas */
+                margin-left: 1.25rem; /* Espaciado a la izquierda */
+              }
 
-            <div className="flex gap-x-4">
+              .product-description ol {
+                list-style-type: decimal; /* Para listas ordenadas */
+                margin-left: 1.25rem; /* Espaciado a la izquierda */
+              }
+            `}</style>
+            <div
+              className="product-description mb-6"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
+
+            {/* Tamaños para las lociones */}
+
+            <div>
+              {product.categories?.map((categorie, i) => (
+                <div key={i}>
+                  <p>{categorie}</p>
+                </div>
+              )) || <p>No categories available.</p>}
+            </div>
+
+            {/* <div className="flex gap-x-4">
               <h3 className="font-bold ">Tamaño:</h3>
               <h5>Seleccione</h5>
               <div>
@@ -161,55 +177,10 @@ export default function DetailProduct() {
                   </DropdownMenu>
                 </Dropdown>
               </div>
-            </div>
+            </div> */}
 
             {/* Precio */}
-
             <h2 className="font-semibold text-xl mb-3">{selectdPrice}</h2>
-
-            {/* Sección de la composición */}
-            <div className="mb-4">
-              <h3 className="font-bold pb-3">Composición:</h3>
-              <div className="overflow-x-hidden">
-                <div className="translate-x-12 transform">
-                  <ul className="list-disc">
-                    <li>
-                      Notas Altas:
-                      {notasAltas &&
-                        notasAltas.map((nota, key) => {
-                          return (
-                            <div key={key}>
-                              <p>{nota}</p>
-                            </div>
-                          );
-                        })}
-                    </li>
-                    <li>
-                      Notas Medias:
-                      {notasMedias &&
-                        notasMedias.map((nota, key) => {
-                          return (
-                            <div key={key}>
-                              <p>{nota}</p>
-                            </div>
-                          );
-                        })}
-                    </li>
-                    <li>
-                      Notas Medias:
-                      {notasBajas &&
-                        notasBajas.map((nota, key) => {
-                          return (
-                            <div key={key}>
-                              <p>{nota}</p>
-                            </div>
-                          );
-                        })}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
             {/* Botones de añadir al carrito y favoritos */}
             <div className="m-6 mt-8">

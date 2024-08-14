@@ -68,6 +68,7 @@ export const ProductProvider = ({ children }) => {
         const dataProducts = await getProducts();
         setLoading(false);
         setProducts(dataProducts.data);
+        console.log(dataProducts);
 
         if (dataProducts.length === 0) {
           console.log("Ups!! No se encontraron productos");

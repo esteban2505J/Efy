@@ -11,7 +11,8 @@ import {
   createTag,
 } from "../../../api/products";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Importa los estilos de Quill
+
+// Importa los estilos de Quill
 
 export default function CreateProduct() {
   // Use form product
@@ -66,20 +67,16 @@ export default function CreateProduct() {
         formData.append("title", formValues.title);
         formData.append("description", formValues.description);
         formData.append("typeProduct", formValues.typeProduct);
-        formData.append(
-          "categories",
-          JSON.stringify(Array.from(selectedCategories))
-        );
+        formData.append("categories", Array.from(selectedCategories).join(","));
         formData.append(
           "subCategories",
-          JSON.stringify(Array.from(selectedSubCategories))
+          Array.from(selectedSubCategories).join(",")
         );
         formData.append("price", formValues.price);
         if (selectedImage) {
           formData.append("image", selectedImage);
         }
-
-        formData.append("tags", JSON.stringify(Array.from(selectedTags)));
+        formData.append("tags", Array.from(selectedTags).join(","));
 
         const createSucces = await createProductContext(formData);
         if (createSucces === true) {

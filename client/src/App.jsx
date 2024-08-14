@@ -2,8 +2,9 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Nav2 from "./components/tienda/nav2";
 import "./App.css";
+import "react-quill/dist/quill.snow.css";
 import Products from "./Pages/Products";
-import DetailProduct from "./Pages/DetailProduct";
+import DetailProduct from "./Pages/Information/DetailProduct";
 import AboutUs from "./Pages/Information/AboutUs";
 import Blog from "./Pages/Blog";
 import ShoppingCart from "./Pages/ShoppingCart";
@@ -28,10 +29,9 @@ function App() {
       <ProductProvider>
         <CartProvider>
           <AuthProvider>
-            <HashRouter>  
+            <HashRouter>
               <main>
-                <Nav2 /> 
-                
+                <Nav2 />
 
                 <body>
                   <Routes>
@@ -59,8 +59,6 @@ function App() {
                       path="/admin/administrativePanel"
                       element={<AdministrativePanel />}
                     />
-
-                   
                   </Routes>
                 </body>
                 <Footer className="footer" />
