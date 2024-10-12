@@ -200,24 +200,8 @@ export const getProductsByCategorie = async (req, res) => {
   }
 };
 
-// // Función que devuelve los productos de cierta categoría
-// export const getProductsByTypeProduct = async (req, res) => {
-//   const { type } = req.body;
-//   try {
-//     const productsByTypeProduct = await Product.findOne({
-//       typeProduct: type,
-//     });
-//     if (!productsByTypeProduct || productsByTypeProduct.length == 0) {
-//       res.status(404).json({ message: "No se encotnraron productos " });
-//     }
 
-//     return res.json(productsByTypeProduct);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(404).json({ message: "algo salió mal" });
-//   }
-// };
-
+//Esta función devuelve un producto en específico 
 export const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
