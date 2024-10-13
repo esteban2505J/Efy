@@ -5,6 +5,7 @@ import {
   getProduct,
   getProducts,
   getProductsByCategorie,
+  getProductsByTagas,
   
   updateProduct,
   createCategory,
@@ -27,6 +28,7 @@ router.get("/products/categorie", getProductsByCategorie);
 router.delete("/products/product/delete/:id", deleteProduct);
 router.put("/products/product/update/:id", updateProduct);
 router.get("/product/:id", getProduct);
+router.get("/product/getBytags", getProductsByTagas)
 
 // Ruta para obtener las sub categorias
 router.get("/admin/getSubCategories", getSubCategories);
@@ -41,5 +43,7 @@ router.post("/admin/createCategory",createCategory)
 router.post("/admin/createSubCategory",createSubCategory)
 // Ruta para la creación de etiquetas
 router.post("/admin/createTag",createTag)
+
+
 
 export default router;

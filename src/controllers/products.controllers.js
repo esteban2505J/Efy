@@ -182,21 +182,26 @@ export const getTags = async (req, res) => {
   }
 };
 
-// Función que devuelve los productos de cierta categoría
+// Función que devuelve los productos de ciertas categorías
 export const getProductsByCategorie = async (req, res) => {
-  const { categorie } = req.body;
+  const { categories } = req.body;  // Asegúrate de que esto es un array de categorías
   try {
-    const productsByCategorie = await Product.findOne({
-      categories: categorie,
+
+    if(categories.length=== 0 ) return res.status(500).json({message:"los parámetros de categoría son vacios"})
+
+    const productsByCategorie = await Product.find({
+      categories: { $in: categories },
     });
-    if (!productsByCategorie || productsByCategorie.length == 0) {
-      res.status(404).json({ message: "No se encotnraron productos " });
+    
+    if (!productsByCategorie || productsByCategorie.length === 0) {
+      return res.status(404).json({ message: "No se encontraron productos" });
     }
 
     return res.json(productsByCategorie);
+
   } catch (error) {
     console.log(error);
-    return res.status(404).json({ message: "algo salió mal " });
+    return res.status(500).json({ message: "Algo salió mal" });
   }
 };
 
@@ -302,4 +307,29 @@ try {
   console.log(error);
   return res.status(500).json({message: "algo salió mal"})
 }
+}
+
+//Function for get products by tags
+export const getProductsByTagas = async (req, res) =>{
+
+  const {tags} = req.body
+
+  try {
+
+    if(tags.length=== 0 ) return res.status(500).json({message:"los parámetros de categoría son vacios"})
+
+    const productsBytags = await Product.find({
+      tags: { $in: tags },
+    });
+    
+    if (!productsBytags || productsBytags.length === 0) {
+      return res.status(404).json({ message: "No se encontraron productos" });
+    }
+
+    return res.json(productsBytags);
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Algo salió mal" });
+  }
 }
