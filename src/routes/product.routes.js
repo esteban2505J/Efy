@@ -5,7 +5,7 @@ import {
   getProduct,
   getProducts,
   getProductsByCategorie,
-  getProductsByTagas,
+  getProductsByTags,
   
   updateProduct,
   createCategory,
@@ -28,7 +28,7 @@ router.get("/products/categorie", getProductsByCategorie);
 router.delete("/products/product/delete/:id", deleteProduct);
 router.put("/products/product/update/:id", updateProduct);
 router.get("/product/:id", getProduct);
-router.get("/product/getBytags", getProductsByTagas)
+router.post("/product/getBytags", getProductsByTags)
 
 // Ruta para obtener las sub categorias
 router.get("/admin/getSubCategories", getSubCategories);

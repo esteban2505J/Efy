@@ -309,27 +309,32 @@ try {
 }
 }
 
-//Function for get products by tags
-export const getProductsByTagas = async (req, res) =>{
-
-  const {tags} = req.body
+export const getProductsByTags = async (req, res) => {
+  const { tags } = req.body;
+  console.log(tags); // Asegúrate de que aquí se impriman los tags correctamente.
 
   try {
+    // Verificar si no hay tags
+    if (!tags || tags.length === 0) {
+      return res.status(400).json({ message: "Los parámetros de categoría están vacíos" });
+    }
 
-    if(tags.length=== 0 ) return res.status(500).json({message:"los parámetros de categoría son vacios"})
-
-    const productsBytags = await Product.find({
-      tags: { $in: tags },
+    // Buscar productos que contengan al menos uno de los tags
+    const productsByTags = await Product.find({
+      tags: { $in: tags }, // Asegúrate de que los tags en la consulta sean correctos.
     });
-    
-    if (!productsBytags || productsBytags.length === 0) {
+
+    // Verificar si no se encontraron productos
+    if (!productsByTags || productsByTags.length === 0) {
       return res.status(404).json({ message: "No se encontraron productos" });
     }
 
-    return res.json(productsBytags);
+    // Devolver los productos encontrados
+    return res.json(productsByTags);
 
   } catch (error) {
-    console.log(error);
+    console.error(error); // Cambiar console.log por console.error para mejor manejo de errores.
     return res.status(500).json({ message: "Algo salió mal" });
   }
-}
+};
+
