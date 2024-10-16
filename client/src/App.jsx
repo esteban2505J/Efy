@@ -22,6 +22,7 @@ import PaginationNav from "./components/tienda/PaginationNav";
 import { ProductProvider } from "./context/ProductContext";
 import CreateProduct from "./Pages/Admin/products/CreateProduct";
 import AdministrativePanel from "./Pages/Admin/panel/AdministrativePanel";
+import Home from "./Pages/Home";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
 
                 <body>
                   <Routes>
-                    <Route path="/" element={<Products />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/product" element={<Products />} />
                     <Route path="/product/:id" element={<DetailProduct />} />
                     <Route path="/aboutus" element={<AboutUs />} />
