@@ -57,42 +57,9 @@ export default function App() {
 
         {/* section 2 */}
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          {/* Menú desplegable de categorías */}
-          <Dropdown>
-            <NavbarItem>
-              <DropdownTrigger className="text-lg">
-                <Button
-                  disableRipple
-                  className="p-0 bg-transparent :bg-transparent"
-                  endContent={<ChevronDown fill="currentColor" size={16} />}
-                  radius="sm"
-                  variant="light"
-                >
-                  Categories
-                </Button>
-              </DropdownTrigger>
-            </NavbarItem>
-            <DropdownMenu
-              aria-label="ACME features"
-              className="w-[340px]"
-              itemClasses={{
-                base: "gap-4",
-              }}
-            >
-              <DropdownItem>
-                <Link>Hombre</Link>
-              </DropdownItem>
-              <DropdownItem>
-                <Link>Mujer</Link>
-              </DropdownItem>
-              <DropdownItem>
-                <Link>Mascota</Link>
-              </DropdownItem>
-              <DropdownItem>
-                <Link>Hogar</Link>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          <NavbarItem>
+            <Link href="/#/product">Catálogo</Link>
+          </NavbarItem>
 
           <NavbarItem isActive className="hidden md:flex">
             <Link
