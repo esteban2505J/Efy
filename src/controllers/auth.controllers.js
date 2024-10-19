@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
 import { transporter } from "../libs/nodemailer.js";
-// import upLoadImage from "../libs/claudinary.js";
+
 
 import fs from "fs-extra"
 
@@ -19,12 +19,18 @@ import fs from "fs-extra"
 export const register = async (req, res) => {
   let { fullName, email, password, profilePicture } = req.body;
 
+  //verify that request is not empty
+  if (req.body === null || Object.keys(req.body).length === 0) return res.status(400).json({message:"por favor envíe datos válidos"});
+
+
   // return password encrypt
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
+    //find the user in the data base
     const userFound = await User.findOne({ email });
 
+    //if the user is found return status 400
     if (userFound) return res.status(400).json(["The email already exist."]);
 
     // create a new user
@@ -42,7 +48,8 @@ export const register = async (req, res) => {
 
     // response with cookie created
     res.cookie("token", token);
-
+  
+    //email structure
     const htmlContent = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -138,15 +145,20 @@ export const register = async (req, res) => {
 
 /**function for the login procces */
 export const login = async (req, res) => {
+  
+  //verify that request is not empty
+  if (req.body === null || Object.keys(req.body).length === 0) return res.status(400).json({message:"por favor envíe datos válidos"});
   let { email, password } = req.body;
+
 
   try {
     // found user
     const userFound = await User.findOne({ email });
-    // console.log("this is a", userFound);
-
+   
     if (!userFound) return res.status(400).json(["User not found"]);
+    
 
+    //verify that the password input match with password in the data base
     const isMatch = await bcrypt.compare(password, userFound.password);
     if (!isMatch) return res.status(400).json(["Incorrect password or email"]);
 
@@ -178,6 +190,9 @@ export const logOut = (req, res) => {
 
 /* function for the process of obtaining the user's profile*/
 export const profile = async (req, res) => {
+  
+  //verify that request is not empty
+  if (req.body === null || Object.keys(req.body).length === 0) return res.status(400).json({message:"por favor envíe datos válidos"});
   const userFound = await User.findById(req.user.id);
   if (!userFound) return res.status(400).json({ message: "user not found" });
 
