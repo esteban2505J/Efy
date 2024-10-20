@@ -1,5 +1,7 @@
 import Carousel from "../components/tienda/Carousel";
 import { Button, Image } from "@nextui-org/react";
+import { GiDelicatePerfume, GiSoap } from "react-icons/gi";
+import { TbPerfume } from "react-icons/tb";
 
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 
@@ -18,24 +20,35 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { title: "Perfumes", color: "bg-blue-100" },
-                { title: "Jabones", color: "bg-green-100" },
-                { title: "Aceites", color: "bg-amber-100" },
+                {
+                  title: "Perfumes",
+                  color: "bg-blue-100",
+                  icon: <GiDelicatePerfume />,
+                },
+                { title: "Jabones", color: "bg-green-100", icon: <GiSoap /> },
+                {
+                  title: "Aceites",
+                  color: "bg-amber-100",
+                  icon: <TbPerfume />,
+                },
               ].map((category, index) => (
                 <Card
                   key={index}
                   className={` ${category.color} hover:shadow-lg transition-shadow`}
                 >
-                  <CardHeader className="">
+                  <CardHeader className="justify-center">
+                    <div className="text-4xl p-4">{category.icon}</div>
                     <h2>{category.title}</h2>
                   </CardHeader>
-                  <CardBody>
-                    <Image
-                      isZoomed
-                      width={300}
-                      src={` src/assets/images/perfume${index + 4}.jpg`}
-                      className="mb-10"
-                    ></Image>
+                  <CardBody className="flex flex-row">
+                    <div className="justify-center items-center">
+                      <Image
+                        isZoomed
+                        width={400}
+                        src={` src/assets/images/perfume${index + 4}.jpg`}
+                        className="mb-10"
+                      ></Image>
+                    </div>
                   </CardBody>
                   <CardFooter>
                     <p>
