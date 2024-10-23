@@ -13,13 +13,14 @@ export default function CardProduct2() {
 
   return (
     <>
-      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+      <div className="gap-6 grid grid-cols-2 sm:grid-cols-4">
         {list.map((item) => (
           <Card
             isBlurred="true"
             shadow="sm"
             key={item._id}
             isPressable={true}
+            className="w-80"
             // En CardProduct2
 
             onPress={() => {
