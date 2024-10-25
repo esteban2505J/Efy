@@ -273,6 +273,9 @@ export default function Home() {
               </div>
             </section>
           </article>
+          <section>
+            <Button>Hola</Button>
+          </section>
         </body>
       </main>
     </>
