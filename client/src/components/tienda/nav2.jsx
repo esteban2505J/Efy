@@ -151,7 +151,7 @@ export default function App() {
                   </div>
                   <div>
                     <Button
-                      onPress={logOut}
+                      onClick={logOut}
                       className="bg-red-500 w-3 hidden sm:flex text-2xl text-white ml-8 "
                     >
                       <BiLogOut />

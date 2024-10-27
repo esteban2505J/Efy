@@ -189,7 +189,7 @@ export default function DetailProduct() {
                   variant="shadow"
                   size="md"
                   className="mr-5 text-white bg-black p-5"
-                  onPress={() => {
+                  onClick={() => {
                     addItemToCart({
                       ...product,
                       size: selectedValue,

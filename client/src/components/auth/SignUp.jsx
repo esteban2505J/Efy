@@ -68,7 +68,7 @@ export default function SignUp() {
   return (
     <>
       <Button
-        onPress={onOpen}
+        onClick={onOpen}
         color="primary"
         className={`${loading ? "invisible" : ""}, w-full sm:w-auto ${
           isAuthenticated ? "invisible" : ""
@@ -182,14 +182,14 @@ export default function SignUp() {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onClick={onClose}>
                   Close
                 </Button>
 
                 {loading ? (
                   <Loading loading={loading} />
                 ) : (
-                  <Button color="primary" onPress={onSubmit}>
+                  <Button color="primary" onClick={onSubmit}>
                     Sign in
                   </Button>
                 )}
