@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken";
 
 import { KEY_TOKEN } from "../config.js";
 import { transporter } from "../libs/nodemailer.js";
+import uploadImage from "../libs/cloudinaryConfig.js";
 
 
 import fs from "fs-extra"
@@ -33,11 +34,15 @@ export const register = async (req, res) => {
     //if the user is found return status 400
     if (userFound) return res.status(400).json(["The email already exist."]);
 
+    const urlPicture = await uploadImage(req.files.profilePicture.tempFilePath, "profilePicture")
+   
+
     // create a new user
     const newUser = new User({
       email,
       password: passwordHash,
       fullName,
+      profilePicture: {secureUrl: urlPicture.secure_url, publicId: urlPicture.secure_url}
     });
    
     // saved the user create
@@ -119,6 +124,7 @@ export const register = async (req, res) => {
 
     // Eliminar la imagen temporal
     if (req.files.profilePicture) {
+      console.log(req.files.profilePicture);
       fs.unlink(req.files.profilePicture.tempFilePath, (err) => {
         if (err) {
           console.error("Error al eliminar la imagen temporal:", err);
