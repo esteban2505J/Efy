@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <>
       <Button
-        onPress={onOpen}
+        onClick={onOpen}
         className={`bg-orange-200  ${
           loading ? "invisible" : ""
         }, w-full sm:w-auto ${
@@ -107,14 +107,14 @@ export default function Login() {
                 <Button
                   className="bg-[#DA344D]"
                   variant="flat"
-                  onPress={onClose}
+                  onClick={onClose}
                 >
                   Close
                 </Button>
                 {loading ? (
                   <Loading loading={loading} />
                 ) : (
-                  <Button color="primary" onPress={onSubmit}>
+                  <Button color="primary" onClick={onSubmit}>
                     Sign in
                   </Button>
                 )}

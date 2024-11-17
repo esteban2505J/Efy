@@ -23,7 +23,7 @@ export default function CardProduct2() {
             className="w-80"
             // En CardProduct2
 
-            onPress={() => {
+            onClick={() => {
               try {
                 navigate(`/product/${item._id}`);
               } catch (error) {
