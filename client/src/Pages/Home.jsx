@@ -273,13 +273,6 @@ export default function Home() {
               </div>
             </section>
           </article>
-
-          <article>
-            <h2>sección de recomendados</h2>
-            <Card>
-              <CardHeader>Nombre del perfume</CardHeader>
-            </Card>
-          </article>
         </body>
       </main>
     </>
