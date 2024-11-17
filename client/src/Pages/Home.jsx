@@ -273,9 +273,7 @@ export default function Home() {
               </div>
             </section>
           </article>
-          <section>
-            <Button>Hola</Button>
-          </section>
+
           <article>
             <h2>sección de recomendados</h2>
             <Card>
