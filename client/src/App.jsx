@@ -18,7 +18,6 @@ import FavoriteItems from "./Pages/FavoriteItems";
 import Pqrs from "./Pages/Pqrs";
 import Returns from "./Pages/Returns";
 import Footer from "./components/tienda/footer";
-import PaginationNav from "./components/tienda/PaginationNav";
 import { ProductProvider } from "./context/ProductContext";
 import CreateProduct from "./Pages/Admin/products/CreateProduct";
 import AdministrativePanel from "./Pages/Admin/panel/AdministrativePanel";
