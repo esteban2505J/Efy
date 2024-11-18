@@ -13,7 +13,7 @@ import ProfileUser from "./Pages/ProfileUser";
 import ForgotPassword from "./Pages/ForgotPassword";
 import { CartProvider } from "./context/CartContext";
 import Succes from "./Pages/Succes";
-import MyOrders from "./Pages/MyOrders";
+
 import FavoriteItems from "./Pages/FavoriteItems";
 import Pqrs from "./Pages/Pqrs";
 import Returns from "./Pages/Returns";
@@ -47,7 +47,6 @@ function App() {
                       element={<ForgotPassword />}
                     />
                     <Route path="/succes" element={<Succes />} />
-                    <Route path="/myOrders" element={<MyOrders />} />
                     <Route path="/favorites" element={<FavoriteItems />} />
                     <Route path="/pqrs" element={<Pqrs />} />
                     <Route path="/returns" element={<Returns />} />
