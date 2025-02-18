@@ -97,6 +97,18 @@ export default function SignUp() {
                     ))}
                 </div>
               </ModalHeader>
+
+              <ModalHeader className="flex flex-col gap-1">
+                Sign Up
+                <div>
+                  {registerErrors &&
+                    Object.values(registerErrors).map((error, index) => (
+                      <div className="text-red-600" key={index}>
+                        {error}
+                      </div>
+                    ))}
+                </div>
+              </ModalHeader>
               <ModalBody>
                 {errors.fullName && (
                   <p className=" text-red-500">Full name is required</p>
